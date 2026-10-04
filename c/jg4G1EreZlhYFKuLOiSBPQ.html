@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="googlebot" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>STONK/USDT 4h</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:#131722;font:14px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+header{padding:8px 10px 6px;border-bottom:1px solid #e0e3eb}
+h1{margin:0;font-size:18px;font-weight:700;display:flex;flex-wrap:wrap;align-items:center;gap:4px 9px}
+h1 .tf{font-weight:600;color:#434651}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.3px;padding:2px 7px;border-radius:10px;background:#e3f2fd;color:#0d47a1;border:1px solid #bbdefb}
+.verdict{margin:3px 0 4px;font-weight:600;color:#2a2e39;font-size:13.5px}
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:2px 10px;margin:2px 0}
+.f{display:flex;flex-direction:column;padding:2px 0}
+.k{font-size:10px;color:#787b86;text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v{font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.reasons{margin:5px 0 2px;background:#fafafa;border:1px solid #e0e3eb;border-radius:6px;padding:2px 9px}
+.reasons summary{cursor:pointer;font-weight:600;color:#2a2e39;padding:4px 0;font-size:13px}
+.reasons ul{margin:2px 0 6px;padding-left:18px}
+.reasons li{margin:3px 0;font-size:13px}
+.meta{font-size:10.5px;color:#787b86;margin-top:3px}
+.live{margin:4px 0 2px;font-size:12.5px;color:#2a2e39;font-variant-numeric:tabular-nums}
+.live i{display:inline-block;width:16px;height:0;border-top:2px dotted #ef6c00;vertical-align:middle;margin-right:6px}
+.live .up{color:#2e7d32;font-weight:600}.live .dn{color:#c62828;font-weight:600}.live .lk{color:#9598a1;font-size:10.5px}
+.toolbar{display:flex;gap:6px;align-items:center;padding:6px 10px;border-bottom:1px solid #e0e3eb;background:#fbfbfc}
+.btn{appearance:none;border:1px solid #c9ccd4;background:#fff;color:#131722;border-radius:6px;padding:6px 9px;font:600 12.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;text-decoration:none;cursor:pointer;min-height:32px;display:inline-flex;align-items:center;white-space:nowrap}
+.btn.on{background:#131722;color:#fff;border-color:#131722}
+.btn.tv{margin-left:auto;background:#2962ff;color:#fff;border-color:#2962ff}
+.btn.ms.on{background:#2962ff;border-color:#2962ff}
+.tv .sm{display:none}
+@media (max-width:440px){.toolbar{gap:5px;padding:6px 8px}.btn{padding:6px 8px}.tv .lg{display:none}.tv .sm{display:inline}}
+#mbar{position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:5;display:none;align-items:center;gap:6px;pointer-events:none}
+#mtxt{font:600 11.5px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:rgba(19,23,34,.82);color:#fff;border-radius:12px;padding:5px 10px;white-space:nowrap}
+#mclr{pointer-events:auto;appearance:none;border:1px solid #c9ccd4;background:#fff;color:#131722;border-radius:50%;width:30px;height:30px;font:700 15px/1 sans-serif;cursor:pointer;display:none;padding:0;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.chips{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:5px;padding:5px 10px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-size:11px;border:1px solid #d1d4dc;border-radius:12px;padding:2px 8px 2px 6px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:5px;user-select:none;-webkit-user-select:none}
+.chip i{display:inline-block;width:14px;height:0;border-top:2px solid}
+.chip.off{opacity:.38}
+#legend{font-size:11px;line-height:1.35;font-variant-numeric:tabular-nums;padding:3px 10px 2px;min-height:34px;color:#2a2e39}
+#legend b{font-weight:700}
+#wrap{position:relative;width:100%;height:74vh;height:74svh;min-height:420px;max-height:980px}
+#chart{position:absolute;inset:0;touch-action:none}
+.hint{font-size:10.5px;color:#9598a1;padding:5px 10px 14px}
+#expired,#err{display:none;padding:40px 16px;text-align:center;color:#434651}
+@media (min-width:900px){header,.toolbar,.chips,.hint,#legend{padding-left:18px;padding-right:18px}#wrap{height:76vh}h1{font-size:22px}
+ .facts{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.v{font-size:14px}#legend{font-size:12px;min-height:20px}}
+</style>
+</head>
+<body>
+<header>
+<h1><span>STONK/USDT</span><span class=tf>4h</span><span class=badge>SUIVI DE POSITION</span></h1>
+<div class=verdict>Rebond en cours, non confirmé — tenir avec le stop</div>
+<div class=facts><div class=f><span class=k>Position</span><span class=v>long spot 0.1880 (04/10 06:03 Paris)</span></div><div class=f><span class=k>Prix</span><span class=v>0.1958 (+4.2 %)</span></div><div class=f><span class=k>Stop</span><span class=v>clôture 4h &lt; 0.1850 · dur 0.1801 (−4.2 %)</span></div><div class=f><span class=k>Objectifs (1/3 chacun)</span><span class=v>T1 0.2157 (+15 %, R:R 3.5) · T2 0.2339 (+24 %, R:R 5.8) · T3 0.2430 (+29 %, R:R 7.0)</span></div><div class=f><span class=k>EMA20 / EMA50 4h</span><span class=v>0.2307 / 0.2505</span></div><div class=f><span class=k>Sortie au plus tard</span><span class=v>18/10 (J+14)</span></div></div>
+<div class=live><i></i>Prix au 04/10 10:01 (Paris) : <b>0.1967</b>, <span class=up>+0.46 %</span> depuis la dernière clôture <span class=lk>(bougie en cours, non utilisée par l'analyse)</span></div>
+<details class=reasons><summary>Raisons (9)</summary><ul><li>Position : achat spot 0.1880 le 04/10 à 06:03 (ordre limite dans S2). Plus bas atteint 0.1829 à 06:05–06:10, puis retour au-dessus de 0.1900 dès 06:30.</li><li>Ce qui s&#x27;est passé : cassure de R1 (0.218) vers 23:00 le 03/10, perte de S1 (0.1996) dans la nuit, puis purge sous le plus bas du listing (0.1870–0.1884) à 06:00 sur le plus gros volume horaire de la séquence (Gate 284 k$, DEX ~2,2 M$).</li><li>Bougie 4h 06:00–10:00 : O 0.1935 / H 0.2039 / L 0.1829 / C 0.1958, volume ~1,9× la moyenne 20, mèche basse = 50 % de l&#x27;étendue : rejet net des prix bas, mais mèche haute de 39 % sous R0 (vendeurs à 0.20–0.204).</li><li>Le rebond se fait sur volume décroissant (DEX 1,34 M$ → 0,48 M$ → 0,32 M$ par heure) : réflexe technique pour l&#x27;instant, pas encore une reprise par la demande.</li><li>Structure 4h toujours baissière : sommets et creux descendants, prix sous les EMA 13/20/25/32/50 4h, toutes en pente baissière. Seul progrès : creux horaire plus haut à 0.1890.</li><li>Confirmation du rebond : clôture 4h au-dessus de 0.2040 (R0 repris), puis un creux 4h plus haut au-dessus de 0.1890. Invalidation : clôture 4h sous 0.1850 ou toucher 0.1801.</li><li>Gestion : 1/3 à T1 0.2157, stop au point mort (0.188) ; 1/3 à T2 0.2339, stop à 0.2040 ; dernier tiers à T3 0.2430 ou sortie sur clôture 4h sous le dernier creux 4h plus haut.</li><li>Temps : sans clôture 4h &gt; 0.2040 ni T1 d&#x27;ici le 09–11/10, sortir (au moins la moitié). Sortie totale au plus tard le 18/10.</li><li>Contexte : coin très jeune et très volatile (ATR 4h ≈ 10 %), passé de ~0.007 à 0.42 sur MEXC en août–septembre ; beaucoup d&#x27;acheteurs piégés au-dessus (VWAP ancrés ~0.28). Risque max conseillé 0,25–0,5 % du capital.</li></ul></details>
+<div class=meta>Généré le 04/10/2026 10:01 (Paris) · dernière bougie 4h clôturée 04/10 10:00 · source gate · page supprimée après le 11/10/2026</div>
+</header>
+<div class=toolbar>
+<button class="btn" id=bLog type=button>Log</button>
+<button class="btn" id=bFit type=button>Recentrer</button>
+<button class="btn" id=bAll type=button>Tout</button>
+<button class="btn on" id=bLab type=button title="Afficher / masquer les étiquettes de gauche">Labels</button>
+<button class="btn ms" id=bMes type=button title="Mesurer une variation : toucher le point A puis le point B">Mesure</button>
+<a class="btn tv" href="https://www.tradingview.com/chart/?symbol=GATEIO:STONKUSDT" target="_blank" rel="noopener noreferrer"><span class=lg>TradingView</span><span class=sm>TV</span>&nbsp;↗</a>
+</div>
+<div class=chips id=chips></div>
+<div id=legend></div>
+<div id=wrap><div id=chart></div><div id=mbar><span id=mtxt></span><button id=mclr type=button title="Effacer la mesure" aria-label="Effacer la mesure">✕</button></div></div>
+<div class=hint>Pincer pour zoomer, glisser pour se déplacer, appui long pour le réticule. « Mesure » : toucher un point A puis un point B pour lire la variation. Analyse automatique, pas un conseil financier.</div>
+<div id=expired>Cette page a expiré.</div>
+<div id=err>Graphique indisponible (librairie non chargée).</div>
+<script type="application/json" id="chart-data">{"symbol":"STONK","tf":"4h","log":true,"candles":[[1789372800,0.2057,0.2071,0.1884,0.189,19953.7],[1789387200,0.1887,0.2389,0.1887,0.2208,145211.0],[1789401600,0.2238,0.2239,0.1922,0.2234,126547.0],[1789416000,0.2263,0.2396,0.2032,0.2061,51886.9],[1789430400,0.2065,0.2182,0.1887,0.1903,390105.0],[1789444800,0.1889,0.19,0.1708,0.1763,390223.0],[1789459200,0.1777,0.1921,0.1728,0.1894,220486.0],[1789473600,0.1902,0.2029,0.1634,0.1761,700278.0],[1789488000,0.1767,0.189,0.1656,0.1825,154027.0],[1789502400,0.1825,0.185,0.1661,0.1732,225529.0],[1789516800,0.1732,0.174,0.1496,0.1508,376807.0],[1789531200,0.1508,0.17,0.1503,0.17,141868.0],[1789545600,0.17,0.177,0.1635,0.1754,123804.0],[1789560000,0.1757,0.18,0.1578,0.1685,190862.0],[1789574400,0.1688,0.1779,0.1548,0.17,161073.0],[1789588800,0.17,0.21,0.17,0.2039,428770.0],[1789603200,0.205,0.2179,0.2039,0.2084,208772.0],[1789617600,0.2085,0.2208,0.1996,0.2138,341020.0],[1789632000,0.2139,0.2255,0.2104,0.2133,310061.0],[1789646400,0.2139,0.2463,0.2125,0.2362,470290.0],[1789660800,0.2366,0.252,0.2177,0.2265,707648.0],[1789675200,0.227,0.252,0.2255,0.2474,235511.0],[1789689600,0.2465,0.2586,0.2355,0.2556,438461.0],[1789704000,0.2548,0.2759,0.2538,0.2677,383533.0],[1789718400,0.2686,0.2762,0.2518,0.2636,1533970.0],[1789732800,0.2638,0.2888,0.2563,0.2808,550989.0],[1789747200,0.2803,0.2932,0.2564,0.2606,397019.0],[1789761600,0.2608,0.2623,0.2413,0.2439,526000.0],[1789776000,0.2442,0.2511,0.2359,0.2445,731898.0],[1789790400,0.2445,0.2451,0.2251,0.2423,820089.0],[1789804800,0.2429,0.2526,0.2419,0.2456,341358.0],[1789819200,0.2456,0.2839,0.2449,0.2839,526902.0],[1789833600,0.2834,0.3045,0.272,0.2914,495235.0],[1789848000,0.2916,0.3499,0.275,0.2901,727882.0],[1789862400,0.2903,0.291,0.2516,0.2594,588471.0],[1789876800,0.2597,0.2723,0.2461,0.2704,566850.0],[1789891200,0.2706,0.2835,0.2591,0.2808,482122.0],[1789905600,0.2804,0.3009,0.2804,0.3,838463.0],[1789920000,0.2997,0.3371,0.2828,0.3298,1536340.0],[1789934400,0.3314,0.3448,0.3214,0.3271,429338.0],[1789948800,0.3269,0.375,0.3223,0.3564,799754.0],[1789963200,0.3554,0.3725,0.3491,0.3663,951790.0],[1789977600,0.367,0.3694,0.3309,0.3346,720554.0],[1789992000,0.3347,0.397,0.3342,0.3918,2353770.0],[1790006400,0.3915,0.4032,0.3772,0.3924,894524.0],[1790020800,0.3921,0.4184,0.3551,0.3651,1736810.0],[1790035200,0.3651,0.3775,0.3377,0.3403,1301590.0],[1790049600,0.3399,0.372,0.3225,0.3382,1869900.0],[1790064000,0.3382,0.3421,0.325,0.3288,940338.0],[1790078400,0.3287,0.3664,0.3273,0.3448,996852.0],[1790092800,0.345,0.3453,0.3107,0.3298,1643990.0],[1790107200,0.3301,0.3362,0.2892,0.298,2376800.0],[1790121600,0.298,0.3416,0.2968,0.3117,1685910.0],[1790136000,0.3116,0.3542,0.31,0.3468,1865940.0],[1790150400,0.3468,0.3588,0.31,0.326,2213590.0],[1790164800,0.3263,0.3268,0.2928,0.3057,1963870.0],[1790179200,0.3057,0.3109,0.3,0.3102,728516.0],[1790193600,0.31,0.3248,0.307,0.3208,506366.0],[1790208000,0.3208,0.3616,0.3205,0.3609,3275810.0],[1790222400,0.3611,0.3745,0.3531,0.3697,993428.0],[1790236800,0.3692,0.3706,0.3341,0.3482,781560.0],[1790251200,0.3479,0.3917,0.3458,0.3772,1101880.0],[1790265600,0.3772,0.3813,0.3594,0.3682,571348.0],[1790280000,0.3681,0.3685,0.3329,0.3467,641784.0],[1790294400,0.3468,0.3608,0.332,0.3347,588694.0],[1790308800,0.3347,0.3366,0.3188,0.3304,468782.0],[1790323200,0.3304,0.3702,0.3157,0.3279,1558510.0],[1790337600,0.3278,0.331,0.3058,0.31,1088460.0],[1790352000,0.3104,0.3174,0.2935,0.315,1734910.0],[1790366400,0.3153,0.3241,0.3043,0.3111,892551.0],[1790380800,0.3112,0.3269,0.29,0.2913,1268570.0],[1790395200,0.2916,0.2941,0.259,0.2596,2690000.0],[1790409600,0.2597,0.2862,0.259,0.2817,1088580.0],[1790424000,0.2817,0.2834,0.2501,0.267,2426810.0],[1790438400,0.267,0.2994,0.2647,0.2919,1266140.0],[1790452800,0.2915,0.2923,0.2783,0.2822,354244.0],[1790467200,0.2818,0.2843,0.2676,0.2775,962533.0],[1790481600,0.277,0.2938,0.27,0.2927,509822.0],[1790496000,0.2931,0.3174,0.2879,0.2949,1194520.0],[1790510400,0.2949,0.2955,0.2625,0.2764,1535700.0],[1790524800,0.2762,0.2812,0.2572,0.2713,1295370.0],[1790539200,0.2713,0.2726,0.2458,0.2479,1223080.0],[1790553600,0.248,0.2613,0.2445,0.25,1756430.0],[1790568000,0.2501,0.2603,0.232,0.2353,2309350.0],[1790582400,0.2356,0.2536,0.2341,0.2444,1843610.0],[1790596800,0.2442,0.2575,0.2424,0.2425,1686610.0],[1790611200,0.2425,0.2615,0.2407,0.2488,1618090.0],[1790625600,0.2492,0.2523,0.2358,0.2421,967196.0],[1790640000,0.2424,0.2487,0.2273,0.2317,1516170.0],[1790654400,0.2317,0.2371,0.2255,0.2336,1026150.0],[1790668800,0.2332,0.2419,0.2309,0.2333,1149560.0],[1790683200,0.2333,0.2626,0.229,0.2415,2711550.0],[1790697600,0.2416,0.2795,0.2407,0.278,1440600.0],[1790712000,0.2784,0.2988,0.2728,0.2795,1958280.0],[1790726400,0.2792,0.3123,0.2789,0.2906,1921870.0],[1790740800,0.291,0.2941,0.27,0.2764,1479920.0],[1790755200,0.2763,0.2809,0.2573,0.2783,1583320.0],[1790769600,0.2782,0.2972,0.2586,0.2654,2761950.0],[1790784000,0.2653,0.2777,0.2503,0.2507,2625090.0],[1790798400,0.2507,0.257,0.236,0.239,2965870.0],[1790812800,0.2389,0.2581,0.2248,0.25,3273450.0],[1790827200,0.2501,0.2563,0.2385,0.2391,1185690.0],[1790841600,0.2392,0.245,0.2345,0.239,1069510.0],[1790856000,0.2392,0.2438,0.2242,0.2277,2069180.0],[1790870400,0.2274,0.248,0.2211,0.2434,1836940.0],[1790884800,0.2438,0.255,0.2423,0.249,969526.0],[1790899200,0.2481,0.2587,0.244,0.2578,746412.0],[1790913600,0.258,0.2682,0.2458,0.2478,920499.0],[1790928000,0.2479,0.2566,0.2454,0.2527,440804.0],[1790942400,0.2521,0.2606,0.2393,0.2507,910526.0],[1790956800,0.2509,0.252,0.218,0.2214,1319620.0],[1790971200,0.221,0.2355,0.221,0.2298,668469.0],[1790985600,0.2293,0.236,0.2196,0.2332,548807.0],[1791000000,0.2334,0.2404,0.2309,0.2395,248054.0],[1791014400,0.2391,0.2399,0.2334,0.2348,320755.0],[1791028800,0.2347,0.2459,0.2312,0.2402,542782.0],[1791043200,0.2403,0.2408,0.2202,0.2223,588456.0],[1791057600,0.2225,0.2233,0.2024,0.2036,1543090.0],[1791072000,0.2038,0.21,0.1928,0.1935,2087130.0],[1791086400,0.1935,0.2039,0.1829,0.1958,2810390.0]],"mas":[{"name":"EMA 13","color":"#2962FF","width":1.0,"style":"step","visible":true,"data":[[1789545600,0.1799016],[1789560000,0.1782728],[1789574400,0.177091],[1789588800,0.1809208],[1789603200,0.1848464],[1789617600,0.1889827],[1789632000,0.1924566],[1789646400,0.1987056],[1789660800,0.2026763],[1789675200,0.2090654],[1789689600,0.2157132],[1789704000,0.2231399],[1789718400,0.2289199],[1789732800,0.2363313],[1789747200,0.2397983],[1789761600,0.2403842],[1789776000,0.2409722],[1789790400,0.2411619],[1789804800,0.2417959],[1789819200,0.2478108],[1789833600,0.2540378],[1789848000,0.2591895],[1789862400,0.2592196],[1789876800,0.2608168],[1789891200,0.2636716],[1789905600,0.2688613],[1789920000,0.2775669],[1789934400,0.284643],[1789948800,0.294894],[1789963200,0.3050949],[1789977600,0.3093099],[1789992000,0.3210942],[1790006400,0.3312807],[1790020800,0.3361121],[1790035200,0.3367103],[1790049600,0.3369231],[1790064000,0.3357627],[1790078400,0.3370537],[1790092800,0.3360175],[1790107200,0.3305864],[1790121600,0.3278884],[1790136000,0.33059],[1790150400,0.3299343],[1790164800,0.3264723],[1790179200,0.3241477],[1790193600,0.3236694],[1790208000,0.3289881],[1790222400,0.3348041],[1790236800,0.3367178],[1790251200,0.3425009],[1790265600,0.3461722],[1790280000,0.3462476],[1790294400,0.344598],[1790308800,0.3425697],[1790323200,0.340474],[1790337600,0.3361206],[1790352000,0.3331034],[1790366400,0.32996],[1790380800,0.3244372],[1790395200,0.3151747],[1790409600,0.3103926],[1790424000,0.3041937],[1790438400,0.3024374],[1790452800,0.2995464],[1790467200,0.2963969],[1790481600,0.2958688],[1790496000,0.2957304],[1790510400,0.2929689],[1790524800,0.2898733],[1790539200,0.2838771],[1790553600,0.2790375],[1790568000,0.2727893],[1790582400,0.2687337],[1790596800,0.264986],[1790611200,0.2626737],[1790625600,0.2597346],[1790640000,0.2557297],[1790654400,0.2525683],[1790668800,0.2498157],[1790683200,0.2486277],[1790697600,0.2528238],[1790712000,0.2566347],[1790726400,0.2614869],[1790740800,0.2636173],[1790755200,0.2657148],[1790769600,0.2656699],[1790784000,0.2635313],[1790798400,0.2600268],[1790812800,0.2585944],[1790827200,0.2558095],[1790841600,0.2534082],[1790856000,0.2497356],[1790870400,0.2488305],[1790884800,0.2488547],[1790899200,0.2501326],[1790913600,0.2497994],[1790928000,0.2502137],[1790942400,0.2502832],[1790956800,0.246157],[1790971200,0.2438203],[1790985600,0.2423031],[1791000000,0.2419027],[1791014400,0.240888],[1791028800,0.2407897],[1791043200,0.2381483],[1791057600,0.2332129],[1791072000,0.2275396],[1791086400,0.2230054]]},{"name":"EMA 25","color":"#00BCD4","width":1.0,"style":"step","visible":true,"data":[[1789718400,0.2133003],[1789732800,0.2184926],[1789747200,0.2217316],[1789761600,0.2234369],[1789776000,0.2250571],[1789790400,0.2263835],[1789804800,0.2278617],[1789819200,0.2321723],[1789833600,0.2367283],[1789848000,0.2408338],[1789862400,0.242262],[1789876800,0.2444264],[1789891200,0.2472244],[1789905600,0.2512841],[1789920000,0.2573238],[1789934400,0.2626912],[1789948800,0.2698995],[1789963200,0.2773149],[1789977600,0.2817215],[1789992000,0.2901891],[1790006400,0.2980514],[1790020800,0.303209],[1790035200,0.3060622],[1790049600,0.3085343],[1790064000,0.3100932],[1790078400,0.312763],[1790092800,0.3140735],[1790107200,0.3128371],[1790121600,0.3127496],[1790136000,0.3153689],[1790150400,0.3161867],[1790164800,0.31538],[1790179200,0.3149815],[1790193600,0.3154291],[1790208000,0.3189269],[1790222400,0.3228325],[1790236800,0.3247838],[1790251200,0.3288159],[1790265600,0.3318454],[1790280000,0.3329881],[1790294400,0.3331198],[1790308800,0.3329105],[1790323200,0.3325251],[1790337600,0.3307924],[1790352000,0.3295776],[1790366400,0.3281563],[1790380800,0.3253212],[1790395200,0.3202657],[1790409600,0.3172991],[1790424000,0.3134299],[1790438400,0.3117738],[1790452800,0.3094989],[1790467200,0.3070374],[1790481600,0.3059345],[1790496000,0.3050857],[1790510400,0.3028791],[1790524800,0.30045],[1790539200,0.2964077],[1790553600,0.2928378],[1790568000,0.2884119],[1790582400,0.2850263],[1790596800,0.2817551],[1790611200,0.2792201],[1790625600,0.2763647],[1790640000,0.2729289],[1790654400,0.2699036],[1790668800,0.267088],[1790683200,0.2651197],[1790697600,0.2661105],[1790712000,0.2671404],[1790726400,0.268945],[1790740800,0.2695185],[1790755200,0.270194],[1790769600,0.2698252],[1790784000,0.268354],[1790798400,0.266096],[1790812800,0.2648579],[1790827200,0.2628765],[1790841600,0.2610398],[1790856000,0.2584752],[1790870400,0.2573156],[1790884800,0.2566759],[1790899200,0.2567624],[1790913600,0.256073],[1790928000,0.2558135],[1790942400,0.2554202],[1790956800,0.2528032],[1790971200,0.2510338],[1790985600,0.2496619],[1791000000,0.2488803],[1791014400,0.2477972],[1791028800,0.2472128],[1791043200,0.2452964],[1791057600,0.242089],[1791072000,0.2383514],[1791086400,0.2350782]]},{"name":"EMA 32","color":"#F23645","width":1.0,"style":"dots","visible":true,"data":[[1789819200,0.225941],[1789833600,0.2299082],[1789848000,0.2335562],[1789862400,0.2351225],[1789876800,0.2372605],[1789891200,0.2398993],[1789905600,0.2435417],[1789920000,0.2487695],[1789934400,0.2535168],[1789948800,0.2597521],[1789963200,0.2662096],[1789977600,0.2703545],[1789992000,0.2777148],[1790006400,0.2846654],[1790020800,0.2895402],[1790035200,0.2926166],[1790049600,0.2953792],[1790064000,0.2974047],[1790078400,0.3002772],[1790092800,0.3020664],[1790107200,0.30182],[1790121600,0.3024188],[1790136000,0.3051085],[1790150400,0.3063747],[1790164800,0.3063338],[1790179200,0.3065681],[1790193600,0.3074307],[1790208000,0.3106712],[1790222400,0.3142487],[1790236800,0.3163064],[1790251200,0.3199969],[1790265600,0.3229183],[1790280000,0.3243596],[1790294400,0.3249863],[1790308800,0.3253144],[1790323200,0.3254711],[1790337600,0.3245335],[1790352000,0.3239557],[1790366400,0.3231765],[1790380800,0.3212446],[1790395200,0.3175086],[1790409600,0.3153384],[1790424000,0.3124088],[1790438400,0.3111658],[1790452800,0.3094103],[1790467200,0.3074764],[1790481600,0.3065808],[1790496000,0.3058729],[1790510400,0.3040867],[1790524800,0.3020996],[1790539200,0.2988148],[1790553600,0.2958563],[1790568000,0.2921862],[1790582400,0.2892901],[1790596800,0.2864543],[1790611200,0.2841722],[1790625600,0.2816224],[1790640000,0.2785968],[1790654400,0.2758697],[1790668800,0.2732897],[1790683200,0.2713631],[1790697600,0.2717653],[1790712000,0.2722341],[1790726400,0.2733472],[1790740800,0.2735322],[1790755200,0.2738212],[1790769600,0.2733108],[1790784000,0.2719404],[1790798400,0.269944],[1790812800,0.2687353],[1790827200,0.2669392],[1790841600,0.2652459],[1790856000,0.2629704],[1790870400,0.2617843],[1790884800,0.2610095],[1790899200,0.260815],[1790913600,0.2600262],[1790928000,0.2595822],[1790942400,0.2590439],[1790956800,0.2567625],[1790971200,0.2551284],[1790985600,0.2537994],[1791000000,0.2529327],[1791014400,0.2518338],[1791028800,0.2511287],[1791043200,0.2493815],[1791057600,0.2466069],[1791072000,0.2433883],[1791086400,0.2405041]]},{"name":"EMA 20","color":"#7E57C2","width":1.0,"style":"line","visible":true,"data":[[1789646400,0.1947777],[1789660800,0.1977989],[1789675200,0.2025228],[1789689600,0.2075778],[1789704000,0.2133037],[1789718400,0.2180938],[1789732800,0.2240659],[1789747200,0.2275453],[1789761600,0.2291029],[1789776000,0.2305693],[1789790400,0.2316865],[1789804800,0.2330116],[1789819200,0.2378581],[1789833600,0.2429573],[1789848000,0.2474471],[1789862400,0.2485855],[1789876800,0.2506631],[1789891200,0.2535332],[1789905600,0.2579586],[1789920000,0.2648007],[1789934400,0.2707339],[1789948800,0.2788926],[1789963200,0.2872171],[1789977600,0.2917298],[1789992000,0.3012603],[1790006400,0.3099403],[1790020800,0.3151936],[1790035200,0.3175847],[1790049600,0.319548],[1790064000,0.3204292],[1790078400,0.3227502],[1790092800,0.3234216],[1790107200,0.3210005],[1790121600,0.3201147],[1790136000,0.3226562],[1790150400,0.3229746],[1790164800,0.3213294],[1790179200,0.3202695],[1790193600,0.32032],[1790208000,0.3241848],[1790222400,0.3285196],[1790236800,0.3303939],[1790251200,0.3348516],[1790265600,0.3380277],[1790280000,0.3388536],[1790294400,0.338458],[1790308800,0.3376906],[1790323200,0.3367581],[1790337600,0.3342097],[1790352000,0.3323802],[1790366400,0.3303536],[1790380800,0.3266342],[1790395200,0.32025],[1790409600,0.3165785],[1790424000,0.3118568],[1790438400,0.3099561],[1790452800,0.3073127],[1790467200,0.3044734],[1790481600,0.3033521],[1790496000,0.3025471],[1790510400,0.3000569],[1790524800,0.2973182],[1790539200,0.2926117],[1790553600,0.2885534],[1790568000,0.2834817],[1790582400,0.2797596],[1790596800,0.2762111],[1790611200,0.2736005],[1790625600,0.2706005],[1790640000,0.2668956],[1790654400,0.2637246],[1790668800,0.2608271],[1790683200,0.2589864],[1790697600,0.2607972],[1790712000,0.2625784],[1790726400,0.2652471],[1790740800,0.2663093],[1790755200,0.2674513],[1790769600,0.2672559],[1790784000,0.2656792],[1790798400,0.2631383],[1790812800,0.261887],[1790827200,0.2597168],[1790841600,0.2577438],[1790856000,0.2548825],[1790870400,0.2537889],[1790884800,0.2533328],[1790899200,0.2537583],[1790913600,0.2531908],[1790928000,0.2531441],[1790942400,0.2529113],[1790956800,0.2499102],[1790971200,0.247995],[1790985600,0.2465859],[1791000000,0.2459111],[1791014400,0.2448529],[1791028800,0.2444097],[1791043200,0.2423041],[1791057600,0.238618],[1791072000,0.234321],[1791086400,0.2306523]]},{"name":"EMA 50","color":"#FF9800","width":1.0,"style":"line","visible":true,"data":[[1790078400,0.2761522],[1790092800,0.2782561],[1790107200,0.2790303],[1790121600,0.2803115],[1790136000,0.2829189],[1790150400,0.2846083],[1790164800,0.2854355],[1790179200,0.2864066],[1790193600,0.2877554],[1790208000,0.2906238],[1790222400,0.2937248],[1790236800,0.2958611],[1790251200,0.2990509],[1790265600,0.3017626],[1790280000,0.3035249],[1790294400,0.3047474],[1790308800,0.3057534],[1790323200,0.3066219],[1790337600,0.3067544],[1790352000,0.3070777],[1790366400,0.3072355],[1790380800,0.3066105],[1790395200,0.304767],[1790409600,0.3038624],[1790424000,0.3024168],[1790438400,0.3020044],[1790452800,0.3012277],[1790467200,0.3002972],[1790481600,0.2999993],[1790496000,0.2997993],[1790510400,0.2988817],[1790524800,0.2978001],[1790539200,0.2958432],[1790553600,0.2940454],[1790568000,0.2917417],[1790582400,0.2898852],[1790596800,0.2880269],[1790611200,0.2864886],[1790625600,0.2847479],[1790640000,0.2826676],[1790654400,0.2807434],[1790668800,0.2788828],[1790683200,0.2774168],[1790697600,0.2774397],[1790712000,0.2775205],[1790726400,0.2780334],[1790740800,0.2779694],[1790755200,0.2779823],[1790769600,0.2774889],[1790784000,0.2764384],[1790798400,0.2749702],[1790812800,0.273991],[1790827200,0.2726227],[1790841600,0.2713042],[1790856000,0.2695942],[1790870400,0.268567],[1790884800,0.2677996],[1790899200,0.2674075],[1790913600,0.2666386],[1790928000,0.266092],[1790942400,0.2654884],[1790956800,0.2637594],[1790971200,0.2624277],[1790985600,0.2612815],[1791000000,0.2604273],[1791014400,0.2594223],[1791028800,0.2586685],[1791043200,0.2572423],[1791057600,0.2551387],[1791072000,0.2527215],[1791086400,0.2504892]]}],"vma":[[1789430400,146741.0],[1789444800,187321.0],[1789459200,192059.0],[1789473600,255586.0],[1789488000,244302.0],[1789502400,242425.0],[1789516800,254641.0],[1789531200,245243.0],[1789545600,235902.0],[1789560000,232685.0],[1789574400,227911.0],[1789588800,240464.0],[1789603200,238600.0],[1789617600,244290.0],[1789632000,247752.0],[1789646400,258879.0],[1789660800,293263.0],[1789675200,297778.0],[1789689600,313374.0],[1789704000,329956.0],[1789718400,387150.0],[1789732800,395188.0],[1789747200,404015.0],[1789761600,395301.0],[1789776000,424194.0],[1789790400,453922.0],[1789804800,452150.0],[1789819200,471402.0],[1789833600,489973.0],[1789848000,516824.0],[1789862400,538194.0],[1789876800,545098.0],[1789891200,558766.0],[1789905600,583638.0],[1789920000,644952.0],[1789934400,642904.0],[1789948800,647509.0],[1789963200,683323.0],[1789977600,697428.0],[1789992000,795940.0],[1790006400,763968.0],[1790020800,823258.0],[1790035200,868487.0],[1790049600,935682.0],[1790064000,946104.0],[1790078400,954942.0],[1790092800,1020070.0],[1790107200,1112570.0],[1790121600,1172100.0],[1790136000,1229010.0],[1790150400,1310260.0],[1790164800,1380110.0],[1790179200,1392430.0],[1790193600,1375830.0],[1790208000,1462800.0],[1790222400,1491010.0],[1790236800,1490100.0],[1790251200,1497600.0],[1790265600,1490140.0],[1790280000,1404540.0],[1790294400,1389250.0],[1790308800,1325850.0],[1790323200,1338690.0],[1790337600,1299620.0],[1790352000,1339350.0],[1790366400,1334140.0],[1790380800,1315360.0],[1790395200,1331020.0],[1790409600,1301160.0],[1790424000,1329200.0],[1790438400,1281830.0],[1790452800,1201350.0],[1790467200,1213050.0],[1790481600,1213220.0],[1790496000,1109160.0],[1790510400,1136270.0],[1790524800,1161960.0],[1790539200,1168020.0],[1790553600,1227270.0],[1790568000,1310650.0],[1790582400,1373400.0],[1790596800,1434290.0],[1790611200,1437270.0],[1790625600,1431210.0],[1790640000,1420270.0],[1790654400,1426950.0],[1790668800,1421000.0],[1790683200,1422080.0],[1790697600,1439680.0],[1790712000,1416250.0],[1790726400,1449040.0],[1790740800,1505320.0],[1790755200,1536360.0],[1790769600,1648970.0],[1790784000,1720490.0],[1790798400,1792000.0],[1790812800,1890910.0],[1790827200,1889040.0],[1790841600,1854690.0],[1790856000,1842680.0],[1790870400,1842350.0],[1790884800,1806490.0],[1790899200,1762910.0],[1790913600,1760580.0],[1790928000,1706810.0],[1790942400,1701030.0],[1790956800,1709530.0],[1790971200,1607380.0],[1790985600,1562790.0],[1791000000,1477280.0],[1791014400,1397220.0],[1791028800,1350360.0],[1791043200,1300620.0],[1791057600,1239680.0],[1791072000,1212780.0],[1791086400,1205010.0]],"zones":[{"low":0.187,"high":0.19,"color":"#2e7d32","alpha":0.16,"label":"S2 0.1870–0.1900 · plus bas du listing 14/09 — tenu en clôture","short":"S2 0.1870–0.1900","kind":"sr"},{"low":0.1625,"high":0.1656,"color":"#2e7d32","alpha":0.16,"label":"S3 0.1625–0.1656 · creux 15/09","short":"S3 0.1625–0.1656","kind":"sr"},{"low":0.1455,"high":0.1521,"color":"#2e7d32","alpha":0.16,"label":"S4 0.1455–0.1521 · plus bas 16/09","short":"S4 0.1455–0.1521","kind":"sr"},{"low":0.1996,"high":0.2038,"color":"#c62828","alpha":0.12,"label":"R0 0.1996–0.2038 · ancien S1 cassé cette nuit, rejet à 0.2039","short":"R0 0.1996–0.2038","kind":"sr"},{"low":0.2177,"high":0.2255,"color":"#c62828","alpha":0.12,"label":"R1 0.2177–0.2255 · support cassé 03/10 (+ EMA200 4h MEXC ~0.214)","short":"R1 0.2177–0.2255","kind":"sr"},{"low":0.229,"high":0.2445,"color":"#c62828","alpha":0.12,"label":"R2 0.2290–0.2445 · congestion + EMA20/25 4h","short":"R2 0.2290–0.2445","kind":"sr"},{"low":0.245,"high":0.259,"color":"#c62828","alpha":0.12,"label":"R3 0.2450–0.2590 · POC volume + EMA50 4h","short":"R3 0.2450–0.2590","kind":"sr"},{"low":0.2606,"high":0.27,"color":"#c62828","alpha":0.12,"label":"R4 0.2606–0.2700 · sommet 02/10","short":"R4 0.2606–0.2700","kind":"sr"}],"bands":[{"low":0.187,"high":0.19,"color":"#1565c0","alpha":0.2,"kind":"entry","label":"Zone d'achat S2 0.1870–0.1900","short":"Achat"}],"lines":[{"price":0.188,"color":"#1565c0","style":"solid","width":2,"title":"Entrée 0.1880"},{"price":0.185,"color":"#d32f2f","style":"dashed","width":2,"title":"Stop clôture 4h < 0.1850"},{"price":0.1801,"color":"#b71c1c","style":"solid","width":2,"title":"Stop dur 0.1801"},{"price":0.2142812,"color":"#434651","style":"dotted","width":1,"title":"EMA200 4h MEXC 0.2143"},{"price":0.2157,"color":"#2e7d32","style":"dashed","width":2,"title":"T1 0.2157 (+14.7 %, R:R 3.5)"},{"price":0.2339,"color":"#2e7d32","style":"dashed","width":2,"title":"T2 0.2339 (+24.4 %, R:R 5.8)"},{"price":0.243,"color":"#2e7d32","style":"dashed","width":2,"title":"T3 0.2430 (+29.3 %, R:R 7.0)"}],"autoscale":[0.1801,0.243],"initial":90,"minMove":0.0001,"expires":"2026-10-11T10:01:59.470667+02:00","live":[1791100800,0.1958,0.1967,0.1956,0.1967,4426.0],"liveAt":"2026-10-04T10:01:59+02:00"}</script>
+<script src="../assets/lightweight-charts-5.2.1.standalone.production.js"></script>
+<script>
+
+function initChart(){
+"use strict";
+var D=JSON.parse(document.getElementById('chart-data').textContent);
+function $(id){return document.getElementById(id);}
+function hideChart(){['wrap','chips','legend'].forEach(function(i){$(i).style.display='none';});
+  document.querySelector('.toolbar').style.display='none';document.querySelector('.hint').style.display='none';}
+if(D.expires && Date.now()>Date.parse(D.expires)){hideChart();$('expired').style.display='block';return;}
+if(!window.LightweightCharts){hideChart();$('err').style.display='block';return;}
+var LC=window.LightweightCharts;
+function fmt(p){
+  if(p===null||p===undefined||!isFinite(p))return '?';
+  if(p>=1000)return Math.round(p).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+  if(p>=100)return p.toFixed(2);
+  if(p>=1)return String(Number(p.toPrecision(4)));
+  if(p<=0)return String(p);
+  var dec=Math.max(4,-Math.floor(Math.log10(p))+3);return p.toFixed(dec);
+}
+function fmtVol(v){var a=Math.abs(v);if(a>=1e9)return (v/1e9).toFixed(2)+' G';if(a>=1e6)return (v/1e6).toFixed(2)+' M';if(a>=1e3)return (v/1e3).toFixed(1)+' k';return v.toFixed(0);}
+function rgba(hex,a){var n=parseInt(hex.replace('#',''),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+var TZ='Europe/Paris';
+function F(o){o.timeZone=TZ;return new Intl.DateTimeFormat('fr-FR',o);}
+var fDate=F({day:'2-digit',month:'2-digit',year:'2-digit'}),fDT=F({day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+var fDay=F({day:'numeric'}),fMon=F({month:'short'}),fYear=F({year:'numeric'}),fHM=F({hour:'2-digit',minute:'2-digit'});
+var intraday=D.tf!=='1d'&&D.tf!=='1w';
+function tlabel(t){return (intraday?fDT:fDate).format(new Date(t*1000));}
+var priceFormat={type:'custom',minMove:D.minMove,formatter:fmt};
+var FONT='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+var el=$('chart');
+var chart=LC.createChart(el,{
+  autoSize:true,
+  layout:{background:{type:'solid',color:'#ffffff'},textColor:'#131722',fontSize:11,fontFamily:FONT,
+          panes:{separatorColor:'#d1d4dc',separatorHoverColor:'rgba(41,98,255,0.15)',enableResize:true}},
+  grid:{vertLines:{color:'#e6e6e6',style:LC.LineStyle.Dotted},horzLines:{color:'#e6e6e6',style:LC.LineStyle.Dotted}},
+  rightPriceScale:{borderColor:'#d1d4dc',scaleMargins:{top:0.04,bottom:0.04},entireTextOnly:true},
+  timeScale:{borderColor:'#d1d4dc',timeVisible:intraday,secondsVisible:false,rightOffset:3,minBarSpacing:0.5,
+             tickMarkFormatter:function(t,type){var d=new Date(t*1000);
+               if(type===0)return fYear.format(d);if(type===1)return fMon.format(d).replace('.','');
+               if(type===2)return fDay.format(d);return fHM.format(d);}},
+  crosshair:{mode:LC.CrosshairMode.Normal,vertLine:{color:'#9598a1',labelBackgroundColor:'#434651'},
+             horzLine:{color:'#9598a1',labelBackgroundColor:'#434651'}},
+  localization:{locale:'fr-FR',timeFormatter:function(t){return tlabel(t);}},
+  handleScale:{axisPressedMouseMove:{time:true,price:true},pinch:true,mouseWheel:true},
+  handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true}
+});
+// --- bougies (pane 0) ---
+var auto=D.autoscale.slice();
+D.bands.forEach(function(b){auto.push(b.low,b.high);});
+var candle=chart.addSeries(LC.CandlestickSeries,{upColor:'#FFFFFF',downColor:'#434651',borderUpColor:'#434651',borderDownColor:'#000000',
+  wickUpColor:'#434651',wickDownColor:'#2A2E39',priceFormat:priceFormat,priceLineVisible:false,lastValueVisible:true,
+  autoscaleInfoProvider:function(orig){var r=orig();if(!r||!r.priceRange)return r;
+    var lo=r.priceRange.minValue,hi=r.priceRange.maxValue;
+    auto.forEach(function(p){if(p>0){lo=Math.min(lo,p);hi=Math.max(hi,p);}});
+    r.priceRange.minValue=lo*0.985;r.priceRange.maxValue=hi*1.015;return r;}},0);
+// bougie en cours (D.live) : affichage seul, estompée (~35 %), jamais utilisée par les MA / niveaux
+var LV=D.live,FADE=0.35,bars=D.candles.slice();if(LV)bars.push(LV);
+var liveAt=D.liveAt?new Date(D.liveAt):null;
+function liveStyle(c){var up=c[4]>=c[1];return up?{color:'rgba(255,255,255,'+FADE+')',borderColor:rgba('#434651',FADE),wickColor:rgba('#434651',FADE)}
+  :{color:rgba('#434651',FADE),borderColor:rgba('#000000',FADE),wickColor:rgba('#2A2E39',FADE)};}
+if(LV)candle.applyOptions({lastValueVisible:false});
+candle.setData(bars.map(function(c){var o={time:c[0],open:c[1],high:c[2],low:c[3],close:c[4]};
+  if(LV&&c===LV){var st=liveStyle(c);for(var k in st)o[k]=st[k];}return o;}));
+// --- moyennes mobiles (exclues de l'autoscale, comme l'ylim du PNG) ---
+var maSeries=[];
+D.mas.forEach(function(m){
+  var dots=m.style==='dots';
+  var s=chart.addSeries(LC.LineSeries,{color:m.color,lineWidth:Math.min(4,Math.max(1,Math.round(m.width))),
+    lineType:m.style==='step'?LC.LineType.WithSteps:LC.LineType.Simple,lineVisible:!dots,
+    pointMarkersVisible:dots,pointMarkersRadius:1.5,visible:m.visible,priceFormat:priceFormat,
+    priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false,
+    autoscaleInfoProvider:function(){return null;}},0);
+  s.setData(m.data.map(function(p){return {time:p[0],value:p[1]};}));
+  maSeries.push({m:m,s:s,map:new Map(m.data.map(function(p){return [p[0],p[1]];}))});
+});
+// --- volume (pane 1, en bas) ---
+var vol=chart.addSeries(LC.HistogramSeries,{priceFormat:{type:'volume'},lastValueVisible:false,priceLineVisible:false},1);
+vol.setData(bars.map(function(c){var col=c[4]>=c[1]?'#B2B5BE':'#434651';return {time:c[0],value:c[5],color:(LV&&c===LV)?rgba(col,FADE):col};}));
+var vma=chart.addSeries(LC.LineSeries,{color:'#555555',lineWidth:1,lineStyle:LC.LineStyle.Dashed,priceFormat:{type:'volume'},
+  lastValueVisible:false,priceLineVisible:false,crosshairMarkerVisible:false},1);
+vma.setData(D.vma.map(function(p){return {time:p[0],value:p[1]};}));
+vol.priceScale().applyOptions({scaleMargins:{top:0.12,bottom:0}});
+var panes=chart.panes();panes[0].setStretchFactor(4);panes[1].setStretchFactor(1.1);
+// --- lignes de prix (stop / invalidation / objectif / entrée / dernière clôture) ---
+var LS={solid:LC.LineStyle.Solid,dashed:LC.LineStyle.Dashed,dotted:LC.LineStyle.Dotted};
+// Titres des lignes dessinés À GAUCHE (avec les étiquettes S/R, empilés sans chevauchement) : à droite, seule
+// la petite étiquette de prix colorée reste sur l'axe, pour ne pas masquer l'échelle ni les dernières bougies.
+var lineLabels=[];
+D.lines.forEach(function(l){candle.createPriceLine({price:l.price,color:l.color,lineWidth:l.width||1,
+  lineStyle:LS[l.style]||LC.LineStyle.Solid,axisLabelVisible:true,title:''});
+  if(l.title)lineLabels.push({price:l.price,color:l.color,label:l.title,kind:'line'});});
+if(LV){candle.createPriceLine({price:LV[4],color:'#ef6c00',lineWidth:1,lineStyle:LC.LineStyle.Dotted,axisLabelVisible:true,title:''});
+  lineLabels.push({price:LV[4],color:'#ef6c00',label:'Prix actuel '+fmt(LV[4])+' (bougie en cours)',kind:'line'});}
+// --- primitive : bandes S/R + zones du plan (rectangles pleins) avec étiquettes ---
+function BandsPrimitive(zones,bands,lines){this.items=zones.concat(bands);this.lines=lines||[];this.series=null;this.show=true;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'bottom';},renderer:function(){return {draw:function(){},drawBackground:function(t){self.drawFill(t);}};}},
+              {zOrder:function(){return 'top';},renderer:function(){return {draw:function(t){self.drawLabels(t);}};}}];}
+BandsPrimitive.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+BandsPrimitive.prototype.detached=function(){this.series=null;};
+BandsPrimitive.prototype.updateAllViews=function(){};
+BandsPrimitive.prototype.paneViews=function(){return this.views;};
+BandsPrimitive.prototype.drawFill=function(target){var s=this.series,items=this.items;if(!s)return;
+  target.useBitmapCoordinateSpace(function(sc){var ctx=sc.context,vr=sc.verticalPixelRatio,W=sc.bitmapSize.width,px=Math.max(1,Math.round(vr));
+    items.forEach(function(b){var y1=s.priceToCoordinate(b.high),y2=s.priceToCoordinate(b.low);if(y1===null||y2===null)return;
+      var top=Math.round(Math.min(y1,y2)*vr),h=Math.max(Math.round(Math.abs(y2-y1)*vr),2*px);
+      ctx.fillStyle=rgba(b.color,b.alpha);ctx.fillRect(0,top,W,h);
+      if(b.kind!=='sr'){ctx.fillStyle=rgba(b.color,0.6);ctx.fillRect(0,top,W,px);ctx.fillRect(0,top+h-px,W,px);}
+    });});};
+BandsPrimitive.prototype.drawLabels=function(target){var s=this.series,items=this.items,lines=this.lines;if(!s||!this.show)return;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width,H=sc.mediaSize.height,narrow=W<520;
+    var fs=narrow?10:11,lh=fs+4,labs=[];
+    items.forEach(function(b){var y1=s.priceToCoordinate(b.high),y2=s.priceToCoordinate(b.low);if(y1===null||y2===null)return;
+      var y=(y1+y2)/2;if(y<-lh||y>H+lh)return;labs.push({y:y,b:b});});
+    lines.forEach(function(b){var y=s.priceToCoordinate(b.price);if(y===null||y<-lh||y>H+lh)return;labs.push({y:y,b:b});});
+    labs.sort(function(a,b){return a.y-b.y;});
+    for(var i=1;i<labs.length;i++){if(labs[i].y-labs[i-1].y<lh)labs[i].y=labs[i-1].y+lh;}
+    for(var j=labs.length-1;j>=0;j--){var mx=(j===labs.length-1?H-lh/2:labs[j+1].y-lh);if(labs[j].y>mx)labs[j].y=mx;}
+    labs.forEach(function(L){var b=L.b,txt=(narrow?b.short:b.label)||b.label,bold=b.kind!=='sr';
+      if(b.kind==='line'){ctx.font='600 '+fs+'px '+FONT;var lw=ctx.measureText(txt).width+8;
+        ctx.fillStyle=b.color;if(ctx.roundRect){ctx.beginPath();ctx.roundRect(2,L.y-lh/2,lw,lh,3);ctx.fill();}else ctx.fillRect(2,L.y-lh/2,lw,lh);
+        ctx.fillStyle='#fff';ctx.textBaseline='middle';ctx.fillText(txt,6,L.y+0.5);return;}
+      ctx.font=(bold?'700 ':'500 ')+fs+'px '+FONT;
+      var w=ctx.measureText(txt).width,x=5;
+      ctx.fillStyle='rgba(255,255,255,0.8)';ctx.fillRect(x-3,L.y-lh/2,w+6,lh);
+      ctx.fillStyle=b.kind==='entry'?'#0d47a1':b.color;ctx.textBaseline='middle';ctx.fillText(txt,x,L.y+0.5);});
+  });};
+var bandsPrim=new BandsPrimitive(D.zones,D.bands,lineLabels);candle.attachPrimitive(bandsPrim);
+// étiquettes de gauche (S/R, zones, titres des lignes) : bouton « Labels » ; « Tout » les masque, « Recentrer » les rétablit
+var bLab=$('bLab');
+function setLabels(v){bandsPrim.show=v;bLab.classList.toggle('on',v);if(bandsPrim.req)bandsPrim.req();}
+bLab.onclick=function(){setLabels(!bandsPrim.show);};
+// --- vue initiale : même fenêtre que le PNG (réduite sur petit écran pour garder des bougies lisibles) ---
+var n=bars.length;
+function initialBars(){var w=el.clientWidth||400;return Math.min(D.initial,n,Math.max(60,Math.floor((w-60)/3)));}
+function fit(){chart.timeScale().setVisibleLogicalRange({from:Math.max(0,n-initialBars())-0.5,to:n-1+3});
+  candle.priceScale().applyOptions({autoScale:true});vol.priceScale().applyOptions({autoScale:true});}
+fit();
+$('bFit').onclick=function(){fit();setLabels(true);};
+$('bAll').onclick=function(){chart.timeScale().fitContent();candle.priceScale().applyOptions({autoScale:true});setLabels(false);};
+var isLog=!!D.log,bLog=$('bLog');
+function setLog(v){isLog=v;candle.priceScale().applyOptions({mode:v?LC.PriceScaleMode.Logarithmic:LC.PriceScaleMode.Normal,autoScale:true});
+  bLog.textContent=v?'Log':'Linéaire';bLog.title='Échelle de prix : '+(v?'logarithmique':'linéaire')+' (toucher pour changer)';bLog.classList.toggle('on',v);}
+setLog(isLog);bLog.onclick=function(){setLog(!isLog);};
+// --- pastilles MA (toucher = afficher / masquer) ---
+var chips=$('chips');
+maSeries.forEach(function(o){var c=document.createElement('span');c.className='chip'+(o.m.visible?'':' off');
+  var i=document.createElement('i');i.style.borderTopColor=o.m.color;i.style.borderTopStyle=o.m.style==='dots'?'dotted':'solid';
+  if(o.m.width>=2)i.style.borderTopWidth='3px';c.appendChild(i);c.appendChild(document.createTextNode(o.m.name));
+  c.onclick=function(){o.m.visible=!o.m.visible;o.s.applyOptions({visible:o.m.visible});c.classList.toggle('off',!o.m.visible);legend(lastT);};
+  chips.appendChild(c);});
+// --- lecture au réticule (OHLC, variation, volume, MA) ---
+var leg=$('legend'),byT=new Map(bars.map(function(c){return [c[0],c];})),lastT=null;
+function legend(t){lastT=t;var c=(t!==null&&byT.get(t))||bars[n-1];t=c[0];
+  var ch=(c[4]/c[1]-1)*100,col=ch>=0?'#2e7d32':'#c62828';
+  var h='<b>'+tlabel(t)+'</b> &nbsp;O <b>'+fmt(c[1])+'</b> H <b>'+fmt(c[2])+'</b> B <b>'+fmt(c[3])+'</b> C <b>'+fmt(c[4])+
+    '</b> <span style="color:'+col+'">'+(ch>=0?'+':'')+ch.toFixed(2)+' %</span> · Vol '+fmtVol(c[5]);
+  if(LV&&c===LV)h+=' <span style="color:#ef6c00">· bougie en cours'+(liveAt?' (au '+fHM.format(liveAt)+')':'')+'</span>';
+  var mm=[];maSeries.forEach(function(o){if(!o.m.visible)return;var v=o.map.get(t);if(v!==undefined)mm.push('<span style="color:'+o.m.color+'">'+o.m.name+' '+fmt(v)+'</span>');});
+  if(mm.length)h+='<br>'+mm.join(' · ');leg.innerHTML=h;}
+legend(null);
+chart.subscribeCrosshairMove(function(p){legend(p&&p.time!==undefined?p.time:null);});
+// --- outil « Mesure » (règle façon TradingView) : A puis B, rectangle + variation en % ---
+// Points en coordonnées logiques (index de bougie) + prix : la mesure reste alignée au zoom / déplacement.
+var TFS={'4h':14400,'1d':86400,'1w':604800}[D.tf]||86400;
+var M={on:false,a:null,b:null,hover:null},bMes=$('bMes'),mbar=$('mbar'),mtxt=$('mtxt'),mclr=$('mclr');
+var tsc=chart.timeScale();
+function MeasurePrimitive(){this.series=null;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'top';},renderer:function(){return {draw:function(t){self.draw(t);}};}}];}
+MeasurePrimitive.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+MeasurePrimitive.prototype.detached=function(){this.series=null;this.req=null;};
+MeasurePrimitive.prototype.updateAllViews=function(){};
+MeasurePrimitive.prototype.paneViews=function(){return this.views;};
+MeasurePrimitive.prototype.update=function(){if(this.req)this.req();};
+function mStats(A,B){var nb=Math.abs(Math.round(B.l)-Math.round(A.l)),sec=nb*TFS,dur;
+  if(TFS<86400){var hh=sec/3600;dur=hh+' h'+(hh>=24?' ('+(Math.round(hh/24*10)/10).toString().replace('.',',')+' j)':'');}
+  else{dur=(Math.round(sec/86400*10)/10).toString().replace('.',',')+' j';}
+  var d=B.p-A.p,pct=(B.p/A.p-1)*100;
+  return {pct:pct,abs:d,nb:nb,dur:dur,up:B.p>=A.p,
+    l1:(pct>=0?'+':'−')+Math.abs(pct).toFixed(2).replace('.',',')+' %',
+    l2:(d>=0?'+':'−')+fmt(Math.abs(d))+' · '+nb+' bougie'+(nb>1?'s':'')+' · '+dur};}
+MeasurePrimitive.prototype.draw=function(target){var s=this.series;if(!s||!M.a)return;
+  var A=M.a,B=M.b||M.hover;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width,H=sc.mediaSize.height;
+    var xa=tsc.logicalToCoordinate(A.l),ya=s.priceToCoordinate(A.p);if(xa===null||ya===null)return;
+    if(!B){ctx.fillStyle='#2962ff';ctx.beginPath();ctx.arc(xa,ya,4,0,2*Math.PI);ctx.fill();return;}
+    var xb=tsc.logicalToCoordinate(B.l),yb=s.priceToCoordinate(B.p);if(xb===null||yb===null)return;
+    var st=mStats(A,B),c=st.up?'#2e7d32':'#c62828',x0=Math.min(xa,xb),x1=Math.max(xa,xb),y0=Math.min(ya,yb),y1=Math.max(ya,yb);
+    ctx.fillStyle=rgba(c,0.16);ctx.fillRect(x0,y0,Math.max(x1-x0,1),Math.max(y1-y0,1));
+    ctx.strokeStyle=rgba(c,0.75);ctx.lineWidth=1;ctx.strokeRect(Math.round(x0)+0.5,Math.round(y0)+0.5,Math.max(Math.round(x1-x0),1),Math.max(Math.round(y1-y0),1));
+    // flèches : verticale (prix) et horizontale (temps) au centre
+    var xm=(x0+x1)/2,ym=(y0+y1)/2;ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.beginPath();
+    ctx.moveTo(xm,ya);ctx.lineTo(xm,yb);ctx.moveTo(xa,ym);ctx.lineTo(xb,ym);ctx.stroke();
+    function head(x,y,dx,dy){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-dx*7-dy*4,y-dy*7+dx*4);ctx.lineTo(x-dx*7+dy*4,y-dy*7-dx*4);ctx.closePath();ctx.fill();}
+    ctx.fillStyle=c;if(Math.abs(yb-ya)>14)head(xm,yb,0,yb>ya?1:-1);if(Math.abs(xb-xa)>14)head(xb,ym,xb>xa?1:-1,0);
+    [[xa,ya],[xb,yb]].forEach(function(q){ctx.beginPath();ctx.arc(q[0],q[1],3.5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.stroke();});
+    // étiquette : % en gros, puis variation absolue · bougies · durée
+    var big=W<520?17:19,sm=W<520?11:11.5,pad=7;
+    ctx.font='700 '+big+'px '+FONT;var w1=ctx.measureText(st.l1).width;ctx.font='500 '+sm+'px '+FONT;var w2=ctx.measureText(st.l2).width;
+    var bw=Math.max(w1,w2)+2*pad,bh=big+sm+2*pad+4,bx=Math.min(Math.max(xm-bw/2,3),W-bw-3),by;
+    if(st.up){by=y0-bh-6;if(by<3)by=Math.min(y1+6,H-bh-3);}else{by=y1+6;if(by+bh>H-3)by=Math.max(y0-bh-6,3);}
+    ctx.fillStyle=rgba(c,0.92);if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,by,bw,bh,5);ctx.fill();}else ctx.fillRect(bx,by,bw,bh);
+    ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='top';ctx.font='700 '+big+'px '+FONT;ctx.fillText(st.l1,bx+bw/2,by+pad);
+    ctx.font='500 '+sm+'px '+FONT;ctx.fillText(st.l2,bx+bw/2,by+pad+big+4);ctx.textAlign='left';
+  });};
+var mp=new MeasurePrimitive();candle.attachPrimitive(mp);
+function mUI(){bMes.classList.toggle('on',M.on);mbar.style.display=(M.on||M.a)?'flex':'none';mclr.style.display=M.a?'inline-block':'none';
+  mtxt.style.display=M.on?'inline-block':'none';
+  mtxt.textContent=!M.a?'Mesure : toucher le point A':(!M.b?'Toucher le point B':'Toucher pour une nouvelle mesure');
+  window.__measure=M.a&&M.b?Object.assign(mStats(M.a,M.b),{a:M.a,b:M.b}):null;}
+window.__range=function(){return tsc.getVisibleLogicalRange();};
+// point touché -> {l: index de bougie, p: prix}, aimanté au plus haut / bas / clôture / ouverture à < 8 px
+// (x, y) en px relatifs au graphique ; seul le pane des prix (pane 0, en haut) est accepté
+function mPoint(x,y){if(x<0||y<0||x>tsc.width()||y>chart.panes()[0].getHeight())return null;
+  var lg=tsc.coordinateToLogical(x);if(lg===null)return null;
+  var li=Math.round(lg),pr=candle.coordinateToPrice(y);if(pr===null||!(pr>0))return null;
+  var c=bars[li];if(c){var best=8,bp=null;[c[2],c[3],c[4],c[1]].forEach(function(v){var yy=candle.priceToCoordinate(v);
+    if(yy!==null&&Math.abs(yy-y)<best){best=Math.abs(yy-y);bp=v;}});if(bp!==null)pr=bp;}
+  return {l:li,p:pr};}
+function panOpts(){return {handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true},
+  handleScale:{axisPressedMouseMove:{time:true,price:true},axisDoubleClickReset:{time:true,price:true},pinch:true,mouseWheel:true}};}
+function setMeasure(v){M.on=v;M.hover=null;
+  chart.applyOptions(v?{handleScroll:false,handleScale:false}:panOpts());
+  if(v&&M.a&&!M.b)M.a=null;mUI();mp.update();}
+bMes.onclick=function(){setMeasure(!M.on);};
+function mClear(e){if(e){e.stopPropagation();e.preventDefault();}M.a=M.b=M.hover=null;down=null;mUI();mp.update();}
+mclr.onclick=mClear;mclr.addEventListener('pointerup',mClear);mclr.addEventListener('pointerdown',function(e){e.stopPropagation();});
+// touchers / clics lus directement (pointer events, souris + tactile) : indépendant des gestes de la librairie,
+// deux touchers rapides ne sont pas pris pour un double-clic
+var down=null;
+function rel(e){var r=el.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+el.addEventListener('pointerdown',function(e){if(!M.on||(e.pointerType==='mouse'&&e.button!==0))return;
+  down={id:e.pointerId,p:rel(e),t:Date.now()};},true);
+el.addEventListener('pointerup',function(e){if(!M.on||!down||down.id!==e.pointerId)return;var p=rel(e),d=down;down=null;
+  if(Math.abs(p.x-d.p.x)>12||Math.abs(p.y-d.p.y)>12||Date.now()-d.t>800)return;
+  var q=mPoint(p.x,p.y);if(!q)return;if(!M.a||M.b){M.a=q;M.b=null;M.hover=null;}else{M.b=q;M.hover=null;}mUI();mp.update();},true);
+el.addEventListener('pointercancel',function(){down=null;},true);
+el.addEventListener('pointermove',function(e){if(!M.on||!M.a||M.b||e.pointerType!=='mouse')return;var p=rel(e);
+  M.hover=mPoint(p.x,p.y);mp.update();},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(M.a||M.on)){M.a=M.b=M.hover=null;if(M.on)setMeasure(false);else{mUI();mp.update();}}});
+mUI();
+}
+
+(function(){if(window.LightweightCharts){initChart();return;}
+var s=document.createElement('script');s.src='https://unpkg.com/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';s.integrity='sha384-KkYqTZlM13Zya6fVUF3IGCBOQ1ehFeJVVgxaVvD/0MebineF9EI8Jkd3NnWNChqN';s.crossOrigin='anonymous';
+s.onload=initChart;s.onerror=initChart;document.head.appendChild(s);})();
+</script>
+</body>
+</html>
