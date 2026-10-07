@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="googlebot" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>MON-USDC 1D</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:#131722;font:14px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+header{padding:8px 10px 6px;border-bottom:1px solid #e0e3eb}
+h1{margin:0;font-size:18px;font-weight:700;display:flex;flex-wrap:wrap;align-items:center;gap:4px 9px}
+h1 .tf{font-weight:600;color:#434651}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.3px;padding:2px 7px;border-radius:10px;background:#e3f2fd;color:#0d47a1;border:1px solid #bbdefb}
+.verdict{margin:3px 0 4px;font-weight:600;color:#2a2e39;font-size:13.5px}
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:2px 10px;margin:2px 0}
+.f{display:flex;flex-direction:column;padding:2px 0}
+.k{font-size:10px;color:#787b86;text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v{font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.reasons,.context{margin:5px 0 2px;background:#fafafa;border:1px solid #e0e3eb;border-radius:6px;padding:2px 9px}
+.reasons summary,.context summary{cursor:pointer;font-weight:600;color:#2a2e39;padding:4px 0;font-size:13px}
+.reasons ul,.context ul{margin:2px 0 6px;padding-left:0;list-style:none}
+.reasons li{margin:3px 0;font-size:13px;padding-left:18px;list-style:disc;list-style-position:inside}
+.context li{margin:6px 0;padding:6px 8px;border-radius:5px;background:#fff;border:1px solid #e8eaef;font-size:13px}
+.context .tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;
+  padding:1px 6px;border-radius:8px;margin-right:6px;vertical-align:middle}
+.context .when{font-size:11px;color:#787b86;font-variant-numeric:tabular-nums}
+.context .ttl{font-weight:600;margin:3px 0 1px;color:#131722}
+.context .detail{font-size:12.5px;color:#434651;line-height:1.35}
+.context .event .tag,.context .catalyst .tag{background:#e3f2fd;color:#0d47a1}
+.context .narrative .tag{background:#f3e5f5;color:#4a148c}
+.context .risk .tag{background:#ffebee;color:#b71c1c}
+.context .note .tag{background:#eceff1;color:#37474f}
+.context .position .tag{background:#e8eaf6;color:#1a237e}
+.meta{font-size:10.5px;color:#787b86;margin-top:3px}
+.live{margin:4px 0 2px;font-size:12.5px;color:#2a2e39;font-variant-numeric:tabular-nums}
+.live i{display:inline-block;width:16px;height:0;border-top:2px dotted #ef6c00;vertical-align:middle;margin-right:6px}
+.live .up{color:#2e7d32;font-weight:600}.live .dn{color:#c62828;font-weight:600}.live .lk{color:#9598a1;font-size:10.5px}
+.toolbar{display:flex;gap:6px;align-items:center;padding:6px 10px;border-bottom:1px solid #e0e3eb;background:#fbfbfc}
+.btn{appearance:none;border:1px solid #c9ccd4;background:#fff;color:#131722;border-radius:6px;padding:6px 9px;font:600 12.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;text-decoration:none;cursor:pointer;min-height:32px;display:inline-flex;align-items:center;white-space:nowrap}
+.btn.on{background:#131722;color:#fff;border-color:#131722}
+.btn.tv{margin-left:auto;background:#2962ff;color:#fff;border-color:#2962ff}
+.btn.ms.on{background:#2962ff;border-color:#2962ff}
+.tv .sm{display:none}
+@media (max-width:440px){.toolbar{gap:5px;padding:6px 8px}.btn{padding:6px 8px}.tv .lg{display:none}.tv .sm{display:inline}}
+#mbar{position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:5;display:none;align-items:center;gap:6px;pointer-events:none}
+#mtxt{font:600 11.5px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:rgba(19,23,34,.82);color:#fff;border-radius:12px;padding:5px 10px;white-space:nowrap}
+#mclr{pointer-events:auto;appearance:none;border:1px solid #c9ccd4;background:#fff;color:#131722;border-radius:50%;width:30px;height:30px;font:700 15px/1 sans-serif;cursor:pointer;display:none;padding:0;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.chips{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:5px;padding:5px 10px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-size:11px;border:1px solid #d1d4dc;border-radius:12px;padding:2px 8px 2px 6px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:5px;user-select:none;-webkit-user-select:none}
+.chip i{display:inline-block;width:14px;height:0;border-top:2px solid}
+.chip.off{opacity:.38}
+#legend{font-size:11px;line-height:1.35;font-variant-numeric:tabular-nums;padding:3px 10px 2px;min-height:34px;color:#2a2e39}
+#legend b{font-weight:700}
+#wrap{position:relative;width:100%;height:74vh;height:74svh;min-height:420px;max-height:980px}
+#chart{position:absolute;inset:0;touch-action:none}
+.hint{font-size:10.5px;color:#9598a1;padding:5px 10px 14px}
+#expired,#err{display:none;padding:40px 16px;text-align:center;color:#434651}
+@media (min-width:900px){header,.toolbar,.chips,.hint,#legend{padding-left:18px;padding-right:18px}#wrap{height:76vh}h1{font-size:22px}
+ .facts{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.v{font-size:14px}#legend{font-size:12px;min-height:20px}}
+
+#wrap{height:66vh;height:66svh;min-height:400px}
+.ostrip{display:flex;gap:10px;align-items:center;overflow-x:auto;white-space:nowrap;padding:5px 10px;border-bottom:1px solid #e0e3eb;
+  font-size:12px;font-variant-numeric:tabular-nums;background:#fff;scrollbar-width:none}
+.ostrip::-webkit-scrollbar{display:none}
+.ostrip b{font-weight:700}.ostrip .e{color:#1565c0}.ostrip .s{color:#d32f2f}.ostrip .t{color:#2e7d32}
+.ostrip .st{flex:none;width:10px;height:10px;border-radius:50%;background:#2e7d32}.ostrip .st.bad{background:#d32f2f}.ostrip .st.warn{background:#f9a825}
+.ostrip .go{margin-left:auto;flex:none}
+.oh{position:absolute;z-index:4;display:none;align-items:center;gap:5px;transform:translateY(-50%);height:30px;padding:0 10px 0 6px;
+  border-radius:15px;color:#fff;font:700 11.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  white-space:nowrap;cursor:ns-resize;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
+  box-shadow:0 1px 4px rgba(0,0,0,.28);border:2px solid #fff;opacity:.94}
+.oh::before{content:"";position:absolute;inset:-9px -4px}
+.oh .g{font-size:15px;line-height:1;opacity:.95}
+.oh.act{opacity:1;box-shadow:0 0 0 3px rgba(41,98,255,.35),0 2px 6px rgba(0,0,0,.35);transform:translateY(-50%) scale(1.06)}
+.oh.bad{outline:2px dashed #ffeb3b;outline-offset:1px}
+#wrap.hov #chart,#wrap.hov #chart *{cursor:ns-resize!important}
+#wrap.dragging #chart,#wrap.dragging #chart *{cursor:grabbing!important}
+.opanel{margin:8px 10px 4px;border:1px solid #d1d4dc;border-radius:8px;background:#fafbfc}
+.opanel h2{margin:0;padding:8px 10px;font-size:15px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;border-bottom:1px solid #e0e3eb}
+.opanel h2 .oid{font-size:11px;font-weight:600;color:#787b86}
+.opanel h2 .ok,.opanel h2 .ko,.opanel h2 .wa{font-size:11px;padding:2px 8px;border-radius:10px}
+.opanel h2 .ok{background:#e8f5e9;color:#1b5e20}.opanel h2 .ko{background:#ffebee;color:#b71c1c}.opanel h2 .wa{background:#fff8e1;color:#8d6e00}
+.osum{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 12px;padding:8px 10px;font-variant-numeric:tabular-nums}
+.osum .k{font-size:10px}.osum .v{font-size:13.5px}.osum .sub{font-size:11px;color:#787b86;font-weight:500}
+.osum input{width:96px;font:600 14px/1.2 inherit;padding:4px 6px;border:1px solid #c9ccd4;border-radius:5px}
+.olv{padding:2px 10px 6px}
+.orow{display:grid;grid-template-columns:76px 1fr;gap:2px 8px;align-items:center;padding:7px 0;border-top:1px solid #eceef2}
+.orow .nm{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+.orow .nm i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.orow .ctl{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.orow input.px{width:104px;font:600 15px/1.2 inherit;font-variant-numeric:tabular-nums;padding:5px 7px;border:1px solid #c9ccd4;border-radius:5px}
+.orow input.pc{width:50px;font:600 13px/1.2 inherit;padding:4px 5px;border:1px solid #c9ccd4;border-radius:5px}
+.orow .nb{min-width:34px;justify-content:center;padding:6px 0}
+.orow .det{grid-column:2;font-size:12px;color:#434651;font-variant-numeric:tabular-nums}
+.orow .det b{color:#131722}
+.orow.bad input.px{border-color:#d32f2f;background:#fff5f5}
+.owarn{padding:0 10px}
+.owarn div{margin:4px 0;padding:6px 8px;border-radius:5px;font-size:12.5px}
+.owarn .er{background:#ffebee;color:#b71c1c;border:1px solid #ffcdd2}
+.owarn .wa{background:#fff8e1;color:#6d5300;border:1px solid #ffe082}
+.oact{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px 10px}
+.oet{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;padding:7px 10px;border-top:1px solid #eceef2}
+.oet .k{font-size:12px;font-weight:700;margin-right:2px}
+.oet label{display:inline-flex;align-items:center;gap:5px;min-height:34px;padding:0 11px;border:1px solid #c9ccd4;border-radius:17px;
+  background:#fff;font-size:13px;font-weight:600;cursor:pointer;user-select:none;-webkit-user-select:none}
+.oet label.on{border-color:#1565c0;background:#e3f2fd;color:#0d47a1}
+.oet input{margin:0;accent-color:#1565c0}
+.oet .d{flex-basis:100%;font-size:12px;color:#434651}
+.btn.pri{background:#2e7d32;border-color:#2e7d32;color:#fff;font-size:14px;padding:9px 14px;min-height:40px}
+.btn.pri[disabled]{background:#9e9e9e;border-color:#9e9e9e}
+.ocode{display:none;margin:0 10px 10px;padding:8px 10px;border:2px solid #2e7d32;border-radius:8px;background:#fff}
+.ocode.stale{border-color:#f9a825;opacity:.7}
+.ocode .lbl{font-weight:700;font-size:13px;margin-bottom:4px}
+.ocode textarea{width:100%;min-height:74px;font:12.5px/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all;
+  padding:6px;border:1px solid #c9ccd4;border-radius:5px;resize:vertical;background:#f7f8fa}
+.ocode .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.ocode .msg{font-size:12px;color:#1b5e20;font-weight:600}
+.ocode ul{margin:6px 0 0;padding-left:18px;font-size:12.5px}
+.ovol{padding:8px 10px 10px;border-top:1px solid #eceef2}
+.ovh{display:flex;flex-wrap:wrap;gap:3px 10px;align-items:baseline;font-size:12px;font-variant-numeric:tabular-nums}
+.ovh .k{font-size:12px;font-weight:700}.ovh .amt{margin-left:auto;font-weight:600;color:#131722}
+.ovcap{color:#434651}.ovcap b{color:#131722}
+.ovcap .ex{display:inline-block;padding:1px 7px;border-radius:9px;border:1px solid #e0b000;color:#6d4c00;font-weight:800;font-size:10.5px;
+  letter-spacing:.05em;background:repeating-linear-gradient(45deg,#fff3cd,#fff3cd 6px,#ffe08a 6px,#ffe08a 12px)}
+.ovcap .re{display:inline-block;padding:1px 7px;border-radius:9px;background:#e8f5e9;color:#1b5e20;font-weight:700;font-size:10.5px}
+.ovcap .nl{display:inline-block;padding:1px 7px;border-radius:9px;background:#ffebee;color:#b71c1c;font-weight:700;font-size:10.5px}
+.ovs{display:flex;align-items:center;gap:10px;margin:8px 0 6px}
+.ovtr{position:relative;flex:1;height:36px}
+.ovbar{position:absolute;left:12px;right:12px;top:15px;height:6px;border-radius:3px;background:#d8dce6}
+.ovfill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;background:#1652f0}
+.ovbar i{position:absolute;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#d8dce6;border:2px solid #fafbfc;box-sizing:border-box}
+.ovbar i.on{background:#1652f0}
+.ovtr input{position:absolute;inset:0;z-index:1;width:100%;height:36px;margin:0;padding:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.ovtr input:focus{outline:none}
+.ovtr input::-webkit-slider-runnable-track{height:36px;background:transparent;border:0}
+.ovtr input::-moz-range-track{height:36px;background:transparent;border:0}
+.ovtr input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:6px;border-radius:50%;background:#fff;border:3px solid #1652f0;box-shadow:0 1px 4px rgba(0,0,0,.3);box-sizing:border-box}
+.ovtr input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid #1652f0;box-shadow:0 1px 4px rgba(0,0,0,.3);box-sizing:border-box}
+.ovtr input:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px rgba(22,82,240,.25)}
+.ovtr.over .ovfill,.ovtr.over .ovbar i.on{background:#d32f2f}
+.ovtr.over input::-webkit-slider-thumb{border-color:#d32f2f}
+.ovtr input:disabled{cursor:not-allowed}
+.ovtr input:disabled::-webkit-slider-thumb{border-color:#9e9e9e;background:#eee;box-shadow:none}
+.ovtr input:disabled::-moz-range-thumb{border-color:#9e9e9e;background:#eee;box-shadow:none}
+.ovp{min-width:62px;text-align:right;font:700 15px/1 inherit;font-variant-numeric:tabular-nums}
+.ovq{display:flex;gap:6px}
+.ovq button{flex:1;min-height:34px;justify-content:center;font-weight:600}
+.ovq button.on{border-color:#1652f0;background:#e8eefc;color:#0d47a1}
+.ovm{margin-top:7px;padding:6px 8px;border-radius:5px;font-size:12px;line-height:1.4}
+.ovm.ex{background:#fff8e1;border:1px dashed #e0b000;color:#6d4c00}
+.ovm.ko{background:#ffebee;border:1px solid #ffcdd2;color:#b71c1c}
+.ovm.ok{background:#f1f8e9;border:1px solid #dcedc8;color:#33691e}
+.ovol.off .ovp{color:#9e9e9e}
+.oopt{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:6px 10px 0;border-top:1px solid #eceef2}
+.oopt label{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 11px;border:1px solid #c9ccd4;border-radius:17px;
+  background:#fff;font-size:13px;font-weight:600;cursor:pointer;user-select:none;-webkit-user-select:none}
+.oopt label.on{border-color:#d32f2f;background:#ffebee;color:#b71c1c}
+.oopt input{margin:0;accent-color:#d32f2f;width:16px;height:16px}
+.oopt .ohodl{font-size:12px;color:#434651}
+@media (min-width:900px){.opanel,.ocode{margin-left:18px;margin-right:18px}.ostrip{padding-left:18px;padding-right:18px}#legend{min-height:34px}}
+</style>
+</head>
+<body>
+<header>
+<h1><span>MON-USDC</span><span class=tf>1D</span><span class=badge>ORDRE · VENTE ▼</span></h1>
+<div class=verdict>Proposition de VENTE #MON-261007-VUPV (v1) : choisis la quantité (curseur = % du solde détenu), limite ou marché, TP / stop optionnels, puis « Valider l&#x27;ordre ».</div>
+<div class=facts><div class=f><span class=k>Paire</span><span class=v>MON-USDC · Coinbase</span></div><div class=f><span class=k>Côté</span><span class=v>VENTE spot (crypto déjà détenue)</span></div><div class=f><span class=k>Type proposé</span><span class=v>Vente limite</span></div><div class=f><span class=k>Quantité proposée</span><span class=v>201 827 MON ≈ 5 211,17 USDC</span></div><div class=f><span class=k>Stop proposé</span><span class=v>0.025100 (−2,8 %)</span></div><div class=f><span class=k>TP1 proposé</span><span class=v>0.026500 (+2,6 % vs dernier prix, 40 %)</span></div><div class=f><span class=k>TP2 proposé</span><span class=v>0.027100 (+5,0 % vs dernier prix, 40 %)</span></div><div class=f><span class=k>TP3 proposé</span><span class=v>0.027800 (+7,7 % vs dernier prix, 20 %)</span></div><div class=f><span class=k>Dernier prix</span><span class=v>0.025820</span></div><div class=f><span class=k>Solde MON détenu</span><span class=v>201 827 MON · réel (« Anna trading », lu le 07/10/2026 22:25)</span></div></div>
+<div class=live><i></i>Prix au 07/10 22:25 (Paris) : <b>0.02582</b>, <span class=dn>-9.25 %</span> depuis la dernière clôture <span class=lk>(bougie en cours, non utilisée par l'analyse)</span></div>
+<details class=context open><summary>Contexte (1)</summary><ul><li class="cx note"><span class=tag>Note</span><div class=ttl>MON — sortie rapide</div><div class=detail>Prix ~0.02585, entree 0.02785 (-7%). Base recente 0.0254-0.0257. Unlock a surveiller (~21/10). Ajuste les lignes au doigt, valide, copie le code et colle-le ici : je verifie avant tout ordre.</div></li></ul></details>
+<details class=reasons><summary>Pourquoi cette vente (4)</summary><ul><li>Sortie de la position MON sur rebond : la these de tendance est morte, on vend dans la force, pas au plus bas.</li><li>Vente en 3 paliers de limites au-dessus du marche + stop de protection sous la base, lies en OCO.</li><li>TP1 0.0265 (40%) resistance la plus proche ; TP2 0.0271 (40%) zone d offre 0.0270-0.0272 ; TP3 0.0278 (20%) proche breakeven.</li><li>Stop 0.0251 : si la base 0.0254-0.0257 casse, on sort le reste pour ne pas laisser filer.</li></ul></details>
+<div class=meta>Généré le 07/10/2026 22:25 (Paris) · dernière bougie clôturée 07/10 02:00 · source Coinbase · page supprimée après le 14/10/2026</div>
+</header>
+<div class=toolbar>
+<button class="btn" id=bLog type=button>Log</button>
+<button class="btn" id=bFit type=button>Recentrer</button>
+<button class="btn" id=bAll type=button>Tout</button>
+<button class="btn on" id=bLab type=button title="Afficher / masquer les étiquettes de gauche">Labels</button>
+<button class="btn ms" id=bMes type=button title="Mesurer une variation : toucher le point A puis le point B">Mesure</button>
+<a class="btn tv" href="https://www.tradingview.com/chart/?symbol=COINBASE:MONUSD" target="_blank" rel="noopener noreferrer"><span class=lg>TradingView</span><span class=sm>TV</span>&nbsp;↗</a>
+</div>
+<div class=ostrip id=ostrip></div>
+<div class=chips id=chips></div>
+<div id=legend></div>
+<div id=wrap><div id=chart></div><div id=mbar><span id=mtxt></span><button id=mclr type=button title="Effacer la mesure" aria-label="Effacer la mesure">✕</button></div></div>
+<section class=opanel id=opanel>
+<h2><span>Ordre</span><span class=oid id=ooid></span><span id=ostat></span></h2>
+<div class=osum id=osum></div>
+<div class=ovol id=ovol>
+<div class=ovh><span class=k>Volume</span><span class=ovcap id=ovcap></span><span class=amt id=ovamt></span></div>
+<div class=ovs><div class=ovtr id=ovtr><div class=ovbar><div class=ovfill id=ovfill></div><i style="left:0%"></i><i style="left:25%"></i><i style="left:50%"></i><i style="left:75%"></i><i style="left:100%"></i></div>
+<input type=range id=oRange min=0 max=100 step=1 value=0 aria-label="Taille en % du capital disponible"></div><span class=ovp id=ovpct></span></div>
+<div class=ovq id=ovq><button class=btn type=button data-p=25>25 %</button><button class=btn type=button data-p=50>50 %</button><button class=btn type=button data-p=75>75 %</button><button class=btn type=button data-p=100>Max</button></div>
+<div class=ovm id=ovmsg></div>
+</div>
+<div class=oet id=oet role=radiogroup aria-label="Type de vente"><span class=k>Type de vente</span>
+<label id=oetl_limit><input type=radio name=oet value=limit> Limite</label>
+<label id=oetl_market><input type=radio name=oet value=market> Marché</label>
+<div class=d id=oetd></div></div>
+<div class=oopt id=oopt><label class=ostopl id=ostopl><input type=checkbox id=oStopOn> Stop de protection</label><span class=ohodl id=ohodl></span></div>
+<div class=olv id=olv></div>
+<div class=owarn id=owarn></div>
+<div class=oact>
+<button class="btn pri" id=oVal type=button>Valider l'ordre</button>
+<button class=btn id=oAdd type=button>+ TP</button>
+<button class=btn id=oDel type=button>− TP</button>
+<button class=btn id=oRst type=button>Réinitialiser</button>
+</div>
+<div class=ocode id=ocode>
+<div class=lbl id=ocodel>Code de validation : copie-le et colle-le dans le chat</div>
+<textarea id=ocodet readonly spellcheck=false autocomplete=off></textarea>
+<div class=row><button class="btn pri" id=oCopy type=button>Copier</button><span class=msg id=ocmsg></span></div>
+<ul id=odiff></ul>
+</div>
+</section>
+<div class=hint>Glisser une ligne d&#x27;ordre (ou sa poignée ⇕) pour l&#x27;ajuster ; prix arrondi au pas de cotation (0.000001). Pincer pour zoomer, glisser ailleurs pour se déplacer. Aucun ordre n&#x27;est passé depuis cette page : le code validé est relu et comparé à la proposition avant tout envoi. Pas un conseil financier.</div>
+<div id=expired>Cette page a expiré.</div>
+<div id=err>Graphique indisponible (librairie non chargée).</div>
+<script type="application/json" id="chart-data">{"symbol":"MON","tf":"1d","log":true,"candles":[[1765411200,0.02687,0.02699,0.0255,0.02624,460345000.0],[1765497600,0.02625,0.02659,0.02366,0.02407,403836000.0],[1765584000,0.02407,0.0242,0.02304,0.02344,241356000.0],[1765670400,0.02347,0.02355,0.0201,0.02064,686617000.0],[1765756800,0.02066,0.02209,0.01928,0.01987,642379000.0],[1765843200,0.01986,0.02271,0.01928,0.02155,561444000.0],[1765929600,0.02155,0.0217,0.01832,0.01873,589061000.0],[1766016000,0.01873,0.01885,0.01654,0.01691,442579000.0],[1766102400,0.01691,0.01939,0.0168,0.01905,409270000.0],[1766188800,0.01906,0.0195,0.01842,0.01877,386830000.0],[1766275200,0.01878,0.02063,0.01847,0.0205,544551000.0],[1766361600,0.02049,0.02188,0.01915,0.01921,843447000.0],[1766448000,0.0192,0.02065,0.01858,0.01978,439259000.0],[1766534400,0.01979,0.0225,0.01979,0.02169,803190000.0],[1766620800,0.02169,0.02453,0.02137,0.02315,922536000.0],[1766707200,0.02314,0.02532,0.02198,0.02333,790903000.0],[1766793600,0.02335,0.02429,0.02227,0.0231,414356000.0],[1766880000,0.02312,0.02312,0.02054,0.02244,478734000.0],[1766966400,0.02244,0.0245,0.02122,0.02147,535772000.0],[1767052800,0.02143,0.02318,0.0206,0.02257,365837000.0],[1767139200,0.02257,0.024,0.02229,0.0227,434870000.0],[1767225600,0.0227,0.02431,0.02185,0.0237,430461000.0],[1767312000,0.0237,0.0284,0.02314,0.02795,988592000.0],[1767398400,0.02794,0.03,0.02724,0.02932,594915000.0],[1767484800,0.02931,0.02987,0.02763,0.02875,375029000.0],[1767571200,0.02875,0.02981,0.0275,0.0283,385232000.0],[1767657600,0.02829,0.0305,0.02725,0.02984,711567000.0],[1767744000,0.02983,0.03142,0.02665,0.02681,581018000.0],[1767830400,0.02681,0.0285,0.02552,0.02781,361308000.0],[1767916800,0.02779,0.0279,0.02543,0.02614,336154000.0],[1768003200,0.02612,0.02619,0.02395,0.02422,289675000.0],[1768089600,0.02423,0.02519,0.0233,0.02385,190166000.0],[1768176000,0.02382,0.02507,0.02284,0.02307,353026000.0],[1768262400,0.02306,0.02515,0.02238,0.02475,412323000.0],[1768348800,0.02475,0.02526,0.0231,0.02319,336547000.0],[1768435200,0.02318,0.02324,0.02192,0.02213,333778000.0],[1768521600,0.02212,0.02256,0.021,0.02229,282842000.0],[1768608000,0.02228,0.02311,0.02207,0.02211,128015000.0],[1768694400,0.02209,0.02304,0.02169,0.02176,160871000.0],[1768780800,0.02176,0.02176,0.02,0.02012,332413000.0],[1768867200,0.02011,0.02023,0.01775,0.01788,586229000.0],[1768953600,0.01789,0.0194,0.01767,0.01876,488506000.0],[1769040000,0.01877,0.01914,0.01774,0.0181,233711000.0],[1769126400,0.01811,0.01902,0.01798,0.01833,276121000.0],[1769212800,0.01833,0.01939,0.01819,0.01908,327797000.0],[1769299200,0.01908,0.0193,0.0175,0.01779,367483000.0],[1769385600,0.01779,0.01907,0.01774,0.0188,320841000.0],[1769472000,0.0188,0.02228,0.01865,0.02218,659890000.0],[1769558400,0.02218,0.0228,0.02106,0.02129,497054000.0],[1769644800,0.0213,0.02156,0.01907,0.01999,449980000.0],[1769731200,0.02,0.0216,0.01946,0.02019,645737000.0],[1769817600,0.02019,0.02047,0.01638,0.01804,699803000.0],[1769904000,0.01804,0.01906,0.0172,0.01783,462913000.0],[1769990400,0.01784,0.01992,0.01698,0.01847,600504000.0],[1770076800,0.01848,0.01858,0.01711,0.01754,577367000.0],[1770163200,0.01753,0.01999,0.01737,0.01973,798591000.0],[1770249600,0.01973,0.01995,0.01677,0.01724,1686670000.0],[1770336000,0.01726,0.019,0.01601,0.01856,832181000.0],[1770422400,0.01856,0.01896,0.01763,0.01861,403843000.0],[1770508800,0.01861,0.01899,0.01798,0.01812,329761000.0],[1770595200,0.01812,0.01854,0.01721,0.01795,456343000.0],[1770681600,0.01795,0.02144,0.01632,0.01969,1528500000.0],[1770768000,0.01968,0.02015,0.01817,0.01905,486128000.0],[1770854400,0.01904,0.02029,0.01894,0.02015,342105000.0],[1770940800,0.02015,0.02368,0.01984,0.02278,521441000.0],[1771027200,0.02278,0.02514,0.02221,0.02339,387507000.0],[1771113600,0.02339,0.02474,0.02211,0.02422,463597000.0],[1771200000,0.02424,0.02485,0.02276,0.02347,334418000.0],[1771286400,0.02347,0.02354,0.02157,0.02213,239243000.0],[1771372800,0.02212,0.02224,0.01991,0.02016,394026000.0],[1771459200,0.02014,0.02107,0.01956,0.02044,200708000.0],[1771545600,0.02045,0.02154,0.02017,0.02106,312294000.0],[1771632000,0.02106,0.0215,0.02045,0.02062,299183000.0],[1771718400,0.02061,0.02073,0.01957,0.01985,189521000.0],[1771804800,0.01985,0.02087,0.01879,0.02055,436069000.0],[1771891200,0.02056,0.02103,0.01988,0.02003,351062000.0],[1771977600,0.02003,0.02298,0.02001,0.02154,356085000.0],[1772064000,0.02155,0.02249,0.02055,0.02104,197334000.0],[1772150400,0.02105,0.02153,0.02038,0.02065,121315000.0],[1772236800,0.02063,0.02122,0.01939,0.02113,172698000.0],[1772323200,0.02113,0.02244,0.02064,0.02085,119735000.0],[1772409600,0.02087,0.0221,0.02025,0.02121,160163000.0],[1772496000,0.02121,0.02139,0.02024,0.02037,164252000.0],[1772582400,0.02037,0.02365,0.02018,0.02256,287702000.0],[1772668800,0.02256,0.02316,0.02165,0.02173,166601000.0],[1772755200,0.02175,0.02273,0.0213,0.02174,154203000.0],[1772841600,0.02174,0.02274,0.02151,0.02168,130530000.0],[1772928000,0.02166,0.02181,0.02031,0.02042,73683300.0],[1773014400,0.02042,0.02167,0.02011,0.02119,256109000.0],[1773100800,0.02119,0.02228,0.02112,0.02155,100422000.0],[1773187200,0.02155,0.0217,0.02096,0.02141,75449000.0],[1773273600,0.02141,0.02199,0.02115,0.0212,132710000.0],[1773360000,0.0212,0.02295,0.02112,0.02189,148189000.0],[1773446400,0.02187,0.02219,0.02151,0.02215,55828000.0],[1773532800,0.02213,0.02352,0.02202,0.02346,81847500.0],[1773619200,0.02344,0.02505,0.02325,0.02476,170004000.0],[1773705600,0.02472,0.02513,0.02339,0.0236,84046600.0],[1773792000,0.02358,0.02435,0.0225,0.02307,109842000.0],[1773878400,0.02309,0.02353,0.02178,0.02199,98769100.0],[1773964800,0.02199,0.02251,0.02179,0.02243,67654500.0],[1774051200,0.02245,0.02249,0.02127,0.02141,51796000.0],[1774137600,0.02138,0.02159,0.02052,0.02053,59125500.0],[1774224000,0.02053,0.02198,0.02042,0.02158,114766000.0],[1774310400,0.0216,0.02362,0.02121,0.02334,148093000.0],[1774396800,0.02336,0.02692,0.02277,0.02642,281414000.0],[1774483200,0.02641,0.02734,0.02346,0.02432,215945000.0],[1774569600,0.02433,0.02438,0.0216,0.02236,115635000.0],[1774656000,0.02235,0.02415,0.02196,0.02329,147101000.0],[1774742400,0.02331,0.02365,0.0216,0.02204,129181000.0],[1774828800,0.02207,0.02428,0.022,0.02231,146800000.0],[1774915200,0.02231,0.02495,0.02218,0.02494,125097000.0],[1775001600,0.02493,0.02563,0.0237,0.02384,178168000.0],[1775088000,0.02384,0.02571,0.02265,0.02501,157442000.0],[1775174400,0.02502,0.02758,0.02452,0.02727,333046000.0],[1775260800,0.02727,0.02829,0.02674,0.02724,207205000.0],[1775347200,0.02724,0.02847,0.02618,0.02827,198065000.0],[1775433600,0.02827,0.02958,0.02679,0.0271,220167000.0],[1775520000,0.02711,0.03147,0.0258,0.0304,273344000.0],[1775606400,0.0304,0.03353,0.02951,0.03114,460217000.0],[1775692800,0.03114,0.03494,0.02912,0.03296,340653000.0],[1775779200,0.03295,0.03735,0.03271,0.03511,416442000.0],[1775865600,0.03512,0.03701,0.03436,0.03556,149416000.0],[1775952000,0.03554,0.03575,0.03154,0.03271,261635000.0],[1776038400,0.0327,0.0369,0.03193,0.03603,296412000.0],[1776124800,0.03602,0.03749,0.034,0.0345,251977000.0],[1776211200,0.03451,0.036,0.03323,0.03514,201160000.0],[1776297600,0.03515,0.03752,0.03359,0.0343,223865000.0],[1776384000,0.03429,0.03729,0.03287,0.03477,255859000.0],[1776470400,0.0348,0.03516,0.03198,0.03246,110677000.0],[1776556800,0.03247,0.03371,0.02955,0.03007,196880000.0],[1776643200,0.03006,0.03325,0.02931,0.0319,139150000.0],[1776729600,0.03189,0.03411,0.0309,0.03277,156169000.0],[1776816000,0.03278,0.03521,0.03258,0.03376,147923000.0],[1776902400,0.03377,0.03419,0.03204,0.03248,141452000.0],[1776988800,0.03249,0.0326,0.03039,0.03069,113010000.0],[1777075200,0.0307,0.03173,0.02964,0.0313,171583000.0],[1777161600,0.03131,0.03239,0.03031,0.03208,70674600.0],[1777248000,0.03207,0.03335,0.02993,0.03058,131681000.0],[1777334400,0.03057,0.03084,0.02795,0.02914,158904000.0],[1777420800,0.02915,0.02983,0.0251,0.02704,259811000.0],[1777507200,0.02703,0.02791,0.02619,0.02716,132099000.0],[1777593600,0.02717,0.0304,0.02709,0.0301,216949000.0],[1777680000,0.03009,0.03112,0.02979,0.03011,76604800.0],[1777766400,0.03011,0.03057,0.02903,0.02909,60004400.0],[1777852800,0.0291,0.03128,0.02867,0.02945,152369000.0],[1777939200,0.02947,0.03309,0.02921,0.03133,133592000.0],[1778025600,0.03131,0.03378,0.03069,0.03231,160111000.0],[1778112000,0.03229,0.0336,0.0312,0.03239,107295000.0],[1778198400,0.03238,0.03431,0.03196,0.03427,105734000.0],[1778284800,0.03427,0.03499,0.03336,0.03467,92666900.0],[1778371200,0.03465,0.03653,0.03394,0.03549,128440000.0],[1778457600,0.0355,0.03602,0.03314,0.03361,108006000.0],[1778544000,0.03363,0.03462,0.03035,0.03085,129163000.0],[1778630400,0.03085,0.03159,0.0288,0.03012,207242000.0],[1778716800,0.03016,0.03076,0.02844,0.02977,115987000.0],[1778803200,0.02978,0.03031,0.02718,0.02828,242582000.0],[1778889600,0.0283,0.02854,0.02729,0.02775,56090100.0],[1778976000,0.02776,0.02908,0.0272,0.02781,74257100.0],[1779062400,0.02778,0.02778,0.02562,0.02698,147398000.0],[1779148800,0.02699,0.02742,0.02568,0.02594,129183000.0],[1779235200,0.02592,0.02707,0.0255,0.02692,79091200.0],[1779321600,0.02691,0.03012,0.02677,0.02865,174694000.0],[1779408000,0.02863,0.02904,0.02606,0.02615,122307000.0],[1779494400,0.02615,0.02648,0.02388,0.0258,124511000.0],[1779580800,0.02581,0.02637,0.02485,0.02525,56503100.0],[1779667200,0.02527,0.02679,0.02514,0.02626,62172100.0],[1779753600,0.02628,0.02686,0.02482,0.02503,61147100.0],[1779840000,0.02504,0.0252,0.02303,0.0233,84438500.0],[1779926400,0.02329,0.0242,0.02267,0.02368,145499000.0],[1780012800,0.0237,0.0246,0.02305,0.0233,68926100.0],[1780099200,0.0233,0.02386,0.02298,0.02325,35809100.0],[1780185600,0.02326,0.02402,0.0227,0.02383,52783000.0],[1780272000,0.02383,0.02398,0.02212,0.02254,329086000.0],[1780358400,0.02255,0.02268,0.02011,0.02048,365469000.0],[1780444800,0.02049,0.02134,0.01986,0.02044,266221000.0],[1780531200,0.02043,0.02218,0.01815,0.0215,697469000.0],[1780617600,0.02149,0.02194,0.01986,0.02106,370451000.0],[1780704000,0.02106,0.02133,0.01976,0.02108,68947300.0],[1780790400,0.0211,0.02358,0.021,0.02216,240892000.0],[1780876800,0.02217,0.02267,0.02074,0.02084,159335000.0],[1780963200,0.02084,0.02177,0.02009,0.02128,225785000.0],[1781049600,0.02126,0.02152,0.02036,0.02105,143246000.0],[1781136000,0.02104,0.02232,0.02093,0.02165,154702000.0],[1781222400,0.02163,0.02181,0.021,0.0211,74747700.0],[1781308800,0.02111,0.02197,0.021,0.02182,76726800.0],[1781395200,0.02183,0.02275,0.02106,0.02249,61787100.0],[1781481600,0.02251,0.02341,0.02218,0.02261,118838000.0],[1781568000,0.0226,0.02393,0.02212,0.02306,190443000.0],[1781654400,0.02305,0.02321,0.02149,0.02177,95645400.0],[1781740800,0.02177,0.02188,0.02052,0.02108,81258000.0],[1781827200,0.02108,0.02118,0.02046,0.02066,39065200.0],[1781913600,0.02066,0.02082,0.0203,0.02059,43588900.0],[1782000000,0.02059,0.02156,0.02054,0.02075,68340100.0],[1782086400,0.02077,0.02145,0.02053,0.02063,111249000.0],[1782172800,0.02064,0.02087,0.01957,0.02009,67683900.0],[1782259200,0.0201,0.02012,0.01877,0.01968,171651000.0],[1782345600,0.01968,0.0202,0.01894,0.01917,185563000.0],[1782432000,0.01915,0.0194,0.01834,0.01934,141936000.0],[1782518400,0.01935,0.01987,0.01871,0.01884,64485700.0],[1782604800,0.01883,0.01914,0.01848,0.01864,40430300.0],[1782691200,0.01864,0.01919,0.0185,0.01892,61363400.0],[1782777600,0.01891,0.01891,0.01804,0.01833,69754700.0],[1782864000,0.01833,0.02093,0.01804,0.02004,309062000.0],[1782950400,0.02005,0.02064,0.01983,0.01999,165883000.0],[1783036800,0.01998,0.02117,0.01994,0.0205,144244000.0],[1783123200,0.0205,0.02113,0.02015,0.02111,94238500.0],[1783209600,0.02111,0.02176,0.02013,0.02159,158388000.0],[1783296000,0.02158,0.02537,0.02135,0.02497,494778000.0],[1783382400,0.02496,0.02626,0.02369,0.02438,282018000.0],[1783468800,0.02439,0.025,0.02235,0.02309,210168000.0],[1783555200,0.02309,0.02384,0.02276,0.02307,88811600.0],[1783641600,0.02308,0.02378,0.02245,0.02299,80084600.0],[1783728000,0.02297,0.02418,0.0222,0.02227,77614900.0],[1783814400,0.02225,0.02358,0.02208,0.02279,92363000.0],[1783900800,0.02278,0.0232,0.02166,0.02226,91272800.0],[1783987200,0.02227,0.02374,0.02192,0.02263,126480000.0],[1784073600,0.02263,0.02341,0.02217,0.02229,94553800.0],[1784160000,0.02228,0.02254,0.02135,0.02158,48655400.0],[1784246400,0.02157,0.02231,0.02139,0.02194,89001800.0],[1784332800,0.02193,0.02207,0.02122,0.02158,48043500.0],[1784419200,0.02158,0.02164,0.02105,0.02118,28608600.0],[1784505600,0.02119,0.02366,0.021,0.02287,90040000.0],[1784592000,0.02286,0.02368,0.02244,0.02289,95581400.0],[1784678400,0.02289,0.02409,0.02271,0.02293,127954000.0],[1784764800,0.02293,0.02341,0.0223,0.02235,50471500.0],[1784851200,0.02234,0.02235,0.0217,0.02185,26796400.0],[1784937600,0.02186,0.02193,0.02058,0.0206,38406000.0],[1785024000,0.02058,0.02167,0.02056,0.02135,23866700.0],[1785110400,0.02134,0.02139,0.02003,0.02013,42709800.0],[1785196800,0.02013,0.02147,0.02,0.02125,28838000.0],[1785283200,0.02125,0.02137,0.02057,0.02076,27706600.0],[1785369600,0.02076,0.02192,0.02055,0.02171,35030300.0],[1785456000,0.0217,0.02188,0.02047,0.02071,53630500.0],[1785542400,0.02072,0.02114,0.02038,0.02047,26406600.0],[1785628800,0.02048,0.02116,0.02045,0.02098,20250400.0],[1785715200,0.02098,0.021718,0.02032,0.021524,36046600.0],[1785801600,0.021528,0.021557,0.02046,0.020531,57017800.0],[1785888000,0.020533,0.021245,0.020446,0.020999,56413000.0],[1785974400,0.021009,0.021142,0.020401,0.020439,45520300.0],[1786060800,0.020442,0.02109,0.020277,0.020917,46774800.0],[1786147200,0.020897,0.021115,0.020604,0.020898,24401200.0],[1786233600,0.020885,0.021343,0.02075,0.020972,28377000.0],[1786320000,0.020981,0.02315,0.020941,0.021779,94577600.0],[1786406400,0.021743,0.022312,0.021185,0.0214,40230900.0],[1786492800,0.021395,0.02224,0.021375,0.021802,35556200.0],[1786579200,0.021826,0.021943,0.021334,0.021539,31346500.0],[1786665600,0.021539,0.021622,0.020881,0.021136,26134100.0],[1786752000,0.021121,0.02117,0.020684,0.020894,38197700.0],[1786838400,0.020891,0.021002,0.020171,0.020294,24537700.0],[1786924800,0.020278,0.02186,0.019753,0.021767,131382000.0],[1787011200,0.02176,0.02194,0.020818,0.021228,66561500.0],[1787097600,0.021229,0.023059,0.021056,0.022581,121212000.0],[1787184000,0.022587,0.027345,0.02232,0.026718,323356000.0],[1787270400,0.02673,0.0297,0.025966,0.028652,279913000.0],[1787356800,0.028648,0.030248,0.0255,0.028133,223239000.0],[1787443200,0.028138,0.03088,0.026576,0.03043,152745000.0],[1787529600,0.030421,0.0322,0.028419,0.031585,178330000.0],[1787616000,0.031572,0.032378,0.027733,0.027753,117322000.0],[1787702400,0.027769,0.02873,0.027008,0.028582,83703700.0],[1787788800,0.02856,0.029256,0.027193,0.028608,80742700.0],[1787875200,0.028609,0.029099,0.025539,0.027326,132163000.0],[1787961600,0.02732,0.027879,0.026184,0.026706,33350200.0],[1788048000,0.0267,0.028495,0.026161,0.02655,30489600.0],[1788134400,0.02652,0.02776,0.026141,0.026459,68794500.0],[1788220800,0.026411,0.027309,0.025501,0.026483,71573000.0],[1788307200,0.026466,0.026546,0.024798,0.025364,58343600.0],[1788393600,0.025411,0.027359,0.024845,0.027102,71987300.0],[1788480000,0.027102,0.02804,0.024239,0.025037,102520000.0],[1788566400,0.024974,0.0262,0.02472,0.024932,88285800.0],[1788652800,0.024948,0.02748,0.024886,0.027105,82704400.0],[1788739200,0.027108,0.028256,0.025911,0.026996,97861200.0],[1788825600,0.026947,0.027239,0.02512,0.025628,61551100.0],[1788912000,0.025714,0.026685,0.024264,0.024945,100734000.0],[1788998400,0.024949,0.024954,0.0229,0.02292,89308200.0],[1789084800,0.022968,0.024845,0.022487,0.02331,82997000.0],[1789171200,0.02331,0.023739,0.02302,0.023136,23794600.0],[1789257600,0.023144,0.023569,0.022512,0.022663,30430400.0],[1789344000,0.022681,0.023896,0.022646,0.022916,36747800.0],[1789430400,0.022904,0.023101,0.020899,0.021697,80796300.0],[1789516800,0.021695,0.023178,0.02142,0.022119,86009200.0],[1789603200,0.022122,0.023664,0.022047,0.023255,82830300.0],[1789689600,0.023233,0.025401,0.023093,0.024678,88415300.0],[1789776000,0.024664,0.02575,0.02365,0.024799,86159000.0],[1789862400,0.024731,0.025015,0.023066,0.025003,65390100.0],[1789948800,0.024995,0.026687,0.024555,0.025628,137050000.0],[1790035200,0.025617,0.02775,0.024684,0.027257,168816000.0],[1790121600,0.027337,0.027706,0.02378,0.024011,144898000.0],[1790208000,0.024012,0.025432,0.023517,0.025003,82673400.0],[1790294400,0.025016,0.026689,0.024724,0.026395,142404000.0],[1790380800,0.02642,0.027008,0.025702,0.026766,70922800.0],[1790467200,0.026703,0.02884,0.02589,0.02811,132578000.0],[1790553600,0.028139,0.030544,0.026865,0.028515,264369000.0],[1790640000,0.028559,0.029334,0.026631,0.026834,104948000.0],[1790726400,0.026865,0.031841,0.0265,0.031752,154481000.0],[1790812800,0.031751,0.035342,0.031313,0.033672,409112000.0],[1790899200,0.033686,0.035861,0.030743,0.032313,195638000.0],[1790985600,0.032313,0.0345,0.0308,0.033899,116771000.0],[1791072000,0.033913,0.03547,0.032772,0.033342,238925000.0],[1791158400,0.033329,0.033443,0.030695,0.031457,183885000.0],[1791244800,0.031452,0.031528,0.028238,0.028453,295105000.0]],"mas":[{"name":"EMA 13","color":"#2962FF","width":1.0,"style":"step","visible":true,"data":[[1765411200,0.02869263],[1765497600,0.02803226],[1765584000,0.02737622],[1765670400,0.0264139],[1765756800,0.02547906],[1765843200,0.02491777],[1765929600,0.0240338],[1766016000,0.02301611],[1766102400,0.02244953],[1766188800,0.02192388],[1766275200,0.02172047],[1766361600,0.02136183],[1766448000,0.02113585],[1766534400,0.02121502],[1766620800,0.02149144],[1766707200,0.02175409],[1766793600,0.02194637],[1766880000,0.02201689],[1766966400,0.02193876],[1767052800,0.02202894],[1767139200,0.0221248],[1767225600,0.02234983],[1767312000,0.02314986],[1767398400,0.0240313],[1767484800,0.0247054],[1767571200,0.02521892],[1767657600,0.02587907],[1767744000,0.02601206],[1767830400,0.02626891],[1767916800,0.02625049],[1768003200,0.02596042],[1768089600,0.02565893],[1768176000,0.02528909],[1768262400,0.02521207],[1768348800,0.02492321],[1768435200,0.02452418],[1768521600,0.02420501],[1768608000,0.02390572],[1768694400,0.02359919],[1768780800,0.02310216],[1768867200,0.02235614],[1768953600,0.02184241],[1769040000,0.02130778],[1769126400,0.02088238],[1769212800,0.0206249],[1769299200,0.02021991],[1769385600,0.02001707],[1769472000,0.02032606],[1769558400,0.02046376],[1769644800,0.02039608],[1769731200,0.02036664],[1769817600,0.02003427],[1769904000,0.01971937],[1769990400,0.01954089],[1770076800,0.01925505],[1770163200,0.0193229],[1770249600,0.01902534],[1770336000,0.01895886],[1770422400,0.01890903],[1770508800,0.01879631],[1770595200,0.01867541],[1770681600,0.01882035],[1770768000,0.01885316],[1770854400,0.01903842],[1770940800,0.01957293],[1771027200,0.02011823],[1771113600,0.02070419],[1771200000,0.02109931],[1771286400,0.02124655],[1771372800,0.02109133],[1771459200,0.02099828],[1771545600,0.0210071],[1771632000,0.0209518],[1771718400,0.0207944],[1771804800,0.02075949],[1771891200,0.02065527],[1771977600,0.02078166],[1772064000,0.02081857],[1772150400,0.02079449],[1772236800,0.02084242],[1772323200,0.0208435],[1772409600,0.02089586],[1772496000,0.02082074],[1772582400,0.0210692],[1772668800,0.0211636],[1772755200,0.02124594],[1772841600,0.02130795],[1772928000,0.0211811],[1773014400,0.02118237],[1773100800,0.02123489],[1773187200,0.02125991],[1773273600,0.02125135],[1773360000,0.02134258],[1773446400,0.02145793],[1773532800,0.02174394],[1773619200,0.02217481],[1773705600,0.0223784],[1773792000,0.0224772],[1773878400,0.0224076],[1773964800,0.0224108],[1774051200,0.02226783],[1774137600,0.02201957],[1774224000,0.02195677],[1774310400,0.02215438],[1774396800,0.02276375],[1774483200,0.02298607],[1774569600,0.02289663],[1774656000,0.02295283],[1774742400,0.02282243],[1774828800,0.02274922],[1774915200,0.02306219],[1775001600,0.02317331],[1775088000,0.02343569],[1775174400,0.02398345],[1775260800,0.02444867],[1775347200,0.02499457],[1775433600,0.02529535],[1775520000,0.02602459],[1775606400,0.02675536],[1775692800,0.02764174],[1775779200,0.02870863],[1775865600,0.0296874],[1775952000,0.0301192],[1776038400,0.0309636],[1776124800,0.0314688],[1776211200,0.03199326],[1776297600,0.03232279],[1776384000,0.03267239],[1776470400,0.03264205],[1776556800,0.03227461],[1776643200,0.0322211],[1776729600,0.03229951],[1776816000,0.03250815],[1776902400,0.03250413],[1776988800,0.03224497],[1777075200,0.03210997],[1777161600,0.03210569],[1777248000,0.03188774],[1777334400,0.0314952],[1777420800,0.03085875],[1777507200,0.03033035],[1777593600,0.03029745],[1777680000,0.03027067],[1777766400,0.030102],[1777852800,0.03000886],[1777939200,0.03019759],[1778025600,0.03049936],[1778112000,0.03076946],[1778198400,0.03126953],[1778284800,0.03175531],[1778371200,0.03228884],[1778457600,0.03247758],[1778544000,0.03224507],[1778630400,0.03194149],[1778716800,0.03163127],[1778803200,0.03115252],[1778889600,0.03066645],[1778976000,0.03025838],[1779062400,0.02979004],[1779148800,0.02924004],[1779235200,0.0289086],[1779321600,0.02887166],[1779408000,0.02848285],[1779494400,0.02809959],[1779580800,0.0276925],[1779667200,0.02748786],[1779753600,0.02713674],[1779840000,0.02658863],[1779926400,0.02617311],[1780012800,0.02576267],[1780099200,0.02540372],[1780185600,0.0251789],[1780272000,0.02480191],[1780358400,0.0241845],[1780444800,0.02364957],[1780531200,0.02334249],[1780617600,0.02301642],[1780704000,0.02273979],[1780790400,0.02265696],[1780876800,0.02239739],[1780963200,0.02223777],[1781049600,0.02206809],[1781136000,0.02200836],[1781222400,0.02187859],[1781308800,0.02187022],[1781395200,0.02195876],[1781481600,0.0220518],[1781568000,0.02219583],[1781654400,0.02213499],[1781740800,0.02198428],[1781827200,0.0217951],[1781913600,0.02162294],[1782000000,0.02149823],[1782086400,0.0213742],[1782172800,0.02119074],[1782259200,0.02097492],[1782345600,0.02071708],[1782432000,0.02052035],[1782518400,0.0202803],[1782604800,0.02004597],[1782691200,0.01988512],[1782777600,0.01966296],[1782864000,0.01971682],[1782950400,0.01975585],[1783036800,0.01986216],[1783123200,0.02004042],[1783209600,0.02026179],[1783296000,0.02093439],[1783382400,0.02142662],[1783468800,0.02166425],[1783555200,0.02186507],[1783641600,0.02202577],[1783728000,0.02206066],[1783814400,0.02216485],[1783900800,0.02217845],[1783987200,0.02224295],[1784073600,0.02224967],[1784160000,0.02215401],[1784246400,0.02212343],[1784332800,0.0220458],[1784419200,0.02192211],[1784505600,0.02205753],[1784592000,0.02217645],[1784678400,0.0222841],[1784764800,0.02229352],[1784851200,0.02223016],[1784937600,0.02199728],[1785024000,0.02190481],[1785110400,0.02165126],[1785196800,0.02159394],[1785283200,0.02147481],[1785369600,0.02150841],[1785456000,0.02139435],[1785542400,0.0212623],[1785628800,0.02122197],[1785715200,0.02126512],[1785801600,0.02116024],[1785888000,0.02113721],[1785974400,0.02103746],[1786060800,0.02102026],[1786147200,0.02100279],[1786233600,0.02099839],[1786320000,0.02110991],[1786406400,0.02115135],[1786492800,0.0212443],[1786579200,0.0212864],[1786665600,0.02126491],[1786752000,0.02121193],[1786838400,0.02108079],[1786924800,0.02117882],[1787011200,0.02118585],[1787097600,0.02138516],[1787184000,0.02214699],[1787270400,0.02307628],[1787356800,0.02379867],[1787443200,0.024746],[1787529600,0.025723],[1787616000,0.026013],[1787702400,0.02638],[1787788800,0.02669829],[1787875200,0.02678796],[1787961600,0.02677625],[1788048000,0.02674393],[1788134400,0.02670323],[1788220800,0.02667176],[1788307200,0.02648494],[1788393600,0.02657309],[1788480000,0.02635365],[1788566400,0.02615056],[1788652800,0.02628691],[1788739200,0.02638821],[1788825600,0.0262796],[1788912000,0.02608895],[1788998400,0.02563624],[1789084800,0.02530392],[1789171200,0.02499422],[1789257600,0.02466119],[1789344000,0.02441187],[1789430400,0.02402403],[1789516800,0.02375189],[1789603200,0.0236809],[1789689600,0.02382335],[1789776000,0.02396272],[1789862400,0.02411134],[1789948800,0.024328],[1790035200,0.02474643],[1790121600,0.02464137],[1790208000,0.02469303],[1790294400,0.02493617],[1790380800,0.02519757],[1790467200,0.02561363],[1790553600,0.02602812],[1790640000,0.02614324],[1790726400,0.02694449],[1790812800,0.02790557],[1790899200,0.0285352],[1790985600,0.02930146],[1791072000,0.02987868],[1791158400,0.03010415],[1791244800,0.02986827]]},{"name":"EMA 25","color":"#00BCD4","width":1.0,"style":"step","visible":true,"data":[[1766016000,0.02586421],[1766102400,0.02534004],[1766188800,0.02483465],[1766275200,0.02450122],[1766361600,0.0240942],[1766448000,0.02376234],[1766534400,0.02360293],[1766620800,0.02356809],[1766707200,0.02354977],[1766793600,0.02351518],[1766880000,0.02343247],[1766966400,0.02328151],[1767052800,0.02322678],[1767139200,0.02318626],[1767225600,0.02322578],[1767312000,0.02358918],[1767398400,0.02403001],[1767484800,0.02439309],[1767571200,0.02469362],[1767657600,0.02508949],[1767744000,0.02522184],[1767830400,0.02542093],[1767916800,0.02547624],[1768003200,0.02537961],[1768089600,0.02526195],[1768176000,0.02509334],[1768262400,0.02506692],[1768348800,0.02492255],[1768435200,0.02470773],[1768521600,0.02452176],[1768608000,0.02433624],[1768694400,0.02413806],[1768780800,0.02382898],[1768867200,0.02337137],[1768953600,0.02301665],[1769040000,0.02263844],[1769126400,0.02230702],[1769212800,0.02205879],[1769299200,0.02173042],[1769385600,0.02150501],[1769472000,0.02155693],[1769558400,0.0215364],[1769644800,0.02141744],[1769731200,0.02132302],[1769817600,0.02107048],[1769904000,0.02082122],[1769990400,0.02064035],[1770076800,0.02040186],[1770163200,0.02035018],[1770249600,0.02011094],[1770336000,0.01999163],[1770422400,0.01988536],[1770508800,0.01974956],[1770595200,0.01961113],[1770681600,0.0196172],[1770768000,0.01957357],[1770854400,0.01961791],[1770940800,0.01986115],[1771027200,0.0201326],[1771113600,0.02044701],[1771200000,0.02067955],[1771286400,0.02079112],[1771372800,0.02074257],[1771459200,0.0207193],[1771545600,0.02074551],[1771632000,0.02073585],[1771718400,0.02066771],[1771804800,0.02065866],[1771891200,0.0206103],[1771977600,0.02068181],[1772064000,0.02070937],[1772150400,0.0207048],[1772236800,0.02073751],[1772323200,0.02074616],[1772409600,0.02078184],[1772496000,0.02075016],[1772582400,0.02088938],[1772668800,0.02095404],[1772755200,0.0210145],[1772841600,0.02106569],[1772928000,0.02101602],[1773014400,0.02102941],[1773100800,0.02106945],[1773187200,0.02109565],[1773273600,0.02110368],[1773360000,0.02116416],[1773446400,0.02124],[1773532800,0.02141077],[1773619200,0.0216684],[1773705600,0.02181698],[1773792000,0.02191337],[1773878400,0.02191926],[1773964800,0.02195855],[1774051200,0.02191636],[1774137600,0.02180971],[1774224000,0.02179204],[1774310400,0.02191112],[1774396800,0.02225795],[1774483200,0.02241657],[1774569600,0.02241222],[1774656000,0.02247974],[1774742400,0.02244592],[1774828800,0.02243546],[1774915200,0.02262812],[1775001600,0.02272134],[1775088000,0.02289739],[1775174400,0.02323374],[1775260800,0.02354192],[1775347200,0.02390562],[1775433600,0.02415134],[1775520000,0.024632],[1775606400,0.02513262],[1775692800,0.02573473],[1775779200,0.0264559],[1775865600,0.02715622],[1775952000,0.02758343],[1776038400,0.02823317],[1776124800,0.02871523],[1776211200,0.02920944],[1776297600,0.02960102],[1776384000,0.02999864],[1776470400,0.03018797],[1776556800,0.0301789],[1776643200,0.03031129],[1776729600,0.03050042],[1776816000,0.03075116],[1776902400,0.03088415],[1776988800,0.03086921],[1777075200,0.03090235],[1777161600,0.03099294],[1777248000,0.03096117],[1777334400,0.03082108],[1777420800,0.03053023],[1777507200,0.03027098],[1777593600,0.03025783],[1777680000,0.03024646],[1777766400,0.0301575],[1777852800,0.03010308],[1777939200,0.03019746],[1778025600,0.03035996],[1778112000,0.03051612],[1778198400,0.03080488],[1778284800,0.03110219],[1778371200,0.03143972],[1778457600,0.03160666],[1778544000,0.03154846],[1778630400,0.03143858],[1778716800,0.03131022],[1778803200,0.03107713],[1778889600,0.0308212],[1778976000,0.03058957],[1779062400,0.03031191],[1779148800,0.02997561],[1779235200,0.02974056],[1779321600,0.02965667],[1779408000,0.02938693],[1779494400,0.02911101],[1779580800,0.02881401],[1779667200,0.02861755],[1779753600,0.02834158],[1779840000,0.02795377],[1779926400,0.02762502],[1780012800,0.02729232],[1780099200,0.02698137],[1780185600,0.02673896],[1780272000,0.02641596],[1780358400,0.02595935],[1780444800,0.02553479],[1780531200,0.02522442],[1780617600,0.02490408],[1780704000,0.02460992],[1780790400,0.02442146],[1780876800,0.02414597],[1780963200,0.02392551],[1781049600,0.02370431],[1781136000,0.02354629],[1781222400,0.02335811],[1781308800,0.0232398],[1781395200,0.02318212],[1781481600,0.02313811],[1781568000,0.0231321],[1781654400,0.02302733],[1781740800,0.02287753],[1781827200,0.02270695],[1781913600,0.02254411],[1782000000,0.0224061],[1782086400,0.02226948],[1782172800,0.02210183],[1782259200,0.02191553],[1782345600,0.02170434],[1782432000,0.02152246],[1782518400,0.02131612],[1782604800,0.02111027],[1782691200,0.02094178],[1782777600,0.02074088],[1782864000,0.02068696],[1782950400,0.02063335],[1783036800,0.02062309],[1783123200,0.02066055],[1783209600,0.02073204],[1783296000,0.02105804],[1783382400,0.02131358],[1783468800,0.02145022],[1783555200,0.02157482],[1783641600,0.02168368],[1783728000,0.02172878],[1783814400,0.02181042],[1783900800,0.021845],[1783987200,0.02190538],[1784073600,0.02193497],[1784160000,0.02190766],[1784246400,0.02191015],[1784332800,0.02188476],[1784419200,0.02183054],[1784505600,0.0219105],[1784592000,0.02198585],[1784678400,0.02205847],[1784764800,0.0220809],[1784851200,0.02206314],[1784937600,0.02195059],[1785024000,0.02190439],[1785110400,0.0217679],[1785196800,0.02172806],[1785283200,0.02165359],[1785369600,0.02165793],[1785456000,0.02158501],[1785542400,0.02149924],[1785628800,0.0214593],[1785715200,0.02146428],[1785801600,0.02139249],[1785888000,0.02136222],[1785974400,0.0212912],[1786060800,0.02126242],[1786147200,0.02123439],[1786233600,0.0212142],[1786320000,0.02125765],[1786406400,0.0212686],[1786492800,0.02130963],[1786579200,0.02132727],[1786665600,0.02131256],[1786752000,0.02128036],[1786838400,0.02120449],[1786924800,0.02124776],[1787011200,0.02124624],[1787097600,0.02134891],[1787184000,0.02176192],[1787270400,0.02229193],[1787356800,0.02274124],[1787443200,0.02333268],[1787529600,0.02396748],[1787616000,0.02425867],[1787702400,0.02459123],[1787788800,0.02490022],[1787875200,0.02508681],[1787961600,0.02521137],[1788048000,0.02531434],[1788134400,0.02540239],[1788220800,0.02548551],[1788307200,0.02547617],[1788393600,0.02560123],[1788480000,0.02555783],[1788566400,0.02550969],[1788652800,0.0256324],[1788739200,0.0257373],[1788825600,0.02572889],[1788912000,0.02566859],[1788998400,0.02545716],[1789084800,0.02529199],[1789171200,0.02512615],[1789257600,0.02493667],[1789344000,0.02478124],[1789430400,0.02454399],[1789516800,0.02435745],[1789603200,0.02427265],[1789689600,0.02430383],[1789776000,0.02434192],[1789862400,0.02439277],[1789948800,0.02448779],[1790035200,0.0247008],[1790121600,0.02464774],[1790208000,0.02467507],[1790294400,0.02480737],[1790380800,0.02495804],[1790467200,0.0252005],[1790553600,0.02545546],[1790640000,0.0255615],[1790726400,0.02603769],[1790812800,0.02662495],[1790899200,0.02706249],[1790985600,0.02758837],[1791072000,0.02803096],[1791158400,0.0282945],[1791244800,0.02830669]]},{"name":"EMA 32","color":"#F23645","width":1.0,"style":"dots","visible":true,"data":[[1766620800,0.02455474],[1766707200,0.02448051],[1766793600,0.02439684],[1766880000,0.02427825],[1766966400,0.02410805],[1767052800,0.02401484],[1767139200,0.02393515],[1767225600,0.0239209],[1767312000,0.02416508],[1767398400,0.0244775],[1767484800,0.02473644],[1767571200,0.02495242],[1767657600,0.02524863],[1767744000,0.02534326],[1767830400,0.02549276],[1767916800,0.02553199],[1768003200,0.02545247],[1768089600,0.02535535],[1768176000,0.02521685],[1768262400,0.02518855],[1768348800,0.02506743],[1768435200,0.0248894],[1768521600,0.02473186],[1768608000,0.02457296],[1768694400,0.02440248],[1768780800,0.02414294],[1768867200,0.02376336],[1768953600,0.02346013],[1769040000,0.02313527],[1769126400,0.02284404],[1769212800,0.02261592],[1769299200,0.02232344],[1769385600,0.0221099],[1769472000,0.02211415],[1769558400,0.0220642],[1769644800,0.02193849],[1769731200,0.02183252],[1769817600,0.02160267],[1769904000,0.02137402],[1769990400,0.02119802],[1770076800,0.02097632],[1770163200,0.02090079],[1770249600,0.02067892],[1770336000,0.0205505],[1770422400,0.0204329],[1770508800,0.02029272],[1770595200,0.02015074],[1770681600,0.02012282],[1770768000,0.0200578],[1770854400,0.02006338],[1770940800,0.02022803],[1771027200,0.02041966],[1771113600,0.02064999],[1771200000,0.0208209],[1771286400,0.02090024],[1771372800,0.02085537],[1771459200,0.0208302],[1771545600,0.02084413],[1771632000,0.02083054],[1771718400,0.02077112],[1771804800,0.02075771],[1771891200,0.02071361],[1771977600,0.0207637],[1772064000,0.02078044],[1772150400,0.02077254],[1772236800,0.0207942],[1772323200,0.02079758],[1772409600,0.02082258],[1772496000,0.02079515],[1772582400,0.02090211],[1772668800,0.02095228],[1772755200,0.02100002],[1772841600,0.02104123],[1772928000,0.02100358],[1773014400,0.02101488],[1773100800,0.02104731],[1773187200,0.02106929],[1773273600,0.02107722],[1773360000,0.02112648],[1773446400,0.02118851],[1773532800,0.02132617],[1773619200,0.02153428],[1773705600,0.02165948],[1773792000,0.02174497],[1773878400,0.02175982],[1773964800,0.02180043],[1774051200,0.02177677],[1774137600,0.02170121],[1774224000,0.02169386],[1774310400,0.02179363],[1774396800,0.02207401],[1774483200,0.02221014],[1774569600,0.02221922],[1774656000,0.02228411],[1774742400,0.02226932],[1774828800,0.02227178],[1774915200,0.02243349],[1775001600,0.02251874],[1775088000,0.02266972],[1775174400,0.02294853],[1775260800,0.02320862],[1775347200,0.02351537],[1775433600,0.02373262],[1775520000,0.0241367],[1775606400,0.02456114],[1775692800,0.02507017],[1775779200,0.02567864],[1775865600,0.02627751],[1775952000,0.02666736],[1776038400,0.02723479],[1776124800,0.02767511],[1776211200,0.02812752],[1776297600,0.02850161],[1776384000,0.02888152],[1776470400,0.02909839],[1776556800,0.02915728],[1776643200,0.0293235],[1776729600,0.02953238],[1776816000,0.0297886],[1776902400,0.02995172],[1776988800,0.02999646],[1777075200,0.03007546],[1777161600,0.03019695],[1777248000,0.03022017],[1777334400,0.0301547],[1777420800,0.02996593],[1777507200,0.02979588],[1777593600,0.02981431],[1777680000,0.02983223],[1777766400,0.02978724],[1777852800,0.02976681],[1777939200,0.02986154],[1778025600,0.03000994],[1778112000,0.03015418],[1778198400,0.03040363],[1778284800,0.03066219],[1778371200,0.03095479],[1778457600,0.03111571],[1778544000,0.03109961],[1778630400,0.03104024],[1778716800,0.03096325],[1778803200,0.03080063],[1778889600,0.03061574],[1778976000,0.0304457],[1779062400,0.03023566],[1779148800,0.02997531],[1779235200,0.02979014],[1779321600,0.02972104],[1779408000,0.02950462],[1779494400,0.02928009],[1779580800,0.02903585],[1779667200,0.02886761],[1779753600,0.02863503],[1779840000,0.0283117],[1779926400,0.02803099],[1780012800,0.02774426],[1780099200,0.02747188],[1780185600,0.02725116],[1780272000,0.02696564],[1780358400,0.02657257],[1780444800,0.0262009],[1780531200,0.02591599],[1780617600,0.02562169],[1780704000,0.02534644],[1780790400,0.02515332],[1780876800,0.02489191],[1780963200,0.024673],[1781049600,0.02445343],[1781136000,0.02428352],[1781222400,0.02409058],[1781308800,0.02395297],[1781395200,0.02386431],[1781481600,0.02378829],[1781568000,0.02374415],[1781654400,0.0236245],[1781740800,0.02347029],[1781827200,0.02329997],[1781913600,0.02313573],[1782000000,0.02299114],[1782086400,0.02284804],[1782172800,0.02268089],[1782259200,0.02249901],[1782345600,0.02229726],[1782432000,0.02211803],[1782518400,0.02191936],[1782604800,0.02172061],[1782691200,0.02155088],[1782777600,0.02135567],[1782864000,0.02127593],[1782950400,0.021198],[1783036800,0.0211557],[1783123200,0.02115293],[1783209600,0.02117942],[1783296000,0.02140915],[1783382400,0.0215892],[1783468800,0.02168016],[1783555200,0.02176439],[1783641600,0.02183867],[1783728000,0.02186481],[1783814400,0.02192088],[1783900800,0.02194144],[1783987200,0.02198317],[1784073600,0.02200176],[1784160000,0.0219762],[1784246400,0.02197401],[1784332800,0.02195013],[1784419200,0.02190345],[1784505600,0.02196203],[1784592000,0.02201827],[1784678400,0.02207353],[1784764800,0.02209028],[1784851200,0.02207572],[1784937600,0.02198628],[1785024000,0.02194772],[1785110400,0.02183756],[1785196800,0.02180195],[1785283200,0.0217388],[1785369600,0.02173705],[1785456000,0.02167481],[1785542400,0.02160179],[1785628800,0.0215641],[1785715200,0.02156167],[1785801600,0.02149921],[1785888000,0.02146889],[1785974400,0.02140648],[1786060800,0.02137681],[1786147200,0.02134779],[1786233600,0.02132502],[1786320000,0.02135253],[1786406400,0.02135541],[1786492800,0.02138247],[1786579200,0.02139196],[1786665600,0.02137645],[1786752000,0.02134721],[1786838400,0.02128338],[1786924800,0.02131269],[1787011200,0.02130756],[1787097600,0.02138473],[1787184000,0.02170796],[1787270400,0.02212881],[1787356800,0.0224927],[1787443200,0.02297375],[1787529600,0.02349565],[1787616000,0.02375367],[1787702400,0.02404629],[1787788800,0.02432276],[1787875200,0.02450477],[1787961600,0.02463818],[1788048000,0.02475405],[1788134400,0.02485738],[1788220800,0.0249559],[1788307200,0.02498064],[1788393600,0.0251092],[1788480000,0.02510483],[1788566400,0.02509435],[1788652800,0.02521621],[1788739200,0.02532408],[1788825600,0.0253425],[1788912000,0.02531841],[1788998400,0.02517305],[1789084800,0.02506014],[1789171200,0.02494352],[1789257600,0.02480531],[1789344000,0.0246908],[1789430400,0.02450936],[1789516800,0.02436449],[1789603200,0.02429725],[1789689600,0.02432033],[1789776000,0.02434934],[1789862400,0.02438895],[1789948800,0.02446405],[1790035200,0.02463332],[1790121600,0.0245956],[1790208000,0.02462029],[1790294400,0.02472785],[1790380800,0.02485137],[1790467200,0.02504887],[1790553600,0.02525893],[1790640000,0.02535439],[1790726400,0.02574213],[1790812800,0.02622272],[1790899200,0.02659183],[1790985600,0.02703469],[1791072000,0.02741695],[1791158400,0.0276618],[1791244800,0.02770975]]},{"name":"EMA 200","color":"#434651","width":2.0,"style":"step","visible":true,"data":[[1781136000,0.02626726],[1781222400,0.02621585],[1781308800,0.02617211],[1781395200,0.02613547],[1781481600,0.02610039],[1781568000,0.02607014],[1781654400,0.02602735],[1781740800,0.02597812],[1781827200,0.0259252],[1781913600,0.02587212],[1782000000,0.02582115],[1782086400,0.0257695],[1782172800,0.02571299],[1782259200,0.02565296],[1782345600,0.02558845],[1782432000,0.02552628],[1782518400,0.02545975],[1782604800,0.02539189],[1782691200,0.02532749],[1782777600,0.02525786],[1782864000,0.02520594],[1782950400,0.02515404],[1783036800,0.02510774],[1783123200,0.02506796],[1783209600,0.02503335],[1783296000,0.02503272],[1783382400,0.02502623],[1783468800,0.02500696],[1783555200,0.02498769],[1783641600,0.02496781],[1783728000,0.02494096],[1783814400,0.02491956],[1783900800,0.0248931],[1783987200,0.02487058],[1784073600,0.0248449],[1784160000,0.02481242],[1784246400,0.02478384],[1784332800,0.02475196],[1784419200,0.02471641],[1784505600,0.02469804],[1784592000,0.02468005],[1784678400,0.02466264],[1784764800,0.02463963],[1784851200,0.02461187],[1784937600,0.02457195],[1785024000,0.02453989],[1785110400,0.02449601],[1785196800,0.02446371],[1785283200,0.02442686],[1785369600,0.02439983],[1785456000,0.02436311],[1785542400,0.02432437],[1785628800,0.0242911],[1785715200,0.02426356],[1785801600,0.02422642],[1785888000,0.02419431],[1785974400,0.02415694],[1786060800,0.02412471],[1786147200,0.0240926],[1786233600,0.02406155],[1786320000,0.02403884],[1786406400,0.02401258],[1786492800,0.02399058],[1786579200,0.02396619],[1786665600,0.02393803],[1786752000,0.02390774],[1786838400,0.02387178],[1786924800,0.02385084],[1787011200,0.02382474],[1787097600,0.02381237],[1787184000,0.02384128],[1787270400,0.02388915],[1787356800,0.02393137],[1787443200,0.02399604],[1787529600,0.02407155],[1787616000,0.02410818],[1787702400,0.02415269],[1787788800,0.02419703],[1787875200,0.02422816],[1787961600,0.02425282],[1788048000,0.02427567],[1788134400,0.0242974],[1788220800,0.02431914],[1788307200,0.02432954],[1788393600,0.02435713],[1788480000,0.02436389],[1788566400,0.02436955],[1788652800,0.02439676],[1788739200,0.02442263],[1788825600,0.02443462],[1788912000,0.0244397],[1788998400,0.02442458],[1789084800,0.02441349],[1789171200,0.02440078],[1789257600,0.02438349],[1789344000,0.02436888],[1789430400,0.0243423],[1789516800,0.02432017],[1789603200,0.02430958],[1789689600,0.02431324],[1789776000,0.02431808],[1789862400,0.02432489],[1789948800,0.02433786],[1790035200,0.0243669],[1790121600,0.02436336],[1790208000,0.02436973],[1790294400,0.02438988],[1790380800,0.02441352],[1790467200,0.0244503],[1790553600,0.02449075],[1790640000,0.02451406],[1790726400,0.02458608],[1790812800,0.02467649],[1790899200,0.02475247],[1790985600,0.02484348],[1791072000,0.02492805],[1791158400,0.02499301],[1791244800,0.02502744]]},{"name":"MA 100","color":"#5FA8A0","width":1.0,"style":"line","visible":true,"data":[[1772496000,0.0232695],[1772582400,0.0231901],[1772668800,0.0229484],[1772755200,0.0226978],[1772841600,0.0225074],[1772928000,0.0223575],[1773014400,0.0222422],[1773100800,0.0221783],[1773187200,0.0220846],[1773273600,0.0219826],[1773360000,0.0218961],[1773446400,0.0218407],[1773532800,0.021803],[1773619200,0.0217787],[1773705600,0.0217591],[1773792000,0.0217087],[1773878400,0.0216549],[1773964800,0.0216101],[1774051200,0.0215618],[1774137600,0.0215264],[1774224000,0.0215078],[1774310400,0.0215348],[1774396800,0.0216003],[1774483200,0.021628],[1774569600,0.0216643],[1774656000,0.0217281],[1774742400,0.021758],[1774828800,0.0217934],[1774915200,0.0218378],[1775001600,0.0218841],[1775088000,0.0219364],[1775174400,0.0219922],[1775260800,0.0220331],[1775347200,0.0220825],[1775433600,0.0221225],[1775520000,0.0222021],[1775606400,0.0222988],[1775692800,0.0224027],[1775779200,0.0225268],[1775865600,0.0226454],[1775952000,0.022693],[1776038400,0.0227601],[1776124800,0.0228176],[1776211200,0.022886],[1776297600,0.0229306],[1776384000,0.0230102],[1776470400,0.0230567],[1776556800,0.023096],[1776643200,0.0231728],[1776729600,0.023262],[1776816000,0.0233689],[1776902400,0.0234462],[1776988800,0.0235212],[1777075200,0.0236129],[1777161600,0.0237108],[1777248000,0.0237955],[1777334400,0.0238693],[1777420800,0.0239385],[1777507200,0.0240313],[1777593600,0.0241447],[1777680000,0.0242648],[1777766400,0.0243724],[1777852800,0.0244761],[1777939200,0.0246115],[1778025600,0.0247466],[1778112000,0.0248487],[1778198400,0.0249785],[1778284800,0.0251253],[1778371200,0.0252783],[1778457600,0.025434],[1778544000,0.0255642],[1778630400,0.0256807],[1778716800,0.025803],[1778803200,0.0258885],[1778889600,0.0259936],[1778976000,0.0260861],[1779062400,0.0261698],[1779148800,0.026248],[1779235200,0.0263377],[1779321600,0.0264273],[1779408000,0.0264983],[1779494400,0.0265548],[1779580800,0.0265795],[1779667200,0.0266082],[1779753600,0.0266163],[1779840000,0.0266146],[1779926400,0.0266301],[1780012800,0.0266615],[1780099200,0.0266896],[1780185600,0.0267173],[1780272000,0.0267365],[1780358400,0.0267428],[1780444800,0.0267417],[1780531200,0.0267564],[1780617600,0.0267516],[1780704000,0.026752],[1780790400,0.0267671],[1780876800,0.0267642],[1780963200,0.0267685],[1781049600,0.0267669],[1781136000,0.0267797],[1781222400,0.0267651],[1781308800,0.026766],[1781395200,0.0267735],[1781481600,0.0267828],[1781568000,0.0268092],[1781654400,0.026815],[1781740800,0.0268103],[1781827200,0.0268028],[1781913600,0.0267967],[1782000000,0.0267853],[1782086400,0.0267701],[1782172800,0.0267364],[1782259200,0.0266856],[1782345600,0.0266413],[1782432000,0.026604],[1782518400,0.0265725],[1782604800,0.0265346],[1782691200,0.0265097],[1782777600,0.0264877],[1782864000,0.0264723],[1782950400,0.0264388],[1783036800,0.0263796],[1783123200,0.0263475],[1783209600,0.0263398],[1783296000,0.0263566],[1783382400,0.02638],[1783468800,0.0263878],[1783555200,0.0263691],[1783641600,0.0263606],[1783728000,0.0263332],[1783814400,0.0262884],[1783900800,0.0262386],[1783987200,0.0261822],[1784073600,0.0261341],[1784160000,0.0260459],[1784246400,0.0259539],[1784332800,0.0258401],[1784419200,0.0257008],[1784505600,0.0255739],[1784592000,0.0254757],[1784678400,0.0253447],[1784764800,0.0252232],[1784851200,0.0250903],[1784937600,0.0249533],[1785024000,0.0248191],[1785110400,0.0246958],[1785196800,0.0246076],[1785283200,0.0244962],[1785369600,0.0243856],[1785456000,0.0242551],[1785542400,0.024135],[1785628800,0.0240379],[1785715200,0.02394014],[1785801600,0.02382465],[1785888000,0.02372884],[1785974400,0.02364183],[1786060800,0.0235806],[1786147200,0.02351798],[1786233600,0.0234267],[1786320000,0.02334339],[1786406400,0.02326649],[1786492800,0.02319001],[1786579200,0.0230921],[1786665600,0.02298036],[1786752000,0.0228654],[1786838400,0.02272564],[1786924800,0.02259661],[1787011200,0.02245399],[1787097600,0.0223437],[1787184000,0.02230238],[1787270400,0.0222877],[1787356800,0.02227133],[1787443200,0.02229283],[1787529600,0.02233118],[1787616000,0.02233061],[1787702400,0.02234663],[1787788800,0.02237331],[1787875200,0.02237737],[1787961600,0.02235793],[1788048000,0.02236193],[1788134400,0.02236852],[1788220800,0.02238085],[1788307200,0.02237189],[1788393600,0.02239261],[1788480000,0.02240998],[1788566400,0.0224225],[1788652800,0.02246055],[1788739200,0.02249801],[1788825600,0.02251599],[1788912000,0.02254004],[1788998400,0.02256444],[1789084800,0.02259314],[1789171200,0.0226095],[1789257600,0.02262553],[1789344000,0.02264389],[1789430400,0.02263926],[1789516800,0.02265205],[1789603200,0.0226718],[1789689600,0.02270808],[1789776000,0.02273957],[1789862400,0.0227786],[1789948800,0.02281668],[1790035200,0.02286435],[1790121600,0.02287836],[1790208000,0.02289779],[1790294400,0.02294404],[1790380800,0.0230009],[1790467200,0.0230754],[1790553600,0.02315465],[1790640000,0.02321549],[1790726400,0.02332671],[1790812800,0.02346253],[1790899200,0.02358886],[1790985600,0.02373615],[1791072000,0.02387617],[1791158400,0.02400234],[1791244800,0.02410047]]},{"name":"MA 200","color":"#9C27B0","width":1.0,"style":"line","visible":true,"data":[[1781136000,0.0250246],[1781222400,0.0249776],[1781308800,0.0248572],[1781395200,0.02473565],[1781481600,0.0246451],[1781568000,0.02458335],[1781654400,0.0245286],[1781740800,0.0244943],[1781827200,0.0244437],[1781913600,0.02438965],[1782000000,0.0243407],[1782086400,0.0243054],[1782172800,0.0242697],[1782259200,0.02423215],[1782345600,0.0242002],[1782432000,0.02415635],[1782518400,0.0241137],[1782604800,0.02407235],[1782691200,0.02403575],[1782777600,0.02400705],[1782864000,0.02399005],[1782950400,0.0239868],[1783036800,0.02398995],[1783123200,0.02398775],[1783209600,0.02400205],[1783296000,0.02404235],[1783382400,0.024069],[1783468800,0.0240906],[1783555200,0.02410345],[1783641600,0.02412235],[1783728000,0.0241348],[1783814400,0.0241403],[1783900800,0.02413585],[1783987200,0.02413235],[1784073600,0.0241283],[1784160000,0.024124],[1784246400,0.02412635],[1784332800,0.0241214],[1784419200,0.0241138],[1784505600,0.02410965],[1784592000,0.02408435],[1784678400,0.0240524],[1784764800,0.0240204],[1784851200,0.02398815],[1784937600,0.02394195],[1785024000,0.02391465],[1785110400,0.02387625],[1785196800,0.0238518],[1785283200,0.0238345],[1785369600,0.0238238],[1785456000,0.023812],[1785542400,0.0237906],[1785628800,0.02377955],[1785715200,0.02377652],[1785801600,0.02376772],[1785888000,0.02376217],[1785974400,0.02375556],[1786060800,0.02375955],[1786147200,0.02377464],[1786233600,0.0237857],[1786320000,0.02380409],[1786406400,0.02381945],[1786492800,0.02383306],[1786579200,0.0238518],[1786665600,0.02386348],[1786752000,0.02385705],[1786838400,0.02385207],[1786924800,0.02386096],[1787011200,0.02386614],[1787097600,0.02388885],[1787184000,0.02393329],[1787270400,0.0239842],[1787356800,0.02403716],[1787443200,0.02409066],[1787529600,0.02416239],[1787616000,0.02420836],[1787702400,0.02425821],[1787788800,0.02431066],[1787875200,0.02435753],[1787961600,0.02439262],[1788048000,0.02443012],[1788134400,0.02446166],[1788220800,0.02448018],[1788307200,0.02449005],[1788393600,0.02450445],[1788480000,0.02451229],[1788566400,0.0245263],[1788652800,0.02456102],[1788739200,0.0245938],[1788825600,0.02461665],[1788912000,0.02463827],[1788998400,0.02465362],[1789084800,0.02466742],[1789171200,0.02468295],[1789257600,0.02468857],[1789344000,0.02469794],[1789430400,0.02470318],[1789516800,0.02470813],[1789603200,0.02472015],[1789689600,0.02473749],[1789776000,0.02475963],[1789862400,0.02477185],[1789948800,0.02479134],[1790035200,0.02481893],[1790121600,0.02483058],[1790208000,0.02485349],[1790294400,0.02487952],[1790380800,0.0249056],[1790467200,0.0249391],[1790553600,0.02497567],[1790640000,0.02500039],[1790726400,0.0250484],[1790812800,0.02509946],[1790899200,0.02513723],[1790985600,0.02518873],[1791072000,0.02524008],[1791158400,0.02528742],[1791244800,0.02531753]]}],"vma":[[1765411200,2193560000.0],[1765497600,2099370000.0],[1765584000,2006470000.0],[1765670400,1814450000.0],[1765756800,1568480000.0],[1765843200,1384460000.0],[1765929600,1268330000.0],[1766016000,1143100000.0],[1766102400,1038500000.0],[1766188800,881598000.0],[1766275200,737198000.0],[1766361600,642852000.0],[1766448000,592456000.0],[1766534400,574898000.0],[1766620800,573241000.0],[1766707200,585843000.0],[1766793600,577871000.0],[1766880000,561890000.0],[1766966400,559128000.0],[1767052800,548115000.0],[1767139200,546841000.0],[1767225600,548173000.0],[1767312000,585535000.0],[1767398400,580949000.0],[1767484800,567582000.0],[1767571200,558771000.0],[1767657600,564897000.0],[1767744000,571818000.0],[1767830400,569420000.0],[1767916800,566887000.0],[1768003200,554143000.0],[1768089600,521479000.0],[1768176000,517167000.0],[1768262400,497624000.0],[1768348800,468324000.0],[1768435200,445468000.0],[1768521600,438892000.0],[1768608000,421356000.0],[1768694400,402611000.0],[1768780800,400940000.0],[1768867200,408508000.0],[1768953600,411410000.0],[1769040000,373666000.0],[1769126400,357726000.0],[1769212800,355365000.0],[1769299200,354477000.0],[1769385600,334941000.0],[1769472000,338885000.0],[1769558400,345672000.0],[1769644800,351363000.0],[1769731200,369167000.0],[1769817600,394648000.0],[1769904000,400143000.0],[1769990400,409552000.0],[1770076800,421593000.0],[1770163200,444833000.0],[1770249600,515025000.0],[1770336000,550233000.0],[1770422400,562382000.0],[1770508800,562249000.0],[1770595200,555755000.0],[1770681600,607754000.0],[1770768000,620375000.0],[1770854400,623674000.0],[1770940800,633357000.0],[1771027200,634358000.0],[1771113600,641496000.0],[1771200000,625222000.0],[1771286400,612331000.0],[1771372800,609534000.0],[1771459200,587282000.0],[1771545600,567907000.0],[1771632000,559720000.0],[1771718400,539171000.0],[1771804800,532106000.0],[1771891200,509730000.0],[1771977600,443201000.0],[1772064000,411458000.0],[1772150400,397332000.0],[1772236800,389479000.0],[1772323200,372649000.0],[1772409600,304232000.0],[1772496000,288138000.0],[1772582400,285418000.0],[1772668800,267676000.0],[1772755200,256010000.0],[1772841600,239357000.0],[1772928000,226320000.0],[1773014400,227164000.0],[1773100800,212483000.0],[1773187200,206220000.0],[1773273600,197241000.0],[1773360000,189692000.0],[1773446400,183007000.0],[1773532800,165296000.0],[1773619200,156243000.0],[1773705600,142641000.0],[1773792000,138266000.0],[1773878400,137139000.0],[1773964800,131887000.0],[1774051200,128490000.0],[1774137600,123438000.0],[1774224000,120964000.0],[1774310400,113983000.0],[1774396800,119724000.0],[1774483200,122811000.0],[1774569600,122066000.0],[1774656000,125737000.0],[1774742400,119391000.0],[1774828800,121710000.0],[1774915200,124192000.0],[1775001600,126465000.0],[1775088000,126928000.0],[1775174400,140789000.0],[1775260800,147057000.0],[1775347200,148460000.0],[1775433600,155266000.0],[1775520000,163441000.0],[1775606400,181513000.0],[1775692800,195163000.0],[1775779200,213395000.0],[1775865600,217910000.0],[1775952000,225253000.0],[1776038400,232669000.0],[1776124800,231197000.0],[1776211200,230458000.0],[1776297600,235870000.0],[1776384000,241308000.0],[1776470400,240382000.0],[1776556800,242886000.0],[1776643200,243589000.0],[1776729600,242489000.0],[1776816000,242013000.0],[1776902400,232433000.0],[1776988800,227724000.0],[1777075200,226400000.0],[1777161600,218925000.0],[1777248000,211842000.0],[1777334400,196776000.0],[1777420800,192734000.0],[1777507200,178517000.0],[1777593600,181893000.0],[1777680000,172642000.0],[1777766400,160822000.0],[1777852800,155841000.0],[1777939200,152463000.0],[1778025600,149275000.0],[1778112000,141847000.0],[1778198400,141600000.0],[1778284800,136389000.0],[1778371200,135854000.0],[1778457600,133445000.0],[1778544000,132507000.0],[1778630400,135797000.0],[1778716800,135946000.0],[1778803200,139496000.0],[1778889600,138766000.0],[1778976000,135895000.0],[1779062400,135320000.0],[1779148800,128789000.0],[1779235200,126138000.0],[1779321600,124026000.0],[1779408000,126311000.0],[1779494400,129536000.0],[1779580800,124743000.0],[1779667200,121172000.0],[1779753600,116223000.0],[1779840000,115081000.0],[1779926400,117069000.0],[1780012800,115882000.0],[1780099200,111250000.0],[1780185600,108489000.0],[1780272000,118485000.0],[1780358400,126397000.0],[1780444800,133908000.0],[1780531200,156653000.0],[1780617600,172371000.0],[1780704000,172105000.0],[1780790400,176780000.0],[1780876800,178288000.0],[1780963200,185622000.0],[1781049600,184050000.0],[1781136000,185670000.0],[1781222400,183181000.0],[1781308800,184193000.0],[1781395200,184173000.0],[1781481600,187058000.0],[1781568000,192358000.0],[1781654400,189865000.0],[1781740800,190482000.0],[1781827200,190645000.0],[1781913600,190185000.0],[1782000000,177148000.0],[1782086400,164437000.0],[1782172800,154510000.0],[1782259200,128219000.0],[1782345600,118975000.0],[1782432000,122624000.0],[1782518400,113804000.0],[1782604800,107859000.0],[1782691200,99637600.0],[1782777600,95963000.0],[1782864000,103681000.0],[1782950400,108238000.0],[1783036800,111614000.0],[1783123200,113236000.0],[1783209600,115214000.0],[1783296000,130430000.0],[1783382400,139749000.0],[1783468800,146195000.0],[1783555200,148682000.0],[1783641600,150507000.0],[1783728000,150970000.0],[1783814400,150026000.0],[1783900800,151206000.0],[1783987200,148947000.0],[1784073600,144397000.0],[1784160000,139733000.0],[1784246400,140958000.0],[1784332800,141339000.0],[1784419200,139701000.0],[1784505600,140715000.0],[1784592000,130041000.0],[1784678400,128145000.0],[1784764800,123456000.0],[1784851200,120084000.0],[1784937600,114085000.0],[1785024000,90539600.0],[1785110400,78574200.0],[1785196800,69507700.0],[1785283200,66452500.0],[1785369600,64199800.0],[1785456000,63000500.0],[1785542400,59702700.0],[1785628800,56151600.0],[1785715200,51629900.0],[1785801600,49753100.0],[1785888000,50141000.0],[1785974400,47966900.0],[1786060800,47903500.0],[1786147200,47693100.0],[1786233600,44610000.0],[1786320000,44559800.0],[1786406400,40173600.0],[1786492800,39427800.0],[1786579200,39655300.0],[1786665600,39041700.0],[1786752000,39758300.0],[1786838400,38849700.0],[1786924800,43976900.0],[1787011200,45919700.0],[1787097600,50228700.0],[1787184000,63715000.0],[1787270400,76390400.0],[1787356800,86539800.0],[1787443200,92374700.0],[1787529600,98440300.0],[1787616000,101486000.0],[1787702400,103395000.0],[1787788800,105093000.0],[1787875200,110481000.0],[1787961600,110730000.0],[1788048000,107526000.0],[1788134400,108954000.0],[1788220800,110755000.0],[1788307200,112105000.0],[1788393600,114397000.0],[1788480000,117613000.0],[1788566400,120801000.0],[1788652800,118367000.0],[1788739200,119932000.0],[1788825600,116949000.0],[1788912000,105818000.0],[1788998400,96287400.0],[1789084800,89275300.0],[1789171200,82827800.0],[1789257600,75432800.0],[1789344000,71404100.0],[1789430400,71258700.0],[1789516800,71522100.0],[1789603200,69055400.0],[1789689600,71808700.0],[1789776000,74592100.0],[1789862400,74421900.0],[1789948800,77695800.0],[1790035200,83219400.0],[1790121600,86864900.0],[1790208000,85872500.0],[1790294400,88578500.0],[1790380800,87989400.0],[1790467200,89725200.0],[1790553600,99866100.0],[1790640000,100077000.0],[1790726400,103335000.0],[1790812800,119641000.0],[1790899200,128233000.0],[1790985600,132550000.0],[1791072000,142659000.0],[1791158400,147814000.0],[1791244800,158268000.0]],"zones":[{"low":0.0258,"high":0.02734,"color":"#c62828","alpha":0.17,"label":"S/R 0.02580–0.02734 (4x, f=0.79)","short":"S/R 0.02580–0.02734 (4x, f=0.79)","kind":"sr"},{"low":0.02388,"high":0.025539,"color":"#2e7d32","alpha":0.19,"label":"S/R 0.02388–0.02554 (11x, f=0.93)","short":"S/R 0.02388–0.02554 (11x, f=0.93)","kind":"sr"},{"low":0.02192,"high":0.02365,"color":"#2e7d32","alpha":0.19,"label":"S/R 0.02192–0.02365 (8x, f=0.93)","short":"S/R 0.02192–0.02365 (8x, f=0.93)","kind":"sr"},{"low":0.02775,"high":0.02931,"color":"#c62828","alpha":0.167,"label":"S/R 0.02775–0.02931 (3x, f=0.76)","short":"S/R 0.02775–0.02931 (3x, f=0.76)","kind":"sr"},{"low":0.01999,"high":0.021,"color":"#2e7d32","alpha":0.2,"label":"S/R 0.01999–0.02100 (10x, f=1.00)","short":"S/R 0.01999–0.02100 (10x, f=1.00)","kind":"sr"},{"low":0.01804,"high":0.019753,"color":"#2e7d32","alpha":0.2,"label":"S/R 0.01804–0.01975 (7x, f=1.00)","short":"S/R 0.01804–0.01975 (7x, f=1.00)","kind":"sr"}],"bands":[],"lines":[],"autoscale":[0.0251,0.0265,0.0271,0.0278],"initial":90,"minMove":1e-05,"expires":"2026-10-14T22:25:51+02:00","live":[1791331200,0.028412,0.028655,0.0254,0.02582,242856000.0],"liveAt":"2026-10-07T22:25:51+02:00","markers":[],"x":{"oid":"MON-261007-VUPV","v":1,"sym":"MON-USDC","symbol":"MON","exchange":"Coinbase","side":"sell","quote":"USDC","size":201827.0,"size_usdc":null,"size_base":201827.0,"capital":201827.0,"cap_kind":"live","cap_read":"07/10/2026 22:25","cap_pf":"Anna trading","cap_why":null,"cap_others":[{"currency":"EUR","available":0.0}],"entry":null,"stop":0.0251,"stop_def":0.0251,"tp_def":0.028402,"tps":[{"px":0.0265,"pct_size":40},{"px":0.0271,"pct_size":40},{"px":0.0278,"pct_size":20}],"tick":1e-06,"dec":6,"base_inc":1.0,"base_dec":0,"base_min":1.0,"quote_min":1.0,"lo":0.012628,"hi":0.04448,"last":0.02582,"risk_warn_pct":2.0,"prefix":"ANNA1.","entry_type":"limit","sl_slip":0.5,"fee_t":0.012,"fee_m":0.006}}</script>
+<script src="../assets/lightweight-charts-5.2.1.standalone.production.js"></script>
+<script>
+
+function initChart(){
+"use strict";
+var D=JSON.parse(document.getElementById('chart-data').textContent);
+function $(id){return document.getElementById(id);}
+function hideChart(){['wrap','chips','legend'].forEach(function(i){$(i).style.display='none';});
+  document.querySelector('.toolbar').style.display='none';document.querySelector('.hint').style.display='none';}
+if(D.expires && Date.now()>Date.parse(D.expires)){hideChart();$('expired').style.display='block';return;}
+if(!window.LightweightCharts){hideChart();$('err').style.display='block';return;}
+var LC=window.LightweightCharts;
+function fmt(p){
+  if(p===null||p===undefined||!isFinite(p))return '?';
+  if(p>=1000)return Math.round(p).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+  if(p>=100)return p.toFixed(2);
+  if(p>=1)return String(Number(p.toPrecision(4)));
+  if(p<=0)return String(p);
+  var dec=Math.max(4,-Math.floor(Math.log10(p))+3);return p.toFixed(dec);
+}
+function fmtVol(v){var a=Math.abs(v);if(a>=1e9)return (v/1e9).toFixed(2)+' G';if(a>=1e6)return (v/1e6).toFixed(2)+' M';if(a>=1e3)return (v/1e3).toFixed(1)+' k';return v.toFixed(0);}
+function rgba(hex,a){var n=parseInt(hex.replace('#',''),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+var TZ='Europe/Paris';
+function F(o){o.timeZone=TZ;return new Intl.DateTimeFormat('fr-FR',o);}
+var fDate=F({day:'2-digit',month:'2-digit',year:'2-digit'}),fDT=F({day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+var fDay=F({day:'numeric'}),fMon=F({month:'short'}),fYear=F({year:'numeric'}),fHM=F({hour:'2-digit',minute:'2-digit'});
+var intraday=D.tf!=='1d'&&D.tf!=='1w';
+function tlabel(t){return (intraday?fDT:fDate).format(new Date(t*1000));}
+var priceFormat={type:'custom',minMove:D.minMove,formatter:fmt};
+var FONT='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+var el=$('chart');
+var chart=LC.createChart(el,{
+  autoSize:true,
+  layout:{background:{type:'solid',color:'#ffffff'},textColor:'#131722',fontSize:11,fontFamily:FONT,
+          panes:{separatorColor:'#d1d4dc',separatorHoverColor:'rgba(41,98,255,0.15)',enableResize:true}},
+  grid:{vertLines:{color:'#e6e6e6',style:LC.LineStyle.Dotted},horzLines:{color:'#e6e6e6',style:LC.LineStyle.Dotted}},
+  rightPriceScale:{borderColor:'#d1d4dc',scaleMargins:{top:0.04,bottom:0.04},entireTextOnly:true},
+  timeScale:{borderColor:'#d1d4dc',timeVisible:intraday,secondsVisible:false,rightOffset:3,minBarSpacing:0.5,
+             tickMarkFormatter:function(t,type){var d=new Date(t*1000);
+               if(type===0)return fYear.format(d);if(type===1)return fMon.format(d).replace('.','');
+               if(type===2)return fDay.format(d);return fHM.format(d);}},
+  crosshair:{mode:LC.CrosshairMode.Normal,vertLine:{color:'#9598a1',labelBackgroundColor:'#434651'},
+             horzLine:{color:'#9598a1',labelBackgroundColor:'#434651'}},
+  localization:{locale:'fr-FR',timeFormatter:function(t){return tlabel(t);}},
+  handleScale:{axisPressedMouseMove:{time:true,price:true},pinch:true,mouseWheel:true},
+  handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true}
+});
+// --- bougies (pane 0) ---
+var auto=D.autoscale.slice();
+D.bands.forEach(function(b){auto.push(b.low,b.high);});
+var candle=chart.addSeries(LC.CandlestickSeries,{upColor:'#FFFFFF',downColor:'#434651',borderUpColor:'#434651',borderDownColor:'#000000',
+  wickUpColor:'#434651',wickDownColor:'#2A2E39',priceFormat:priceFormat,priceLineVisible:false,lastValueVisible:true,
+  autoscaleInfoProvider:function(orig){var r=orig();if(!r||!r.priceRange)return r;
+    var lo=r.priceRange.minValue,hi=r.priceRange.maxValue;
+    auto.forEach(function(p){if(p>0){lo=Math.min(lo,p);hi=Math.max(hi,p);}});
+    r.priceRange.minValue=lo*0.985;r.priceRange.maxValue=hi*1.015;return r;}},0);
+// bougie en cours (D.live) : affichage seul, estompée (~35 %), jamais utilisée par les MA / niveaux
+var LV=D.live,FADE=0.35,bars=D.candles.slice();if(LV)bars.push(LV);
+var liveAt=D.liveAt?new Date(D.liveAt):null;
+function liveStyle(c){var up=c[4]>=c[1];return up?{color:'rgba(255,255,255,'+FADE+')',borderColor:rgba('#434651',FADE),wickColor:rgba('#434651',FADE)}
+  :{color:rgba('#434651',FADE),borderColor:rgba('#000000',FADE),wickColor:rgba('#2A2E39',FADE)};}
+if(LV)candle.applyOptions({lastValueVisible:false});
+candle.setData(bars.map(function(c){var o={time:c[0],open:c[1],high:c[2],low:c[3],close:c[4]};
+  if(LV&&c===LV){var st=liveStyle(c);for(var k in st)o[k]=st[k];}return o;}));
+if(D.markers&&D.markers.length&&candle.setMarkers){
+  candle.setMarkers(D.markers.map(function(m){return {time:m.time,position:m.position||'aboveBar',color:m.color||'#2962ff',
+    shape:m.shape||'circle',text:m.text||''};}).sort(function(a,b){return a.time-b.time;}));
+}
+// --- moyennes mobiles (exclues de l'autoscale, comme l'ylim du PNG) ---
+var maSeries=[];
+D.mas.forEach(function(m){
+  var dots=m.style==='dots';
+  var s=chart.addSeries(LC.LineSeries,{color:m.color,lineWidth:Math.min(4,Math.max(1,Math.round(m.width))),
+    lineType:m.style==='step'?LC.LineType.WithSteps:LC.LineType.Simple,lineVisible:!dots,
+    pointMarkersVisible:dots,pointMarkersRadius:1.5,visible:m.visible,priceFormat:priceFormat,
+    priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false,
+    autoscaleInfoProvider:function(){return null;}},0);
+  s.setData(m.data.map(function(p){return {time:p[0],value:p[1]};}));
+  maSeries.push({m:m,s:s,map:new Map(m.data.map(function(p){return [p[0],p[1]];}))});
+});
+// --- volume (pane 1, en bas) ---
+var vol=chart.addSeries(LC.HistogramSeries,{priceFormat:{type:'volume'},lastValueVisible:false,priceLineVisible:false},1);
+vol.setData(bars.map(function(c){var col=c[4]>=c[1]?'#B2B5BE':'#434651';return {time:c[0],value:c[5],color:(LV&&c===LV)?rgba(col,FADE):col};}));
+var vma=chart.addSeries(LC.LineSeries,{color:'#555555',lineWidth:1,lineStyle:LC.LineStyle.Dashed,priceFormat:{type:'volume'},
+  lastValueVisible:false,priceLineVisible:false,crosshairMarkerVisible:false},1);
+vma.setData(D.vma.map(function(p){return {time:p[0],value:p[1]};}));
+vol.priceScale().applyOptions({scaleMargins:{top:0.12,bottom:0}});
+var panes=chart.panes();panes[0].setStretchFactor(4);panes[1].setStretchFactor(1.1);
+// --- lignes de prix (stop / invalidation / objectif / entrée / dernière clôture) ---
+var LS={solid:LC.LineStyle.Solid,dashed:LC.LineStyle.Dashed,dotted:LC.LineStyle.Dotted};
+// Titres des lignes dessinés À GAUCHE (avec les étiquettes S/R, empilés sans chevauchement) : à droite, seule
+// la petite étiquette de prix colorée reste sur l'axe, pour ne pas masquer l'échelle ni les dernières bougies.
+var lineLabels=[];
+D.lines.forEach(function(l){candle.createPriceLine({price:l.price,color:l.color,lineWidth:l.width||1,
+  lineStyle:LS[l.style]||LC.LineStyle.Solid,axisLabelVisible:true,title:''});
+  if(l.title)lineLabels.push({price:l.price,color:l.color,label:l.title,kind:'line'});});
+if(LV){candle.createPriceLine({price:LV[4],color:'#ef6c00',lineWidth:1,lineStyle:LC.LineStyle.Dotted,axisLabelVisible:true,title:''});
+  lineLabels.push({price:LV[4],color:'#ef6c00',label:'Prix actuel '+fmt(LV[4])+' (bougie en cours)',kind:'line'});}
+// --- primitive : bandes S/R + zones du plan (rectangles pleins) avec étiquettes ---
+function BandsPrimitive(zones,bands,lines){this.items=zones.concat(bands);this.lines=lines||[];this.series=null;this.show=true;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'bottom';},renderer:function(){return {draw:function(){},drawBackground:function(t){self.drawFill(t);}};}},
+              {zOrder:function(){return 'top';},renderer:function(){return {draw:function(t){self.drawLabels(t);}};}}];}
+BandsPrimitive.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+BandsPrimitive.prototype.detached=function(){this.series=null;};
+BandsPrimitive.prototype.updateAllViews=function(){};
+BandsPrimitive.prototype.paneViews=function(){return this.views;};
+BandsPrimitive.prototype.drawFill=function(target){var s=this.series,items=this.items;if(!s)return;
+  target.useBitmapCoordinateSpace(function(sc){var ctx=sc.context,vr=sc.verticalPixelRatio,W=sc.bitmapSize.width,px=Math.max(1,Math.round(vr));
+    items.forEach(function(b){var y1=s.priceToCoordinate(b.high),y2=s.priceToCoordinate(b.low);if(y1===null||y2===null)return;
+      var top=Math.round(Math.min(y1,y2)*vr),h=Math.max(Math.round(Math.abs(y2-y1)*vr),2*px);
+      ctx.fillStyle=rgba(b.color,b.alpha);ctx.fillRect(0,top,W,h);
+      if(b.kind!=='sr'){ctx.fillStyle=rgba(b.color,0.6);ctx.fillRect(0,top,W,px);ctx.fillRect(0,top+h-px,W,px);}
+    });});};
+BandsPrimitive.prototype.drawLabels=function(target){var s=this.series,items=this.items,lines=this.lines;if(!s||!this.show)return;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width,H=sc.mediaSize.height,narrow=W<520;
+    var fs=narrow?10:11,lh=fs+4,labs=[];
+    items.forEach(function(b){var y1=s.priceToCoordinate(b.high),y2=s.priceToCoordinate(b.low);if(y1===null||y2===null)return;
+      var y=(y1+y2)/2;if(y<-lh||y>H+lh)return;labs.push({y:y,b:b});});
+    lines.forEach(function(b){var y=s.priceToCoordinate(b.price);if(y===null||y<-lh||y>H+lh)return;labs.push({y:y,b:b});});
+    labs.sort(function(a,b){return a.y-b.y;});
+    for(var i=1;i<labs.length;i++){if(labs[i].y-labs[i-1].y<lh)labs[i].y=labs[i-1].y+lh;}
+    for(var j=labs.length-1;j>=0;j--){var mx=(j===labs.length-1?H-lh/2:labs[j+1].y-lh);if(labs[j].y>mx)labs[j].y=mx;}
+    labs.forEach(function(L){var b=L.b,txt=(narrow?b.short:b.label)||b.label,bold=b.kind!=='sr';
+      if(b.kind==='line'){ctx.font='600 '+fs+'px '+FONT;var lw=ctx.measureText(txt).width+8;
+        ctx.fillStyle=b.color;if(ctx.roundRect){ctx.beginPath();ctx.roundRect(2,L.y-lh/2,lw,lh,3);ctx.fill();}else ctx.fillRect(2,L.y-lh/2,lw,lh);
+        ctx.fillStyle='#fff';ctx.textBaseline='middle';ctx.fillText(txt,6,L.y+0.5);return;}
+      ctx.font=(bold?'700 ':'500 ')+fs+'px '+FONT;
+      var w=ctx.measureText(txt).width,x=5;
+      ctx.fillStyle='rgba(255,255,255,0.8)';ctx.fillRect(x-3,L.y-lh/2,w+6,lh);
+      ctx.fillStyle=b.kind==='entry'?'#0d47a1':b.color;ctx.textBaseline='middle';ctx.fillText(txt,x,L.y+0.5);});
+  });};
+var bandsPrim=new BandsPrimitive(D.zones,D.bands,lineLabels);candle.attachPrimitive(bandsPrim);
+// étiquettes de gauche (S/R, zones, titres des lignes) : bouton « Labels » ; « Tout » les masque, « Recentrer » les rétablit
+var bLab=$('bLab');
+function setLabels(v){bandsPrim.show=v;bLab.classList.toggle('on',v);if(bandsPrim.req)bandsPrim.req();}
+bLab.onclick=function(){setLabels(!bandsPrim.show);};
+// --- vue initiale : même fenêtre que le PNG (réduite sur petit écran pour garder des bougies lisibles) ---
+var n=bars.length;
+function initialBars(){var w=el.clientWidth||400;return Math.min(D.initial,n,Math.max(60,Math.floor((w-60)/3)));}
+function fit(){chart.timeScale().setVisibleLogicalRange({from:Math.max(0,n-initialBars())-0.5,to:n-1+3});
+  candle.priceScale().applyOptions({autoScale:true});vol.priceScale().applyOptions({autoScale:true});}
+fit();
+$('bFit').onclick=function(){fit();setLabels(true);};
+$('bAll').onclick=function(){chart.timeScale().fitContent();candle.priceScale().applyOptions({autoScale:true});setLabels(false);};
+var isLog=!!D.log,bLog=$('bLog');
+function setLog(v){isLog=v;candle.priceScale().applyOptions({mode:v?LC.PriceScaleMode.Logarithmic:LC.PriceScaleMode.Normal,autoScale:true});
+  bLog.textContent=v?'Log':'Linéaire';bLog.title='Échelle de prix : '+(v?'logarithmique':'linéaire')+' (toucher pour changer)';bLog.classList.toggle('on',v);}
+setLog(isLog);bLog.onclick=function(){setLog(!isLog);};
+// --- pastilles MA (toucher = afficher / masquer) ---
+var chips=$('chips');
+maSeries.forEach(function(o){var c=document.createElement('span');c.className='chip'+(o.m.visible?'':' off');
+  var i=document.createElement('i');i.style.borderTopColor=o.m.color;i.style.borderTopStyle=o.m.style==='dots'?'dotted':'solid';
+  if(o.m.width>=2)i.style.borderTopWidth='3px';c.appendChild(i);c.appendChild(document.createTextNode(o.m.name));
+  c.onclick=function(){o.m.visible=!o.m.visible;o.s.applyOptions({visible:o.m.visible});c.classList.toggle('off',!o.m.visible);legend(lastT);};
+  chips.appendChild(c);});
+// --- lecture au réticule (OHLC, variation, volume, MA) ---
+var leg=$('legend'),byT=new Map(bars.map(function(c){return [c[0],c];})),lastT=null;
+function legend(t){lastT=t;var c=(t!==null&&byT.get(t))||bars[n-1];t=c[0];
+  var ch=(c[4]/c[1]-1)*100,col=ch>=0?'#2e7d32':'#c62828';
+  var h='<b>'+tlabel(t)+'</b> &nbsp;O <b>'+fmt(c[1])+'</b> H <b>'+fmt(c[2])+'</b> B <b>'+fmt(c[3])+'</b> C <b>'+fmt(c[4])+
+    '</b> <span style="color:'+col+'">'+(ch>=0?'+':'')+ch.toFixed(2)+' %</span> · Vol '+fmtVol(c[5]);
+  if(LV&&c===LV)h+=' <span style="color:#ef6c00">· bougie en cours'+(liveAt?' (au '+fHM.format(liveAt)+')':'')+'</span>';
+  var mm=[];maSeries.forEach(function(o){if(!o.m.visible)return;var v=o.map.get(t);if(v!==undefined)mm.push('<span style="color:'+o.m.color+'">'+o.m.name+' '+fmt(v)+'</span>');});
+  if(mm.length)h+='<br>'+mm.join(' · ');leg.innerHTML=h;}
+legend(null);
+chart.subscribeCrosshairMove(function(p){legend(p&&p.time!==undefined?p.time:null);});
+// --- outil « Mesure » (règle façon TradingView) : A puis B, rectangle + variation en % ---
+// Points en coordonnées logiques (index de bougie) + prix : la mesure reste alignée au zoom / déplacement.
+var TFS={'4h':14400,'1d':86400,'1w':604800}[D.tf]||86400;
+var M={on:false,a:null,b:null,hover:null},bMes=$('bMes'),mbar=$('mbar'),mtxt=$('mtxt'),mclr=$('mclr');
+var tsc=chart.timeScale();
+function MeasurePrimitive(){this.series=null;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'top';},renderer:function(){return {draw:function(t){self.draw(t);}};}}];}
+MeasurePrimitive.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+MeasurePrimitive.prototype.detached=function(){this.series=null;this.req=null;};
+MeasurePrimitive.prototype.updateAllViews=function(){};
+MeasurePrimitive.prototype.paneViews=function(){return this.views;};
+MeasurePrimitive.prototype.update=function(){if(this.req)this.req();};
+function mStats(A,B){var nb=Math.abs(Math.round(B.l)-Math.round(A.l)),sec=nb*TFS,dur;
+  if(TFS<86400){var hh=sec/3600;dur=hh+' h'+(hh>=24?' ('+(Math.round(hh/24*10)/10).toString().replace('.',',')+' j)':'');}
+  else{dur=(Math.round(sec/86400*10)/10).toString().replace('.',',')+' j';}
+  var d=B.p-A.p,pct=(B.p/A.p-1)*100;
+  return {pct:pct,abs:d,nb:nb,dur:dur,up:B.p>=A.p,
+    l1:(pct>=0?'+':'−')+Math.abs(pct).toFixed(2).replace('.',',')+' %',
+    l2:(d>=0?'+':'−')+fmt(Math.abs(d))+' · '+nb+' bougie'+(nb>1?'s':'')+' · '+dur};}
+MeasurePrimitive.prototype.draw=function(target){var s=this.series;if(!s||!M.a)return;
+  var A=M.a,B=M.b||M.hover;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width,H=sc.mediaSize.height;
+    var xa=tsc.logicalToCoordinate(A.l),ya=s.priceToCoordinate(A.p);if(xa===null||ya===null)return;
+    if(!B){ctx.fillStyle='#2962ff';ctx.beginPath();ctx.arc(xa,ya,4,0,2*Math.PI);ctx.fill();return;}
+    var xb=tsc.logicalToCoordinate(B.l),yb=s.priceToCoordinate(B.p);if(xb===null||yb===null)return;
+    var st=mStats(A,B),c=st.up?'#2e7d32':'#c62828',x0=Math.min(xa,xb),x1=Math.max(xa,xb),y0=Math.min(ya,yb),y1=Math.max(ya,yb);
+    ctx.fillStyle=rgba(c,0.16);ctx.fillRect(x0,y0,Math.max(x1-x0,1),Math.max(y1-y0,1));
+    ctx.strokeStyle=rgba(c,0.75);ctx.lineWidth=1;ctx.strokeRect(Math.round(x0)+0.5,Math.round(y0)+0.5,Math.max(Math.round(x1-x0),1),Math.max(Math.round(y1-y0),1));
+    // flèches : verticale (prix) et horizontale (temps) au centre
+    var xm=(x0+x1)/2,ym=(y0+y1)/2;ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.beginPath();
+    ctx.moveTo(xm,ya);ctx.lineTo(xm,yb);ctx.moveTo(xa,ym);ctx.lineTo(xb,ym);ctx.stroke();
+    function head(x,y,dx,dy){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-dx*7-dy*4,y-dy*7+dx*4);ctx.lineTo(x-dx*7+dy*4,y-dy*7-dx*4);ctx.closePath();ctx.fill();}
+    ctx.fillStyle=c;if(Math.abs(yb-ya)>14)head(xm,yb,0,yb>ya?1:-1);if(Math.abs(xb-xa)>14)head(xb,ym,xb>xa?1:-1,0);
+    [[xa,ya],[xb,yb]].forEach(function(q){ctx.beginPath();ctx.arc(q[0],q[1],3.5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.stroke();});
+    // étiquette : % en gros, puis variation absolue · bougies · durée
+    var big=W<520?17:19,sm=W<520?11:11.5,pad=7;
+    ctx.font='700 '+big+'px '+FONT;var w1=ctx.measureText(st.l1).width;ctx.font='500 '+sm+'px '+FONT;var w2=ctx.measureText(st.l2).width;
+    var bw=Math.max(w1,w2)+2*pad,bh=big+sm+2*pad+4,bx=Math.min(Math.max(xm-bw/2,3),W-bw-3),by;
+    if(st.up){by=y0-bh-6;if(by<3)by=Math.min(y1+6,H-bh-3);}else{by=y1+6;if(by+bh>H-3)by=Math.max(y0-bh-6,3);}
+    ctx.fillStyle=rgba(c,0.92);if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,by,bw,bh,5);ctx.fill();}else ctx.fillRect(bx,by,bw,bh);
+    ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='top';ctx.font='700 '+big+'px '+FONT;ctx.fillText(st.l1,bx+bw/2,by+pad);
+    ctx.font='500 '+sm+'px '+FONT;ctx.fillText(st.l2,bx+bw/2,by+pad+big+4);ctx.textAlign='left';
+  });};
+var mp=new MeasurePrimitive();candle.attachPrimitive(mp);
+function mUI(){bMes.classList.toggle('on',M.on);mbar.style.display=(M.on||M.a)?'flex':'none';mclr.style.display=M.a?'inline-block':'none';
+  mtxt.style.display=M.on?'inline-block':'none';
+  mtxt.textContent=!M.a?'Mesure : toucher le point A':(!M.b?'Toucher le point B':'Toucher pour une nouvelle mesure');
+  window.__measure=M.a&&M.b?Object.assign(mStats(M.a,M.b),{a:M.a,b:M.b}):null;}
+window.__range=function(){return tsc.getVisibleLogicalRange();};
+// point touché -> {l: index de bougie, p: prix}, aimanté au plus haut / bas / clôture / ouverture à < 8 px
+// (x, y) en px relatifs au graphique ; seul le pane des prix (pane 0, en haut) est accepté
+function mPoint(x,y){if(x<0||y<0||x>tsc.width()||y>chart.panes()[0].getHeight())return null;
+  var lg=tsc.coordinateToLogical(x);if(lg===null)return null;
+  var li=Math.round(lg),pr=candle.coordinateToPrice(y);if(pr===null||!(pr>0))return null;
+  var c=bars[li];if(c){var best=8,bp=null;[c[2],c[3],c[4],c[1]].forEach(function(v){var yy=candle.priceToCoordinate(v);
+    if(yy!==null&&Math.abs(yy-y)<best){best=Math.abs(yy-y);bp=v;}});if(bp!==null)pr=bp;}
+  return {l:li,p:pr};}
+function panOpts(){return {handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true},
+  handleScale:{axisPressedMouseMove:{time:true,price:true},axisDoubleClickReset:{time:true,price:true},pinch:true,mouseWheel:true}};}
+function setMeasure(v){M.on=v;M.hover=null;
+  chart.applyOptions(v?{handleScroll:false,handleScale:false}:panOpts());
+  if(v&&M.a&&!M.b)M.a=null;mUI();mp.update();}
+bMes.onclick=function(){setMeasure(!M.on);};
+function mClear(e){if(e){e.stopPropagation();e.preventDefault();}M.a=M.b=M.hover=null;down=null;mUI();mp.update();}
+mclr.onclick=mClear;mclr.addEventListener('pointerup',mClear);mclr.addEventListener('pointerdown',function(e){e.stopPropagation();});
+// touchers / clics lus directement (pointer events, souris + tactile) : indépendant des gestes de la librairie,
+// deux touchers rapides ne sont pas pris pour un double-clic
+var down=null;
+function rel(e){var r=el.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+el.addEventListener('pointerdown',function(e){if(!M.on||(e.pointerType==='mouse'&&e.button!==0))return;
+  down={id:e.pointerId,p:rel(e),t:Date.now()};},true);
+el.addEventListener('pointerup',function(e){if(!M.on||!down||down.id!==e.pointerId)return;var p=rel(e),d=down;down=null;
+  if(Math.abs(p.x-d.p.x)>12||Math.abs(p.y-d.p.y)>12||Date.now()-d.t>800)return;
+  var q=mPoint(p.x,p.y);if(!q)return;if(!M.a||M.b){M.a=q;M.b=null;M.hover=null;}else{M.b=q;M.hover=null;}mUI();mp.update();},true);
+el.addEventListener('pointercancel',function(){down=null;},true);
+el.addEventListener('pointermove',function(e){if(!M.on||!M.a||M.b||e.pointerType!=='mouse')return;var p=rel(e);
+  M.hover=mPoint(p.x,p.y);mp.update();},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(M.a||M.on)){M.a=M.b=M.hover=null;if(M.on)setMeasure(false);else{mUI();mp.update();}}});
+mUI();
+
+// ===================== page « ORDRE » (scanner/orderpage.py) =====================
+(function(){
+var O=D.x;if(!O)return;
+var wrap=$('wrap'),TICK=O.tick,DEC=O.dec,Q=O.quote,SYM=O.symbol;
+var TPC=['#2e7d32','#1b8a5a','#00796b'];
+// --- SHA-256 (synchrone, pur JS : fonctionne aussi hors contexte sécurisé) ---
+var SK=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function sha256(s){var b=[],i,j;for(i=0;i<s.length;i++)b.push(s.charCodeAt(i)&255);
+  var l=b.length*8;b.push(0x80);while(b.length%64!==56)b.push(0);
+  b.push(0,0,0,0,(l>>>24)&255,(l>>>16)&255,(l>>>8)&255,l&255);
+  var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19],w=new Array(64);
+  function R(x,n){return (x>>>n)|(x<<(32-n));}
+  for(i=0;i<b.length;i+=64){for(j=0;j<16;j++)w[j]=(b[i+4*j]<<24)|(b[i+4*j+1]<<16)|(b[i+4*j+2]<<8)|b[i+4*j+3];
+    for(j=16;j<64;j++){var s0=R(w[j-15],7)^R(w[j-15],18)^(w[j-15]>>>3),s1=R(w[j-2],17)^R(w[j-2],19)^(w[j-2]>>>10);w[j]=(w[j-16]+s0+w[j-7]+s1)|0;}
+    var a=H[0],c=H[1],d=H[2],e=H[3],f=H[4],g=H[5],h=H[6],k=H[7];
+    for(j=0;j<64;j++){var t1=(k+(R(f,6)^R(f,11)^R(f,25))+((f&g)^(~f&h))+SK[j]+w[j])|0,
+      t2=((R(a,2)^R(a,13)^R(a,22))+((a&c)^(a&d)^(c&d)))|0;k=h;h=g;g=f;f=(e+t1)|0;e=d;d=c;c=a;a=(t1+t2)|0;}
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+c)|0;H[2]=(H[2]+d)|0;H[3]=(H[3]+e)|0;H[4]=(H[4]+f)|0;H[5]=(H[5]+g)|0;H[6]=(H[6]+h)|0;H[7]=(H[7]+k)|0;}
+  return H.map(function(x){return ('00000000'+(x>>>0).toString(16)).slice(-8);}).join('');}
+function b64u(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+window.__sha256=sha256;
+// --- formats ---
+function snapP(p){return Number((Math.round(p/TICK)*TICK).toFixed(DEC));}
+function px(p){return Number(p).toFixed(DEC);}
+function pc(x,d){d=d===undefined?2:d;if(!isFinite(x))return '?';return (x>=0?'+':'−')+Math.abs(x).toFixed(d).replace('.',',')+' %';}
+function grp(s){return s.replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');}
+function mo(x,d){d=d===undefined?2:d;if(!isFinite(x))return '?';var p=Math.abs(x).toFixed(d).split('.');return (x<0?'−':'')+grp(p[0])+(p[1]?','+p[1]:'');}
+function rr(x){return isFinite(x)?x.toFixed(2).replace('.',','):'?';}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function parseNum(s){s=String(s).replace(/\s/g,'').replace(',','.');var v=parseFloat(s);return isFinite(v)?v:null;}
+// --- état (proposition initiale + ajustements, conservés localement si la page est rechargée) ---
+// SELL : vente d'une crypto déjà détenue (taille = quantité en base, curseur = % du solde détenu) ;
+// achat : taille en USDC (curseur = % du capital disponible). Stop optionnel (null = sans stop), 0 à 3 TP (0 = HODL).
+var SELL=O.side==='sell',UNIT=SELL?SYM:Q,SDEC=SELL?O.base_dec:2;
+var ETL=SELL?{limit:'limite',market:'au marché'}:{limit:'limite',stop_limit:'stop-limit (cassure)'};
+var INIT={entry:SELL?null:O.entry,stop:(O.stop===null||O.stop===undefined)?null:O.stop,size:O.size,
+          tps:O.tps.map(function(t){return {px:t.px,pct:t.pct_size};}),etype:ETL[O.entry_type]?O.entry_type:'limit'};
+function clone(s){return JSON.parse(JSON.stringify(s));}
+var KEY='anna-order:'+O.oid+':v'+O.v,S=clone(INIT),stopPrev=null;
+// --- capital / solde DISPONIBLE (paramètre de la page, jamais inventé) : null = non lu ; 0 = non alimenté / non détenu ---
+var CK=O.cap_kind||'unread',CAP=(CK==='unread'||O.capital===null||O.capital===undefined||!isFinite(+O.capital))?null:+O.capital;
+var CAPOK=CAP!==null&&CAP>0,CEX=CK==='example',CAPN=SELL?'solde '+SYM+' détenu':'capital disponible';
+var BINC=O.base_inc||0.01;
+function floorInc(v,inc){return Number((Math.floor(Number((v/inc).toFixed(6)))*inc).toFixed(SELL?O.base_dec:2));}
+// arrondi INFÉRIEUR (centime pour un achat, pas de quantité pour une vente) : jamais au-dessus du solde
+function capMax(){return CAPOK?floorInc(CAP,SELL?BINC:0.01):0;}
+function sizeOfPct(p){if(!CAPOK)return null;p=Math.max(0,Math.min(100,+p));if(p>=100)return capMax();
+  return Math.min(capMax(),floorInc(CAP*p/100,SELL?BINC:0.01));}
+function pctOf(sz){return CAPOK?sz/CAP*100:null;}
+try{var sv=JSON.parse(localStorage.getItem(KEY)||'null');if(sv&&(SELL||sv.entry>0)&&(sv.stop===null||sv.stop>0)&&sv.size>=0&&sv.tps&&sv.tps.length>=0){
+  if(!ETL[sv.etype])sv.etype=INIT.etype;S=sv;}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function mkt(){return SELL&&S.etype==='market';}
+function levels(){var a=[];if(!SELL)a.push({k:'entry',name:'Entrée',short:'ENTRÉE',color:'#1565c0',p:S.entry});
+  if(mkt())return a;
+  if(S.stop!==null)a.push({k:'stop',name:'Stop',short:'STOP',color:'#d32f2f',p:S.stop});
+  S.tps.forEach(function(t,i){a.push({k:'tp'+i,name:'TP'+(i+1),short:'TP'+(i+1),color:TPC[i],p:t.px});});return a;}
+function getP(k){return k==='entry'?S.entry:k==='stop'?S.stop:S.tps[+k.slice(2)].px;}
+function setP(k,p){if(k==='entry')S.entry=p;else if(k==='stop')S.stop=p;else S.tps[+k.slice(2)].px=p;}
+function refPx(){return SELL?O.last:S.entry;}
+// --- calculs ---
+function calcSell(){var q=S.size,L=O.last,s=mkt()?null:S.stop,errs=[],warns=[],ft=O.fee_t||0,fm=O.fee_m||0;
+  var T=mkt()?[]:S.tps;
+  var tps=T.map(function(t){var un=q*t.pct/100;return {px:t.px,pct:t.pct,d:L?(t.px/L-1)*100:NaN,units:un,pr:un*t.px,net:un*t.px*(1-fm),rr:NaN,gain:un*t.px};});
+  if(!(q>0))errs.push({k:'size',t:'Quantité nulle.'});
+  if(q>0&&Math.abs(q/BINC-Math.round(q/BINC))>1e-6)errs.push({k:'size',t:'Quantité '+q+' '+SYM+' non alignée sur le pas de quantité Coinbase ('+BINC+') : rien n’est arrondi, corrige la quantité.'});
+  if(O.base_min&&q>0&&q<O.base_min)errs.push({k:'size',t:'Quantité sous le minimum Coinbase ('+O.base_min+' '+SYM+').'});
+  if(CAP===null)errs.push({k:'size',t:'Solde '+SYM+' détenu non lu'+(O.cap_why?' ('+O.cap_why+')':'')+' : quantité non vérifiable — validation bloquée, aucune valeur inventée.'});
+  else if(q>CAP+1e-12)errs.push({k:'size',t:'Quantité '+mo(q,O.base_dec)+' '+SYM+' supérieure au solde détenu '+(CEX?'(EXEMPLE : ':'réel (')+mo(CAP,O.base_dec)+' '+SYM+(CAP>0?'':', aucun '+SYM+' détenu')+') : on ne vend pas ce qu’on n’a pas, rien n’est ajusté.'});
+  if(!mkt()){
+    if(!T.length&&s===null)errs.push({k:null,t:'Vente limite : ajoute au moins un TP (prix de vente limite) ou un stop.'});
+    if(s!==null&&L&&s>=L)errs.push({k:'stop',t:'Stop au-dessus/au niveau du dernier prix ('+px(L)+') : il se déclencherait tout de suite. Un stop de vente se place SOUS le prix actuel.'});
+    tps.forEach(function(t,i){
+      if(s!==null&&!(t.px>s))errs.push({k:'tp'+i,t:'TP'+(i+1)+' sous le stop : un prix de vente limite doit être au-dessus du stop.'});
+      else if(i>0&&!(t.px>tps[i-1].px))errs.push({k:'tp'+i,t:'TP'+(i+1)+' doit être au-dessus de TP'+i+' (ordre TP1 < TP2 < TP3).'});
+      if(!(t.pct>0)||t.pct!==Math.round(t.pct))errs.push({k:'tp'+i,t:'Part vendue au TP'+(i+1)+' invalide (entier de 1 à 100 %).'});
+      if(O.base_min&&t.units<O.base_min)errs.push({k:'tp'+i,t:'Quantité du TP'+(i+1)+' ('+mo(t.units,O.base_dec)+' '+SYM+') sous le minimum Coinbase ('+O.base_min+').'});});
+    var sp=tps.reduce(function(a,t){return a+t.pct;},0);
+    if(tps.length&&Math.abs(sp-100)>1e-9)errs.push({k:null,t:'Parts vendues aux TP : total '+sp+' % (doit faire 100 %).'});
+    if(tps.length&&L&&tps[0].px<L*0.9995)warns.push({k:'tp0',t:'TP1 sous le dernier prix ('+px(L)+') : la vente limite serait exécutée tout de suite (comme au marché).'});}
+  var ref=mkt()?L:(T.length?T[0].px:s);
+  if(O.quote_min&&ref&&q>0&&q*ref<O.quote_min)errs.push({k:'size',t:'Montant estimé sous le minimum Coinbase ('+O.quote_min+' '+Q+').'});
+  var gnet=tps.reduce(function(a,t){return a+t.net;},0),snet=s!==null?q*s*(1-ft):NaN,mnet=L?q*L*(1-ft):NaN;
+  return {e:L,s:s,sz:q,u:q,R:NaN,risk:NaN,tps:tps,gain:gnet,wr:NaN,errs:errs,warns:warns,un:q,gnet:gnet,lnet:snet,mnet:mnet,val:L?q*L:NaN};}
+function calc(){if(SELL)return calcSell();
+  var e=S.entry,s=S.stop,hs=s!==null,sz=S.size,u=sz/e,R=hs?e-s:NaN,risk=hs?u*R:NaN,errs=[],warns=[];
+  var tps=S.tps.map(function(t){return {px:t.px,pct:t.pct,d:(t.px/e-1)*100,rr:R>0?(t.px-e)/R:NaN,gain:u*t.pct/100*(t.px-e),units:u*t.pct/100};});
+  var gain=tps.reduce(function(a,t){return a+t.gain;},0),wr=(R>0&&tps.length)?tps.reduce(function(a,t){return a+t.pct/100*t.rr;},0):NaN;
+  if(hs&&!(s<e))errs.push({k:'stop',t:'Stop au-dessus de l’entrée : pour un achat (long), le stop doit être SOUS l’entrée.'});
+  if(tps.length&&!hs)errs.push({k:null,t:'TP sans stop non géré (Coinbase lie TP et stop en OCO) : coche « Stop de protection » ou retire les TP (achat HODL).'});
+  tps.forEach(function(t,i){
+    if(!(t.px>e))errs.push({k:'tp'+i,t:'TP'+(i+1)+' sous l’entrée : un objectif de vente doit être AU-DESSUS de l’entrée.'});
+    else if(i>0&&!(t.px>tps[i-1].px))errs.push({k:'tp'+i,t:'TP'+(i+1)+' doit être au-dessus de TP'+i+' (ordre TP1 < TP2 < TP3).'});
+    if(!(t.pct>0)||t.pct!==Math.round(t.pct))errs.push({k:'tp'+i,t:'Part vendue au TP'+(i+1)+' invalide (entier de 1 à 100 %).'});
+    if(O.base_min&&t.units<O.base_min)errs.push({k:'tp'+i,t:'Quantité du TP'+(i+1)+' ('+mo(t.units,O.base_dec)+' '+SYM+') sous le minimum Coinbase ('+O.base_min+').'});});
+  var sp=tps.reduce(function(a,t){return a+t.pct;},0);
+  if(tps.length&&Math.abs(sp-100)>1e-9)errs.push({k:null,t:'Parts vendues aux TP : total '+sp+' % (doit faire 100 %).'});
+  if(!tps.length&&O.base_min&&sz>0&&u<O.base_min)errs.push({k:'size',t:'Quantité sous le minimum Coinbase ('+O.base_min+' '+SYM+').'});
+  if(!(sz>0))errs.push({k:'size',t:'Taille nulle.'});
+  if(CAP===null)errs.push({k:'size',t:'Capital disponible non lu'+(O.cap_why?' ('+O.cap_why+')':'')+' : taille '+mo(sz)+' '+Q+' non vérifiable contre le solde réel — validation bloquée, aucune valeur inventée.'});
+  else if(sz>CAP+1e-9)errs.push({k:'size',t:'Taille '+mo(sz)+' '+Q+' supérieure au capital disponible '+(CEX?'(EXEMPLE : ':'réel (')+mo(CAP)+' '+Q+(CAP>0?'':', portefeuille non alimenté')+') : rien n’est ajusté — réduis la taille (curseur ou champ)'+(CAP>0?'':' ou alimente le portefeuille')+'.'});
+  if(O.quote_min&&sz<O.quote_min)errs.push({k:'size',t:'Taille sous le minimum Coinbase ('+O.quote_min+' '+Q+').'});
+  if(CAPOK&&risk>0&&risk/CAP*100>O.risk_warn_pct)warns.push({k:'stop',t:'Risque au stop = '+pc(risk/CAP*100).replace('+','')+' du capital'+(CEX?' d’EXEMPLE':'')+' (> '+String(O.risk_warn_pct).replace('.',',')+' %).'});
+  if(R>0&&tps.length&&tps[0].rr<1&&tps[0].px>e)warns.push({k:'tp0',t:'R:R du TP1 inférieur à 1 ('+rr(tps[0].rr)+').'});
+  if(!hs)warns.push({k:null,t:'Achat SANS stop : aucune protection, perte non bornée (HODL assumé).'});
+  if(S.etype!=='stop_limit'&&O.last&&e>O.last*1.0005)warns.push({k:'entry',t:'Entrée au-dessus du dernier prix ('+px(O.last)+') : un achat limite à ce prix serait exécuté tout de suite (comme au marché). Pour acheter la cassure de ce niveau, choisis « Stop-limit · cassure ».'});
+  if(S.etype==='stop_limit'&&O.last&&e<=O.last)warns.push({k:'entry',t:'Entrée stop-limit (cassure) sous/au dernier prix ('+px(O.last)+') : le stop d’achat se déclencherait tout de suite. Une cassure s’achète AU-DESSUS du prix actuel.'});
+  // estimation FRAIS INCLUS (même règle que order_place.py) : quantité = taille / (prix max × (1 + taker)) ;
+  // entrée maker seulement si achat limite sous le marché ; TP maker ; stop taker
+  var ft=O.fee_t||0,fm=O.fee_m||0,bmax=S.etype==='stop_limit'?Math.ceil(e*(1+O.sl_slip/100)/TICK-1e-9)*TICK:e;
+  var un=sz/(bmax*(1+ft)),fin=(S.etype!=='stop_limit'&&O.last&&e<O.last)?fm:ft;
+  var gnet=tps.reduce(function(a,t){return a+un*t.pct/100*(t.px*(1-fm)-e*(1+fin));},0),lnet=hs?un*(s*(1-ft)-e*(1+fin)):NaN;
+  return {e:e,s:s,sz:sz,u:u,R:R,risk:risk,tps:tps,gain:gain,wr:wr,errs:errs,warns:warns,sp:sp,un:un,gnet:gnet,lnet:lnet,fin:fin};}
+// --- lignes de prix (dessinées par la librairie : ligne + étiquette de prix sur l'axe) ---
+var PL={},drag=null,HD={},hov=null;
+function syncLines(bad){var seen={};levels().forEach(function(l){seen[l.k]=1;var act=(drag&&drag.k===l.k)||hov===l.k;
+  var o={price:l.p,color:l.color,lineWidth:act?4:2,lineStyle:l.k==='entry'?LC.LineStyle.Solid:(l.k==='stop'?LC.LineStyle.Dashed:LC.LineStyle.LargeDashed),
+         axisLabelVisible:true,title:'',lineVisible:true};
+  if(PL[l.k])PL[l.k].applyOptions(o);else PL[l.k]=candle.createPriceLine(o);});
+  for(var k in PL)if(!seen[k]){candle.removePriceLine(PL[k]);delete PL[k];}}
+// --- primitive : boîte risque (rouge) / gain (vert) dans l'espace à droite des bougies, façon outil « position » ---
+function OrderPrim(){this.series=null;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'bottom';},renderer:function(){return {draw:function(){},drawBackground:function(t){self.draw(t);}};}}];}
+OrderPrim.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+OrderPrim.prototype.detached=function(){this.series=null;this.req=null;};
+OrderPrim.prototype.updateAllViews=function(){};
+OrderPrim.prototype.paneViews=function(){return this.views;};
+OrderPrim.prototype.draw=function(target){var s=this.series;if(!s)return;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width;
+    var lr=tsc.getVisibleLogicalRange(),x0=W-24;
+    if(lr&&lr.to>lr.from){x0=W*(n-0.5-lr.from)/(lr.to-lr.from);if(!(x0>=0))x0=0;if(x0>W-24)x0=W-24;}
+    var rp=refPx();if(!rp||mkt())return;var ye=s.priceToCoordinate(rp);if(ye===null)return;
+    var ys=S.stop!==null?s.priceToCoordinate(S.stop):null,yt=S.tps.length?s.priceToCoordinate(S.tps[S.tps.length-1].px):null;
+    if(ys!==null){ctx.fillStyle=S.stop<rp?'rgba(211,47,47,0.13)':'rgba(211,47,47,0.30)';ctx.fillRect(x0,Math.min(ye,ys),W-x0,Math.abs(ys-ye));}
+    if(yt!==null){ctx.fillStyle='rgba(46,125,50,0.12)';ctx.fillRect(x0,Math.min(ye,yt),W-x0,Math.abs(yt-ye));}
+  });};
+var oprim=new OrderPrim();candle.attachPrimitive(oprim);
+function repaint(){if(oprim.req)oprim.req();}
+// --- vue initiale : espace libre à droite des bougies pour les poignées / la boîte (comme l'outil position de TV) ---
+// échelle de prix « focus ordre » (vue initiale / Recentrer) : niveaux d'ordre + dernier prix + 12 dernières bougies,
+// pour que les lignes soient espacées et faciles à saisir ; « Tout » revient à l'échelle complète des pages d'analyse.
+var focus=true,FK=12;
+candle.applyOptions({autoscaleInfoProvider:function(orig){var r=orig();if(!r||!r.priceRange)return r;var lo,hi;
+  if(focus){lo=Infinity;hi=-Infinity;levels().forEach(function(l){lo=Math.min(lo,l.p);hi=Math.max(hi,l.p);});
+    if(O.last){lo=Math.min(lo,O.last);hi=Math.max(hi,O.last);}
+    for(var i=Math.max(0,n-FK);i<n;i++){lo=Math.min(lo,bars[i][3]);hi=Math.max(hi,bars[i][2]);}
+    r.priceRange.minValue=lo*0.965;r.priceRange.maxValue=hi*1.03;return r;}
+  lo=r.priceRange.minValue;hi=r.priceRange.maxValue;
+  auto.forEach(function(p){if(p>0){lo=Math.min(lo,p);hi=Math.max(hi,p);}});
+  r.priceRange.minValue=lo*0.985;r.priceRange.maxValue=hi*1.015;return r;}});
+var allBtn=$('bAll').onclick;$('bAll').onclick=function(){focus=false;allBtn();};
+fit=function(){focus=true;var k=initialBars(),pad=Math.max(5,Math.round(k*0.30));
+  chart.timeScale().setVisibleLogicalRange({from:Math.max(0,n-k)-0.5,to:n-1+pad});
+  candle.priceScale().applyOptions({autoScale:true});vol.priceScale().applyOptions({autoScale:true});};
+function updAuto(){auto.length=0;D.autoscale.forEach(function(p){auto.push(p);});levels().forEach(function(l){auto.push(l.p);});
+  if(O.last)auto.push(O.last);}
+updAuto();fit();
+// --- poignées (DOM au-dessus du graphique : jamais en conflit avec les gestes de la librairie) ---
+function mkHandle(k){var h=document.createElement('div');h.className='oh';h.dataset.k=k;h.setAttribute('role','slider');
+  h.innerHTML='<span class=g>⇕</span><span class=t></span>';wrap.appendChild(h);
+  h.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'&&e.button!==0)return;e.preventDefault();e.stopPropagation();
+    try{h.setPointerCapture(e.pointerId);}catch(_){}var r=el.getBoundingClientRect();startDrag(h.dataset.k,e.pointerId,e.clientY-r.top);});
+  ['touchstart','mousedown'].forEach(function(t){h.addEventListener(t,function(e){e.stopPropagation();},{passive:true});});
+  return h;}
+function syncHandles(){var seen={};levels().forEach(function(l){seen[l.k]=1;if(!HD[l.k])HD[l.k]=mkHandle(l.k);HD[l.k].style.background=l.color;});
+  for(var k in HD)if(!seen[k]){HD[k].remove();delete HD[k];}}
+var lastSig='';
+function place(force){var pH=chart.panes()[0].getHeight(),aw=candle.priceScale().width(),L=levels(),ys=[];
+  L.forEach(function(l){ys.push(candle.priceToCoordinate(l.p));});
+  var sig=pH+'|'+aw+'|'+ys.join(',')+'|'+(drag?drag.k:'')+'|'+hov;if(!force&&sig===lastSig)return;lastSig=sig;
+  // colonnes : si deux poignées se chevauchent verticalement, la seconde se décale vers la gauche
+  var items=L.map(function(l,i){return {l:l,y:ys[i],h:HD[l.k]};}).filter(function(o){return o.h;});
+  items.sort(function(a,b){return (a.y===null?1e9:a.y)-(b.y===null?1e9:b.y);});
+  var placed=[];
+  items.forEach(function(o){var h=o.h;if(o.y===null||o.y<-4||o.y>pH+4){h.style.display='none';return;}
+    h.style.display='flex';h.classList.toggle('act',!!(drag&&drag.k===o.l.k));
+    var right=aw+6;placed.forEach(function(p){if(Math.abs(p.y-o.y)<30&&p.right+p.w+4>right&&p.right<=right+1)right=p.right+p.w+4;});
+    h.style.right=right+'px';h.style.top=Math.min(Math.max(o.y,0),pH)+'px';placed.push({y:o.y,right:right,w:h.offsetWidth||90});});}
+(function loop(){try{place(false);}catch(e){}requestAnimationFrame(loop);})();
+// --- glisser : poignées + ligne elle-même (tolérance 8 px souris / 18 px doigt) ---
+function startDrag(k,id,y){var yc=candle.priceToCoordinate(getP(k));drag={k:k,id:id,off:(yc===null?0:y-yc)};window.__lastDrag={k:k,y:y,yc:yc};
+  candle.priceScale().applyOptions({autoScale:false});chart.applyOptions({handleScroll:false,handleScale:false});
+  wrap.classList.add('dragging');render();}
+function moveDrag(clientY){var r=el.getBoundingClientRect(),pH=chart.panes()[0].getHeight();
+  var y=Math.min(Math.max(clientY-r.top-drag.off,0),pH),p=candle.coordinateToPrice(y);if(p===null||!(p>0))return;
+  p=snapP(Math.min(Math.max(p,O.lo),O.hi));if(p===getP(drag.k))return;setP(drag.k,p);render();}
+function endDrag(){if(!drag)return;drag=null;chart.applyOptions(M.on?{handleScroll:false,handleScale:false}:panOpts());
+  wrap.classList.remove('dragging');updAuto();save();render();}
+function hit(y,touch){var best=touch?18:8,k=null;levels().forEach(function(l){var yy=candle.priceToCoordinate(l.p);
+  if(yy!==null&&Math.abs(yy-y)<best){best=Math.abs(yy-y);k=l.k;}});return k;}
+el.addEventListener('pointerdown',function(e){if(M.on||drag||(e.pointerType==='mouse'&&e.button!==0))return;var p=rel(e);
+  if(p.y>chart.panes()[0].getHeight()||p.x>tsc.width())return;var k=hit(p.y,e.pointerType!=='mouse');if(!k)return;
+  e.preventDefault();e.stopPropagation();try{el.setPointerCapture(e.pointerId);}catch(_){}startDrag(k,e.pointerId,p.y);},true);
+window.addEventListener('pointermove',function(e){if(drag&&drag.id===e.pointerId){e.preventDefault();moveDrag(e.clientY);return;}
+  if(!drag&&e.pointerType==='mouse'&&!M.on&&el.contains(e.target)){var p=rel(e),k=(p.y<=chart.panes()[0].getHeight()&&p.x<=tsc.width())?hit(p.y,false):null;
+    if(k!==hov){hov=k;wrap.classList.toggle('hov',!!k);syncLines();}}},{capture:true,passive:false});
+['pointerup','pointercancel'].forEach(function(t){window.addEventListener(t,function(e){if(drag&&drag.id===e.pointerId)endDrag();},true);});
+// pendant un glisser, la librairie ne reçoit aucun geste (pas de défilement / zoom parasite)
+['touchstart','touchmove','touchend','mousedown','mousemove','mouseup'].forEach(function(t){
+  el.addEventListener(t,function(e){if(drag){e.stopPropagation();if(e.cancelable&&t!=='touchend'&&t!=='mouseup')e.preventDefault();}},{capture:true,passive:false});});
+// --- panneau ---
+$('ooid').textContent='#'+O.oid+' · v'+O.v+' · '+O.sym+(SELL?' · VENTE':'');
+function feeTxt(){return 'taker '+String(+(O.fee_t*100).toFixed(2)).replace('.',',')+' %, maker '+String(+(O.fee_m*100).toFixed(2)).replace('.',',')+' %';}
+function sumHTML(c){var cap=CAPOK?CAP:null,cx=CEX?' (exemple)':'';
+  if(SELL)return '<div class=f><span class=k>Côté</span><span class=v>Vente spot <span class=sub>· '+ETL[S.etype]+' · crypto déjà détenue</span></span></div>'+
+   '<div class=f><span class=k>Quantité ('+esc(SYM)+')</span><span class=v><input id=oSize inputmode=decimal value="'+esc(S.size)+'"> <span class=sub>≈ '+mo(c.val)+' '+Q+' au dernier prix</span></span></div>'+
+   '<div class=f><span class=k>Solde '+esc(SYM)+' détenu</span><span class=v>'+(CAP===null?'non lu':mo(CAP,O.base_dec)+' '+esc(SYM)+cx)+(cap?' <span class=sub>· vend '+pc(c.sz/cap*100,1).replace('+','')+'</span>':'')+'</span></div>'+
+   (mkt()?'<div class=f><span class=k>Produit estimé (marché)</span><span class=v style="color:#2e7d32">'+mo(c.mnet)+' '+Q+' <span class=sub>· net de frais taker, au dernier prix (le prix réel peut différer)</span></span></div>':
+   '<div class=f><span class=k>Si tous les TP</span><span class=v style="color:#2e7d32">'+(c.tps.length?mo(c.gnet)+' '+Q+' <span class=sub>· produit net (maker)</span>':'— <span class=sub>· aucun TP</span>')+'</span></div>'+
+   '<div class=f><span class=k>Si stop</span><span class=v style="color:#c62828">'+(c.s!==null?mo(c.lnet)+' '+Q+' <span class=sub>· produit net (taker)</span>':'— <span class=sub>· aucun stop</span>')+'</span></div>')+
+   '<div class=f><span class=k>Frais estimés</span><span class=v><span class=sub>'+feeTxt()+'</span></span></div>'+
+   '<div class=f><span class=k>Dernier prix</span><span class=v>'+(O.last?px(O.last):'?')+'</span></div>';
+  return '<div class=f><span class=k>Côté</span><span class=v>Achat spot (long) <span class=sub>· entrée '+ETL[S.etype]+(S.tps.length?'':' · HODL')+'</span></span></div>'+
+   '<div class=f><span class=k>Taille ('+Q+')</span><span class=v><input id=oSize inputmode=decimal value="'+esc(S.size)+'"> <span class=sub>≈ '+mo(c.u,O.base_dec)+' '+esc(SYM)+'</span></span></div>'+
+   '<div class=f><span class=k>Capital engagé</span><span class=v>'+mo(c.sz)+' '+Q+(cap?' <span class=sub>· '+pc(c.sz/cap*100,1).replace('+','')+' de '+mo(cap,0)+cx+'</span>':' <span class=sub>· capital dispo '+(CAP===null?'non lu':'0 '+Q)+'</span>')+'</span></div>'+
+   '<div class=f><span class=k>Risque au stop</span><span class=v style="color:#c62828">'+(c.s===null?'aucun stop <span class=sub>· perte non bornée</span>':(c.R>0?'−'+mo(c.risk):'?')+' '+Q+(cap&&c.R>0?' <span class=sub>· '+pc(c.risk/cap*100).replace('+','')+' du capital'+cx+'</span>':''))+'</span></div>'+
+   '<div class=f><span class=k>Gain si tous les TP</span><span class=v style="color:#2e7d32">'+(c.tps.length?'+'+mo(c.gain)+' '+Q+' <span class=sub>· R:R moyen '+rr(c.wr)+'</span>':'— <span class=sub>· HODL : aucun TP</span>')+'</span></div>'+
+   '<div class=f><span class=k>Net de frais (estim.)</span><span class=v><span style="color:#2e7d32">'+(c.tps.length?(c.gnet>=0?'+':'')+mo(c.gnet):'—')+'</span> / <span style="color:#c62828">'+(c.s!==null?mo(c.lnet):'—')+'</span> '+Q+' <span class=sub>· TP / stop · frais inclus ≈ '+mo(c.un,O.base_dec)+' '+esc(SYM)+' ('+feeTxt()+')</span></span></div>'+
+   '<div class=f><span class=k>Dernier prix</span><span class=v>'+(O.last?px(O.last)+' <span class=sub>· entrée '+pc((c.e/O.last-1)*100)+'</span>':'?')+'</span></div>';}
+// --- curseur de volume (façon Coinbase) : % du capital disponible (achat) / du solde détenu (vente) <-> taille ---
+// la taille (size_usdc / size_base) reste la seule source de vérité du code ; le % se déduit du solde
+var rng=$('oRange'),QB=Array.prototype.slice.call($('ovq').querySelectorAll('button'));
+function setSize(v){S.size=SELL?v:Math.round(v*100)/100;save();}      // vente : quantité tapée gardée telle quelle
+function pctTxt(p){if(p===null||!isFinite(p))return '—';var r=Math.round(p*10)/10;if(r>=100&&p<100)r=99.9;
+  return (r%1===0?r.toFixed(0):r.toFixed(1)).replace('.',',')+' %';}
+function capTxt(v){return mo(v,SELL?O.base_dec:2)+' '+esc(UNIT);}
+function updVol(c){var p=pctOf(c.sz),over=CAPOK?c.sz>CAP+(SELL?1e-12:1e-9):(CAP!==null&&c.sz>0),pos=CAPOK?Math.min(100,Math.max(0,p)):0;
+  rng.disabled=!CAPOK;if(document.activeElement!==rng||!CAPOK)rng.value=String(Math.round(pos));
+  $('ovfill').style.width=pos+'%';$('ovtr').classList.toggle('over',!!over);$('ovol').classList.toggle('off',!CAPOK);
+  Array.prototype.forEach.call(document.querySelectorAll('.ovbar i'),function(t,i){t.classList.toggle('on',CAPOK&&pos>=i*25-1e-9);});
+  QB.forEach(function(b){var bp=+b.dataset.p;b.disabled=!CAPOK;b.classList.toggle('on',CAPOK&&Math.abs(c.sz-sizeOfPct(bp))<(SELL?BINC/2:0.005));});
+  $('ovpct').textContent=CAPOK?(over?'> 100 %':pctTxt(p)):'—';
+  rng.setAttribute('aria-valuetext',CAPOK?pctTxt(p)+' du '+CAPN+' = '+capTxt(c.sz):'curseur désactivé');
+  $('ovamt').innerHTML=SELL?capTxt(c.sz)+' <span class=sub>≈ '+mo(c.val)+' '+Q+'</span>':mo(c.sz)+' '+Q+' <span class=sub>≈ '+mo(c.u,O.base_dec)+' '+esc(SYM)+'</span>';
+  var pf=O.cap_pf?'« '+esc(O.cap_pf)+' »':'Coinbase',rd=O.cap_read?' · lu le '+esc(O.cap_read):'',cap,msg,cls,Nm=SELL?'Solde '+esc(SYM)+' détenu':'Capital disponible';
+  var oth=(O.cap_others||[]).map(function(o){return esc(o.currency)+' '+mo(o.available);}).join(', ');
+  if(CEX){cap=Nm+' : <b>'+capTxt(CAP)+'</b> <span class=ex>EXEMPLE</span>';cls='ex';
+    msg='⚠ EXEMPLE de démonstration : ce '+(SELL?'solde':'capital')+' ('+capTxt(CAP)+') n’est PAS un solde réel lu sur Coinbase ; il sert seulement à montrer le curseur. Au passage d’ordre, seul le solde RÉEL compte (refus net s’il ne couvre pas la '+(SELL?'quantité':'taille')+', rien n’est ajusté).';}
+  else if(CAP===null){cap=Nm+' : <b>non lu</b> <span class=nl>NON LU</span>';cls='ko';
+    msg='⛔ '+Nm+' non lu'+(O.cap_why?' ('+esc(O.cap_why)+')':'')+'. Curseur désactivé : aucune valeur n’est inventée. La '+(SELL?'quantité':'taille')+' ne peut pas être vérifiée contre le solde réel, la validation est bloquée — régénérer la page quand la lecture du solde fonctionne.';}
+  else if(!CAPOK){cap=Nm+' : <b>0 '+esc(UNIT)+'</b> <span class=re>RÉEL</span>';cls='ko';
+    msg=SELL?'⛔ Solde réel : 0 '+esc(SYM)+' dans '+pf+rd+' — aucun '+esc(SYM)+' détenu (rien de rapatrié pour l’instant). Curseur désactivé (borné à 0). Rien n’est inventé ni ajusté : la quantité saisie reste affichée mais n’est pas validable tant que le solde ne la couvre pas.'
+      :'⛔ Capital disponible réel : 0 '+Q+' dans '+pf+rd+' — portefeuille non alimenté en '+Q+'. Curseur désactivé (borné à 0). Rien n’est inventé ni ajusté : la taille saisie reste affichée mais n’est pas validable tant que le solde ne la couvre pas.'+(oth?' Autres soldes du portefeuille : '+oth+' (non comptés : aucune conversion supposée).':'');}
+  else{cap=Nm+' : <b>'+capTxt(CAP)+'</b> <span class=re>RÉEL</span>';cls=over?'ko':'ok';
+    msg=(over?'⛔ '+(SELL?'Quantité':'Taille')+' supérieure au solde : rien n’est ajusté, réduis-la (curseur ou champ). ':'')+'Solde '+esc(UNIT)+' lu en lecture seule dans '+pf+rd+'. Le curseur ne dépasse jamais 100 % (Max = '+capTxt(capMax())+') ; le solde est re-vérifié au passage d’ordre (refus net s’il ne couvre plus la '+(SELL?'quantité':'taille')+').';}
+  $('ovcap').innerHTML=cap;var m=$('ovmsg');m.className='ovm '+cls;m.innerHTML=msg;}
+function fromPct(p){var v=sizeOfPct(p);if(v===null)return;setSize(v);render();}
+rng.addEventListener('input',function(){fromPct(+rng.value);});
+rng.addEventListener('change',function(){fromPct(+rng.value);render(true);});
+QB.forEach(function(b){b.addEventListener('click',function(){fromPct(+b.dataset.p);render(true);});});
+// --- stop optionnel (achat HODL sans stop / vente sans stop) ---
+var stopCb=$('oStopOn');
+stopCb.addEventListener('change',function(){if(stopCb.checked){if(S.stop===null)S.stop=stopPrev||O.stop_def;}
+  else if(S.stop!==null){stopPrev=S.stop;S.stop=null;}updAuto();save();render(true);});
+var built='';
+function buildRows(){var h='';levels().forEach(function(l){var tp=l.k.indexOf('tp')===0;
+  h+='<div class=orow id=or_'+l.k+'><span class=nm><i style="background:'+l.color+'"></i>'+l.name+'</span>'+
+     '<span class=ctl><input class=px inputmode=decimal data-k="'+l.k+'"><button class="btn nb" type=button data-k="'+l.k+'" data-d=-1 aria-label="moins un pas">−</button>'+
+     '<button class="btn nb" type=button data-k="'+l.k+'" data-d=1 aria-label="plus un pas">+</button>'+
+     (tp?'<span class=sub>part</span><input class=pc inputmode=numeric data-i="'+l.k.slice(2)+'"><span class=sub>%</span>':'')+'</span>'+
+     '<span class=det id=od_'+l.k+'></span></div>';});
+  if(mkt())h+='<div class=orow><span class=nm>Marché</span><span class=det style="grid-column:2">Vente immédiate de toute la quantité au meilleur prix disponible : pas de TP ni de stop (rien ne reste à protéger).</span></div>';
+  else if(!levels().length)h+='<div class=orow><span class=nm>—</span><span class=det style="grid-column:2">Aucun niveau : ajoute un TP (prix de vente limite) ou coche « Stop ».</span></div>';
+  $('olv').innerHTML=h;built=levels().map(function(l){return l.k;}).join(',')+'|'+S.etype;
+  Array.prototype.forEach.call($('olv').querySelectorAll('input.px'),function(inp){inp.addEventListener('change',function(){var v=parseNum(inp.value);
+    if(v!==null&&v>0){setP(inp.dataset.k,snapP(Math.min(Math.max(v,O.lo),O.hi)));updAuto();save();}render(true);});});
+  Array.prototype.forEach.call($('olv').querySelectorAll('input.pc'),function(inp){inp.addEventListener('change',function(){var v=parseNum(inp.value);
+    if(v!==null){S.tps[+inp.dataset.i].pct=Math.max(0,Math.min(100,Math.round(v)));save();}render(true);});});
+  Array.prototype.forEach.call($('olv').querySelectorAll('button.nb'),function(b){b.addEventListener('click',function(){var k=b.dataset.k;
+    setP(k,snapP(Math.min(Math.max(getP(k)+(+b.dataset.d)*TICK,O.lo),O.hi)));updAuto();save();render(true);});});}
+function setInp(inp,val,force){if(inp&&(force||document.activeElement!==inp))inp.value=val;}
+var codeSig=null;
+function render(force){var c=calc(),bad={};c.errs.forEach(function(x){if(x.k)bad[x.k]=1;});
+  if(built!==levels().map(function(l){return l.k;}).join(',')+'|'+S.etype)buildRows();
+  syncLines();syncHandles();
+  var rp=refPx();
+  levels().forEach(function(l){var h=HD[l.k],t,det;
+    if(l.k==='entry'){t=(S.etype==='stop_limit'?'CASSURE ':'ENTRÉE ')+px(l.p);det='<b>'+px(l.p)+'</b> · '+mo(c.u,O.base_dec)+' '+esc(SYM)+' · '+mo(c.sz)+' '+Q;}
+    else if(l.k==='stop'){var d=(l.p/rp-1)*100;t='STOP '+pc(d,1);
+      det=SELL?'<b>'+pc(d)+'</b> vs dernier prix · vente stop-limit de '+mo(c.sz,O.base_dec)+' '+esc(SYM)+' → ≈ <b style="color:#c62828">'+mo(c.lnet)+' '+Q+'</b> net'
+              :'<b>'+pc(d)+'</b> · distance '+px(c.e-l.p)+' · perte <b style="color:#c62828">'+(c.R>0?'−'+mo(c.risk):'?')+' '+Q+'</b>';}
+    else{var i=+l.k.slice(2),q=c.tps[i];
+      if(SELL){t=l.short+' '+pc(q.d,1);det='<b>'+pc(q.d)+'</b> vs dernier prix · vend '+q.pct+' % ('+mo(q.units,O.base_dec)+' '+esc(SYM)+') · ≈ <b style="color:#2e7d32">'+mo(q.net)+' '+Q+'</b> net';}
+      else{t=l.short+' '+pc(q.d,1)+' · '+rr(q.rr)+'R';
+        det='<b>'+pc(q.d)+'</b> · R:R <b>'+rr(q.rr)+'</b> · vend '+q.pct+' % ('+mo(q.units,O.base_dec)+' '+esc(SYM)+') · gain <b style="color:#2e7d32">+'+mo(q.gain)+' '+Q+'</b>';}}
+    if(h){h.querySelector('.t').textContent=t;h.classList.toggle('bad',!!bad[l.k]);}
+    var row=$('or_'+l.k);if(row){row.classList.toggle('bad',!!bad[l.k]);setInp(row.querySelector('input.px'),px(l.p),force);
+      if(l.k.indexOf('tp')===0)setInp(row.querySelector('input.pc'),S.tps[+l.k.slice(2)].pct,force);$('od_'+l.k).innerHTML=det;}});
+  var si=$('oSize'),focus=si&&document.activeElement===si;
+  if(!focus){$('osum').innerHTML=sumHTML(c);var ni=$('oSize');ni.addEventListener('change',function(){var v=parseNum(ni.value);
+    if(v!==null&&v>=0)setSize(v);render(true);});
+    // saisie au clavier : le curseur suit en direct (aucune correction de la valeur tapée)
+    ni.addEventListener('input',function(){var v=parseNum(ni.value);if(v!==null&&v>=0){setSize(v);render();}});}
+  updVol(c);
+  stopCb.checked=S.stop!==null;stopCb.disabled=mkt();$('ostopl').classList.toggle('on',S.stop!==null&&!mkt());
+  $('ohodl').textContent=SELL?(mkt()?'':(S.tps.length?'':'Aucun TP : '+(S.stop!==null?'stop de protection seul.':'ajoute un TP ou un stop.')))
+    :(S.tps.length?'':'HODL : aucun TP'+(S.stop!==null?' (stop de protection posé après l’achat).':' ni stop (achat seul).'));
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=oet]'),function(r){r.checked=(r.value===S.etype);
+    $('oetl_'+r.value).classList.toggle('on',r.checked);});
+  $('oetd').textContent=SELL?(mkt()
+      ?'Vente au marché : toute la quantité est vendue tout de suite au meilleur prix disponible (taker). Le prix réel peut s’écarter du dernier prix.'
+      :'Vente limite : chaque TP est un prix de vente limite (au-dessus du marché) ; avec un stop, TP et stop sont liés en OCO par lot ; stop seul = vente stop-limit de protection (limite 5 % sous le déclencheur).')
+    :(S.etype==='stop_limit'
+    ?'Achat stop-limit : rien n’est acheté tant que le prix n’a pas franchi '+px(c.e)+' à la hausse ; ensuite achat limite jusqu’à '+px(Math.ceil(c.e*(1+O.sl_slip/100)/TICK-1e-9)*TICK)+' (+'+String(O.sl_slip).replace('.',',')+' %). TP et stop posés après le remplissage.'
+    :'Achat limite posé tout de suite à '+px(c.e)+' : exécuté à ce prix ou mieux (entrée au niveau du marché ou en dessous). '+(S.tps.length?'TP et stop liés en OCO dès le remplissage.':(S.stop!==null?'Stop posé après le remplissage.':'Aucune sortie posée (HODL).')));
+  var w='';c.errs.forEach(function(x){w+='<div class=er>⛔ '+esc(x.t)+'</div>';});c.warns.forEach(function(x){w+='<div class=wa>⚠ '+esc(x.t)+'</div>';});
+  $('owarn').innerHTML=w;
+  var st=c.errs.length?'<span class=ko>'+c.errs.length+' incohérence'+(c.errs.length>1?'s':'')+'</span>':(c.warns.length?'<span class=wa>Cohérent · '+c.warns.length+' avertissement'+(c.warns.length>1?'s':'')+'</span>':'<span class=ok>Cohérent</span>');
+  $('ostat').innerHTML=st;$('oVal').disabled=!!c.errs.length;$('oAdd').disabled=S.tps.length>=3||mkt();$('oDel').disabled=S.tps.length<=0||mkt();
+  var s='<span class="st'+(c.errs.length?' bad':(c.warns.length?' warn':''))+'"></span>';
+  if(SELL)s+='<span class=s>VENTE <b>'+mo(c.sz,O.base_dec)+'</b> '+esc(SYM)+' · '+ETL[S.etype]+'</span>'+(c.s!==null?'<span class=s>S <b>'+px(c.s)+'</b></span>':'');
+  else s+='<span class=e>'+(S.etype==='stop_limit'?'E⤒':'E')+' <b>'+px(c.e)+'</b></span>'+(c.s!==null?'<span class=s>S <b>'+px(c.s)+'</b> '+pc((c.s/c.e-1)*100,1)+'</span>':'<span class=s>sans stop</span>');
+  c.tps.forEach(function(q,i){s+='<span class=t>TP'+(i+1)+' <b>'+px(q.px)+'</b>'+(SELL?'':' '+rr(q.rr)+'R')+'</span>';});
+  if(!SELL&&!c.tps.length)s+='<span class=t>HODL</span>';
+  s+=(SELL?'<span>≈ <b>'+mo(c.val)+'</b> '+Q+'</span>':'<span>Risque <b>'+(c.R>0?mo(c.risk):'—')+'</b> '+Q+'</span>')+'<button class="btn go" id=oGo type=button>Valider ↓</button>';
+  $('ostrip').innerHTML=s;$('oGo').onclick=function(){validate();$('opanel').scrollIntoView({behavior:'smooth',block:'start'});};
+  var cb=$('ocode');if(codeSig!==null){var stale=codeSig!==JSON.stringify(S);cb.classList.toggle('stale',stale);
+    $('ocodel').textContent=stale?'Niveaux modifiés depuis la validation : clique de nouveau sur « Valider l’ordre ».':'Code de validation : copie-le et colle-le dans le chat';
+    $('oCopy').disabled=stale;}
+  window.__order={state:clone(S),calc:c};
+  window.__vol={cap:CAP,kind:CK,enabled:CAPOK,pct:pctOf(c.sz),slider:+rng.value,max:capMax(),side:O.side};
+  place(true);repaint();}
+// --- différences avec la proposition initiale (affichées sous le code ; l'assistant refait ce contrôle) ---
+function diffList(){var out=[];function ch(name,a,b){if(a===b)return;if(a===null)out.push(name+' ajouté : '+px(b));else if(b===null)out.push(name+' supprimé (était '+px(a)+')');
+    else out.push(name+' : '+px(a)+' → '+px(b)+' ('+pc((b/a-1)*100)+')');}
+  if(S.etype!==INIT.etype)out.push('Type d’entrée : '+ETL[INIT.etype]+' → '+ETL[S.etype]);
+  if(S.size!==INIT.size)out.push((SELL?'Quantité : ':'Taille : ')+mo(INIT.size,SDEC)+' → '+mo(S.size,SDEC)+' '+UNIT);
+  if(!SELL)ch('Entrée',INIT.entry,S.entry);
+  var mk=mkt(),st=mk?null:S.stop,T=mk?[]:S.tps;ch('Stop',INIT.stop,st);
+  var nmax=Math.max(INIT.tps.length,T.length);
+  for(var i=0;i<nmax;i++){var a=INIT.tps[i],b=T[i];
+    if(!a)out.push('TP'+(i+1)+' ajouté : '+px(b.px)+' ('+b.pct+' %)');else if(!b)out.push('TP'+(i+1)+' supprimé (était '+px(a.px)+', '+a.pct+' %)');
+    else{ch('TP'+(i+1),a.px,b.px);if(a.pct!==b.pct)out.push('Part TP'+(i+1)+' : '+a.pct+' % → '+b.pct+' %');}}
+  if(!SELL&&INIT.tps.length&&!T.length)out.push('→ achat HODL : aucun TP');
+  return out;}
+// code : même ordre de clés que order_code.code_fields
+function codeObj(){var o={oid:O.oid,sym:O.sym,side:O.side};
+  if(SELL){o.entry_type=S.etype;o.size_base=S.size;if(!mkt()&&S.stop!==null)o.stop=S.stop;
+    o.tps=mkt()?[]:S.tps.map(function(t){return {px:t.px,pct_size:t.pct};});}
+  else{if(S.etype!=='limit')o.entry_type=S.etype;o.size_usdc=S.size;o.entry=S.entry;if(S.stop!==null)o.stop=S.stop;
+    o.tps=S.tps.map(function(t){return {px:t.px,pct_size:t.pct};});}
+  o.v=O.v;return o;}
+function validate(){var c=calc();if(c.errs.length){render(true);$('owarn').scrollIntoView({behavior:'smooth',block:'center'});return null;}
+  var b=b64u(JSON.stringify(codeObj())),code=O.prefix+b+'.'+sha256(b).slice(0,6);
+  $('ocodet').value=code;$('ocode').style.display='block';$('ocmsg').textContent='';codeSig=JSON.stringify(S);
+  var d=diffList();$('odiff').innerHTML=d.length?d.map(function(x){return '<li>'+esc(x)+'</li>';}).join(''):'<li>Aucun changement par rapport à la proposition v'+O.v+'.</li>';
+  window.__code=code;render(true);return code;}
+$('oVal').onclick=function(){validate();};
+Array.prototype.forEach.call(document.querySelectorAll('input[name=oet]'),function(r){r.addEventListener('change',function(){
+  if(r.checked&&ETL[r.value]){S.etype=r.value;updAuto();save();render(true);}});});
+function copyCode(){var t=$('ocodet'),m=$('ocmsg');function ok(){m.textContent='Copié ✓ — colle-le dans le chat';}
+  function manual(){t.focus();t.select();try{t.setSelectionRange(0,t.value.length);}catch(_){}
+    var r=false;try{r=document.execCommand('copy');}catch(_){}m.textContent=r?'Copié ✓ — colle-le dans le chat':'Sélectionné : copie-le à la main';}
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t.value).then(ok,manual);else manual();}
+$('oCopy').onclick=copyCode;
+$('oAdd').onclick=function(){if(S.tps.length>=3||mkt())return;
+  if(!S.tps.length){S.tps.push({px:snapP(Math.min(O.hi,O.tp_def)),pct:100});}
+  else{var l=S.tps[S.tps.length-1],np=Math.floor(l.pct/2);if(np<1)return;var base=refPx()||l.px;
+    l.pct-=np;S.tps.push({px:snapP(Math.min(O.hi,l.px+Math.max((l.px-base)*0.5,TICK))),pct:np});}
+  updAuto();save();render(true);};
+$('oDel').onclick=function(){if(S.tps.length<=0||mkt())return;var r=S.tps.pop();if(S.tps.length)S.tps[S.tps.length-1].pct+=r.pct;updAuto();save();render(true);};
+$('oRst').onclick=function(){S=clone(INIT);stopPrev=null;try{localStorage.removeItem(KEY);}catch(e){}codeSig=null;$('ocode').style.display='none';updAuto();render(true);fit();};
+window.__orderY=function(k){return candle.priceToCoordinate(getP(k));};
+window.__orderPx=function(k){return getP(k);};
+window.__codeObj=codeObj;
+render(true);
+})();
+}
+
+(function(){if(window.LightweightCharts){initChart();return;}
+var s=document.createElement('script');s.src='https://unpkg.com/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';s.integrity='sha384-KkYqTZlM13Zya6fVUF3IGCBOQ1ehFeJVVgxaVvD/0MebineF9EI8Jkd3NnWNChqN';s.crossOrigin='anonymous';
+s.onload=initChart;s.onerror=initChart;document.head.appendChild(s);})();
+</script>
+</body>
+</html>
