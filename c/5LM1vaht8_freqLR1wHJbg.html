@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="googlebot" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>SOL-USDC 1D</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:#131722;font:14px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+header{padding:8px 10px 6px;border-bottom:1px solid #e0e3eb}
+h1{margin:0;font-size:18px;font-weight:700;display:flex;flex-wrap:wrap;align-items:center;gap:4px 9px}
+h1 .tf{font-weight:600;color:#434651}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.3px;padding:2px 7px;border-radius:10px;background:#e3f2fd;color:#0d47a1;border:1px solid #bbdefb}
+.verdict{margin:3px 0 4px;font-weight:600;color:#2a2e39;font-size:13.5px}
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:2px 10px;margin:2px 0}
+.f{display:flex;flex-direction:column;padding:2px 0}
+.k{font-size:10px;color:#787b86;text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v{font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.reasons,.context{margin:5px 0 2px;background:#fafafa;border:1px solid #e0e3eb;border-radius:6px;padding:2px 9px}
+.reasons summary,.context summary{cursor:pointer;font-weight:600;color:#2a2e39;padding:4px 0;font-size:13px}
+.reasons ul,.context ul{margin:2px 0 6px;padding-left:0;list-style:none}
+.reasons li{margin:3px 0;font-size:13px;padding-left:18px;list-style:disc;list-style-position:inside}
+.context li{margin:6px 0;padding:6px 8px;border-radius:5px;background:#fff;border:1px solid #e8eaef;font-size:13px}
+.context .tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;
+  padding:1px 6px;border-radius:8px;margin-right:6px;vertical-align:middle}
+.context .when{font-size:11px;color:#787b86;font-variant-numeric:tabular-nums}
+.context .ttl{font-weight:600;margin:3px 0 1px;color:#131722}
+.context .detail{font-size:12.5px;color:#434651;line-height:1.35}
+.context .event .tag,.context .catalyst .tag{background:#e3f2fd;color:#0d47a1}
+.context .narrative .tag{background:#f3e5f5;color:#4a148c}
+.context .risk .tag{background:#ffebee;color:#b71c1c}
+.context .note .tag{background:#eceff1;color:#37474f}
+.context .position .tag{background:#e8eaf6;color:#1a237e}
+.meta{font-size:10.5px;color:#787b86;margin-top:3px}
+.live{margin:4px 0 2px;font-size:12.5px;color:#2a2e39;font-variant-numeric:tabular-nums}
+.live i{display:inline-block;width:16px;height:0;border-top:2px dotted #ef6c00;vertical-align:middle;margin-right:6px}
+.live .up{color:#2e7d32;font-weight:600}.live .dn{color:#c62828;font-weight:600}.live .lk{color:#9598a1;font-size:10.5px}
+.toolbar{display:flex;gap:6px;align-items:center;padding:6px 10px;border-bottom:1px solid #e0e3eb;background:#fbfbfc}
+.btn{appearance:none;border:1px solid #c9ccd4;background:#fff;color:#131722;border-radius:6px;padding:6px 9px;font:600 12.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;text-decoration:none;cursor:pointer;min-height:32px;display:inline-flex;align-items:center;white-space:nowrap}
+.btn.on{background:#131722;color:#fff;border-color:#131722}
+.btn.tv{margin-left:auto;background:#2962ff;color:#fff;border-color:#2962ff}
+.btn.ms.on{background:#2962ff;border-color:#2962ff}
+.tv .sm{display:none}
+@media (max-width:440px){.toolbar{gap:5px;padding:6px 8px}.btn{padding:6px 8px}.tv .lg{display:none}.tv .sm{display:inline}}
+#mbar{position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:5;display:none;align-items:center;gap:6px;pointer-events:none}
+#mtxt{font:600 11.5px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:rgba(19,23,34,.82);color:#fff;border-radius:12px;padding:5px 10px;white-space:nowrap}
+#mclr{pointer-events:auto;appearance:none;border:1px solid #c9ccd4;background:#fff;color:#131722;border-radius:50%;width:30px;height:30px;font:700 15px/1 sans-serif;cursor:pointer;display:none;padding:0;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.chips{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:5px;padding:5px 10px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-size:11px;border:1px solid #d1d4dc;border-radius:12px;padding:2px 8px 2px 6px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:5px;user-select:none;-webkit-user-select:none}
+.chip i{display:inline-block;width:14px;height:0;border-top:2px solid}
+.chip.off{opacity:.38}
+#legend{font-size:11px;line-height:1.35;font-variant-numeric:tabular-nums;padding:3px 10px 2px;min-height:34px;color:#2a2e39}
+#legend b{font-weight:700}
+#wrap{position:relative;width:100%;height:74vh;height:74svh;min-height:420px;max-height:980px}
+#chart{position:absolute;inset:0;touch-action:none}
+.hint{font-size:10.5px;color:#9598a1;padding:5px 10px 14px}
+#expired,#err{display:none;padding:40px 16px;text-align:center;color:#434651}
+@media (min-width:900px){header,.toolbar,.chips,.hint,#legend{padding-left:18px;padding-right:18px}#wrap{height:76vh}h1{font-size:22px}
+ .facts{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.v{font-size:14px}#legend{font-size:12px;min-height:20px}}
+
+#wrap{height:66vh;height:66svh;min-height:400px}
+.ostrip{display:flex;gap:10px;align-items:center;overflow-x:auto;white-space:nowrap;padding:5px 10px;border-bottom:1px solid #e0e3eb;
+  font-size:12px;font-variant-numeric:tabular-nums;background:#fff;scrollbar-width:none}
+.ostrip::-webkit-scrollbar{display:none}
+.ostrip b{font-weight:700}.ostrip .e{color:#1565c0}.ostrip .s{color:#d32f2f}.ostrip .t{color:#2e7d32}
+.ostrip .st{flex:none;width:10px;height:10px;border-radius:50%;background:#2e7d32}.ostrip .st.bad{background:#d32f2f}.ostrip .st.warn{background:#f9a825}
+.ostrip .go{margin-left:auto;flex:none}
+.oh{position:absolute;z-index:4;display:none;align-items:center;gap:5px;transform:translateY(-50%);height:30px;padding:0 10px 0 6px;
+  border-radius:15px;color:#fff;font:700 11.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  white-space:nowrap;cursor:ns-resize;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
+  box-shadow:0 1px 4px rgba(0,0,0,.28);border:2px solid #fff;opacity:.94}
+.oh::before{content:"";position:absolute;inset:-9px -4px}
+.oh .g{font-size:15px;line-height:1;opacity:.95}
+.oh.act{opacity:1;box-shadow:0 0 0 3px rgba(41,98,255,.35),0 2px 6px rgba(0,0,0,.35);transform:translateY(-50%) scale(1.06)}
+.oh.bad{outline:2px dashed #ffeb3b;outline-offset:1px}
+#wrap.hov #chart,#wrap.hov #chart *{cursor:ns-resize!important}
+#wrap.dragging #chart,#wrap.dragging #chart *{cursor:grabbing!important}
+.opanel{margin:8px 10px 4px;border:1px solid #d1d4dc;border-radius:8px;background:#fafbfc}
+.opanel h2{margin:0;padding:8px 10px;font-size:15px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;border-bottom:1px solid #e0e3eb}
+.opanel h2 .oid{font-size:11px;font-weight:600;color:#787b86}
+.opanel h2 .ok,.opanel h2 .ko,.opanel h2 .wa{font-size:11px;padding:2px 8px;border-radius:10px}
+.opanel h2 .ok{background:#e8f5e9;color:#1b5e20}.opanel h2 .ko{background:#ffebee;color:#b71c1c}.opanel h2 .wa{background:#fff8e1;color:#8d6e00}
+.osum{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 12px;padding:8px 10px;font-variant-numeric:tabular-nums}
+.osum .k{font-size:10px}.osum .v{font-size:13.5px}.osum .sub{font-size:11px;color:#787b86;font-weight:500}
+.osum input{width:96px;font:600 14px/1.2 inherit;padding:4px 6px;border:1px solid #c9ccd4;border-radius:5px}
+.olv{padding:2px 10px 6px}
+.orow{display:grid;grid-template-columns:76px 1fr;gap:2px 8px;align-items:center;padding:7px 0;border-top:1px solid #eceef2}
+.orow .nm{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+.orow .nm i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.orow .ctl{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.orow input.px{width:104px;font:600 15px/1.2 inherit;font-variant-numeric:tabular-nums;padding:5px 7px;border:1px solid #c9ccd4;border-radius:5px}
+.orow input.pc{width:50px;font:600 13px/1.2 inherit;padding:4px 5px;border:1px solid #c9ccd4;border-radius:5px}
+.orow .nb{min-width:34px;justify-content:center;padding:6px 0}
+.orow .det{grid-column:2;font-size:12px;color:#434651;font-variant-numeric:tabular-nums}
+.orow .det b{color:#131722}
+.orow.bad input.px{border-color:#d32f2f;background:#fff5f5}
+.owarn{padding:0 10px}
+.owarn div{margin:4px 0;padding:6px 8px;border-radius:5px;font-size:12.5px}
+.owarn .er{background:#ffebee;color:#b71c1c;border:1px solid #ffcdd2}
+.owarn .wa{background:#fff8e1;color:#6d5300;border:1px solid #ffe082}
+.oact{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px 10px}
+.oet{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;padding:7px 10px;border-top:1px solid #eceef2}
+.oet .k{font-size:12px;font-weight:700;margin-right:2px}
+.oet label{display:inline-flex;align-items:center;gap:5px;min-height:34px;padding:0 11px;border:1px solid #c9ccd4;border-radius:17px;
+  background:#fff;font-size:13px;font-weight:600;cursor:pointer;user-select:none;-webkit-user-select:none}
+.oet label.on{border-color:#1565c0;background:#e3f2fd;color:#0d47a1}
+.oet input{margin:0;accent-color:#1565c0}
+.oet .d{flex-basis:100%;font-size:12px;color:#434651}
+.btn.pri{background:#2e7d32;border-color:#2e7d32;color:#fff;font-size:14px;padding:9px 14px;min-height:40px}
+.btn.pri[disabled]{background:#9e9e9e;border-color:#9e9e9e}
+.ocode{display:none;margin:0 10px 10px;padding:8px 10px;border:2px solid #2e7d32;border-radius:8px;background:#fff}
+.ocode.stale{border-color:#f9a825;opacity:.7}
+.ocode .lbl{font-weight:700;font-size:13px;margin-bottom:4px}
+.ocode textarea{width:100%;min-height:74px;font:12.5px/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all;
+  padding:6px;border:1px solid #c9ccd4;border-radius:5px;resize:vertical;background:#f7f8fa}
+.ocode .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.ocode .msg{font-size:12px;color:#1b5e20;font-weight:600}
+.ocode ul{margin:6px 0 0;padding-left:18px;font-size:12.5px}
+.ovol{padding:8px 10px 10px;border-top:1px solid #eceef2}
+.ovh{display:flex;flex-wrap:wrap;gap:3px 10px;align-items:baseline;font-size:12px;font-variant-numeric:tabular-nums}
+.ovh .k{font-size:12px;font-weight:700}.ovh .amt{margin-left:auto;font-weight:600;color:#131722}
+.ovcap{color:#434651}.ovcap b{color:#131722}
+.ovcap .ex{display:inline-block;padding:1px 7px;border-radius:9px;border:1px solid #e0b000;color:#6d4c00;font-weight:800;font-size:10.5px;
+  letter-spacing:.05em;background:repeating-linear-gradient(45deg,#fff3cd,#fff3cd 6px,#ffe08a 6px,#ffe08a 12px)}
+.ovcap .re{display:inline-block;padding:1px 7px;border-radius:9px;background:#e8f5e9;color:#1b5e20;font-weight:700;font-size:10.5px}
+.ovcap .nl{display:inline-block;padding:1px 7px;border-radius:9px;background:#ffebee;color:#b71c1c;font-weight:700;font-size:10.5px}
+.ovs{display:flex;align-items:center;gap:10px;margin:8px 0 6px}
+.ovtr{position:relative;flex:1;height:36px}
+.ovbar{position:absolute;left:12px;right:12px;top:15px;height:6px;border-radius:3px;background:#d8dce6}
+.ovfill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;background:#1652f0}
+.ovbar i{position:absolute;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#d8dce6;border:2px solid #fafbfc;box-sizing:border-box}
+.ovbar i.on{background:#1652f0}
+.ovtr input{position:absolute;inset:0;z-index:1;width:100%;height:36px;margin:0;padding:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.ovtr input:focus{outline:none}
+.ovtr input::-webkit-slider-runnable-track{height:36px;background:transparent;border:0}
+.ovtr input::-moz-range-track{height:36px;background:transparent;border:0}
+.ovtr input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:6px;border-radius:50%;background:#fff;border:3px solid #1652f0;box-shadow:0 1px 4px rgba(0,0,0,.3);box-sizing:border-box}
+.ovtr input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid #1652f0;box-shadow:0 1px 4px rgba(0,0,0,.3);box-sizing:border-box}
+.ovtr input:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px rgba(22,82,240,.25)}
+.ovtr.over .ovfill,.ovtr.over .ovbar i.on{background:#d32f2f}
+.ovtr.over input::-webkit-slider-thumb{border-color:#d32f2f}
+.ovtr input:disabled{cursor:not-allowed}
+.ovtr input:disabled::-webkit-slider-thumb{border-color:#9e9e9e;background:#eee;box-shadow:none}
+.ovtr input:disabled::-moz-range-thumb{border-color:#9e9e9e;background:#eee;box-shadow:none}
+.ovp{min-width:62px;text-align:right;font:700 15px/1 inherit;font-variant-numeric:tabular-nums}
+.ovq{display:flex;gap:6px}
+.ovq button{flex:1;min-height:34px;justify-content:center;font-weight:600}
+.ovq button.on{border-color:#1652f0;background:#e8eefc;color:#0d47a1}
+.ovm{margin-top:7px;padding:6px 8px;border-radius:5px;font-size:12px;line-height:1.4}
+.ovm.ex{background:#fff8e1;border:1px dashed #e0b000;color:#6d4c00}
+.ovm.ko{background:#ffebee;border:1px solid #ffcdd2;color:#b71c1c}
+.ovm.ok{background:#f1f8e9;border:1px solid #dcedc8;color:#33691e}
+.ovol.off .ovp{color:#9e9e9e}
+.oopt{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:6px 10px 0;border-top:1px solid #eceef2}
+.oopt label{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 11px;border:1px solid #c9ccd4;border-radius:17px;
+  background:#fff;font-size:13px;font-weight:600;cursor:pointer;user-select:none;-webkit-user-select:none}
+.oopt label.on{border-color:#d32f2f;background:#ffebee;color:#b71c1c}
+.oopt input{margin:0;accent-color:#d32f2f;width:16px;height:16px}
+.oopt .ohodl{font-size:12px;color:#434651}
+@media (min-width:900px){.opanel,.ocode{margin-left:18px;margin-right:18px}.ostrip{padding-left:18px;padding-right:18px}#legend{min-height:34px}}
+</style>
+</head>
+<body>
+<header>
+<h1><span>SOL-USDC</span><span class=tf>1D</span><span class=badge>ORDRE · VENTE ▼</span></h1>
+<div class=verdict>Proposition de VENTE #SOL-261007-D7P2 (v1) : choisis la quantité (curseur = % du solde détenu), limite ou marché, TP / stop optionnels, puis « Valider l&#x27;ordre ».</div>
+<div class=facts><div class=f><span class=k>Paire</span><span class=v>SOL-USDC · Coinbase</span></div><div class=f><span class=k>Côté</span><span class=v>VENTE spot (crypto déjà détenue)</span></div><div class=f><span class=k>Type proposé</span><span class=v>Vente limite</span></div><div class=f><span class=k>Quantité proposée</span><span class=v>52,00000000 SOL ≈ 6 034,08 USDC</span></div><div class=f><span class=k>Stop proposé</span><span class=v>aucun</span></div><div class=f><span class=k>TP1 proposé</span><span class=v>120.50 (+3,8 % vs dernier prix, 35 %)</span></div><div class=f><span class=k>TP2 proposé</span><span class=v>123.50 (+6,4 % vs dernier prix, 40 %)</span></div><div class=f><span class=k>TP3 proposé</span><span class=v>126.50 (+9,0 % vs dernier prix, 25 %)</span></div><div class=f><span class=k>Dernier prix</span><span class=v>116.04</span></div><div class=f><span class=k>Solde SOL détenu</span><span class=v>52,00000000 SOL · réel (« Anna trading », lu le 07/10/2026 22:47)</span></div></div>
+<div class=live><i></i>Prix au 07/10 22:47 (Paris) : <b>116.05</b>, <span class=dn>-3.84 %</span> depuis la dernière clôture <span class=lk>(bougie en cours, non utilisée par l'analyse)</span></div>
+<details class=context open><summary>Contexte (1)</summary><ul><li class="cx note"><span class=tag>Note</span><div class=ttl>SOL — vente echelonnee</div><div class=detail>Prix ~116, range 115.5-124, resistance 122-125. 52 SOL ~ 6030 USDC. Ajuste les lignes au doigt, valide, copie le code et colle-le ici : je verifie avant tout ordre. Contexte narratif Nara a venir.</div></li></ul></details>
+<details class=reasons><summary>Pourquoi cette vente (4)</summary><ul><li>SOL evolue dans un range ~115.5-124. On est actuellement sur le bas du range (~116), donc on vend dans la force, pas ici.</li><li>3 paliers de vente limite vers le haut du range : TP1 120.5 (35%), TP2 123.5 haut de range (40%), TP3 126.5 cassure (25%).</li><li>Pas de stop par defaut : tu realises un holding, pas un trade a proteger. Ajoute-en un si tu veux sortir sur cassure du range (&lt;114).</li><li>Contexte Nara (ETF, unlocks, flux X) en cours de consultation : j integre des que j ai sa reponse.</li></ul></details>
+<div class=meta>Généré le 07/10/2026 22:47 (Paris) · dernière bougie clôturée 07/10 02:00 · source Coinbase · page supprimée après le 14/10/2026</div>
+</header>
+<div class=toolbar>
+<button class="btn" id=bLog type=button>Log</button>
+<button class="btn" id=bFit type=button>Recentrer</button>
+<button class="btn" id=bAll type=button>Tout</button>
+<button class="btn on" id=bLab type=button title="Afficher / masquer les étiquettes de gauche">Labels</button>
+<button class="btn ms" id=bMes type=button title="Mesurer une variation : toucher le point A puis le point B">Mesure</button>
+<a class="btn tv" href="https://www.tradingview.com/chart/?symbol=COINBASE:SOLUSD" target="_blank" rel="noopener noreferrer"><span class=lg>TradingView</span><span class=sm>TV</span>&nbsp;↗</a>
+</div>
+<div class=ostrip id=ostrip></div>
+<div class=chips id=chips></div>
+<div id=legend></div>
+<div id=wrap><div id=chart></div><div id=mbar><span id=mtxt></span><button id=mclr type=button title="Effacer la mesure" aria-label="Effacer la mesure">✕</button></div></div>
+<section class=opanel id=opanel>
+<h2><span>Ordre</span><span class=oid id=ooid></span><span id=ostat></span></h2>
+<div class=osum id=osum></div>
+<div class=ovol id=ovol>
+<div class=ovh><span class=k>Volume</span><span class=ovcap id=ovcap></span><span class=amt id=ovamt></span></div>
+<div class=ovs><div class=ovtr id=ovtr><div class=ovbar><div class=ovfill id=ovfill></div><i style="left:0%"></i><i style="left:25%"></i><i style="left:50%"></i><i style="left:75%"></i><i style="left:100%"></i></div>
+<input type=range id=oRange min=0 max=100 step=1 value=0 aria-label="Taille en % du capital disponible"></div><span class=ovp id=ovpct></span></div>
+<div class=ovq id=ovq><button class=btn type=button data-p=25>25 %</button><button class=btn type=button data-p=50>50 %</button><button class=btn type=button data-p=75>75 %</button><button class=btn type=button data-p=100>Max</button></div>
+<div class=ovm id=ovmsg></div>
+</div>
+<div class=oet id=oet role=radiogroup aria-label="Type de vente"><span class=k>Type de vente</span>
+<label id=oetl_limit><input type=radio name=oet value=limit> Limite</label>
+<label id=oetl_market><input type=radio name=oet value=market> Marché</label>
+<div class=d id=oetd></div></div>
+<div class=oopt id=oopt><label class=ostopl id=ostopl><input type=checkbox id=oStopOn> Stop de protection</label><span class=ohodl id=ohodl></span></div>
+<div class=olv id=olv></div>
+<div class=owarn id=owarn></div>
+<div class=oact>
+<button class="btn pri" id=oVal type=button>Valider l'ordre</button>
+<button class=btn id=oAdd type=button>+ TP</button>
+<button class=btn id=oDel type=button>− TP</button>
+<button class=btn id=oRst type=button>Réinitialiser</button>
+</div>
+<div class=ocode id=ocode>
+<div class=lbl id=ocodel>Code de validation : copie-le et colle-le dans le chat</div>
+<textarea id=ocodet readonly spellcheck=false autocomplete=off></textarea>
+<div class=row><button class="btn pri" id=oCopy type=button>Copier</button><span class=msg id=ocmsg></span></div>
+<ul id=odiff></ul>
+</div>
+</section>
+<div class=hint>Glisser une ligne d&#x27;ordre (ou sa poignée ⇕) pour l&#x27;ajuster ; prix arrondi au pas de cotation (0.01). Pincer pour zoomer, glisser ailleurs pour se déplacer. Aucun ordre n&#x27;est passé depuis cette page : le code validé est relu et comparé à la proposition avant tout envoi. Pas un conseil financier.</div>
+<div id=expired>Cette page a expiré.</div>
+<div id=err>Graphique indisponible (librairie non chargée).</div>
+<script type="application/json" id="chart-data">{"symbol":"SOL","tf":"1d","log":true,"candles":[[1765411200,136.29,137.84,129.04,136.44,1484570.0],[1765497600,136.43,140.16,130.35,132.32,1116820.0],[1765584000,132.31,134.29,131.65,133.17,360451.0],[1765670400,133.16,133.69,128.0,129.41,564628.0],[1765756800,129.39,135.43,123.58,127.8,1565140.0],[1765843200,127.79,130.11,124.87,129.11,1278400.0],[1765929600,129.13,133.97,121.26,123.21,1615970.0],[1766016000,123.22,128.97,116.82,119.52,1911140.0],[1766102400,119.52,127.79,117.55,126.19,1282230.0],[1766188800,126.2,126.83,125.22,125.75,315445.0],[1766275200,125.75,126.58,123.37,126.0,399000.0],[1766361600,126.0,128.7,124.13,125.85,912325.0],[1766448000,125.84,126.86,122.11,123.92,727617.0],[1766534400,123.92,124.22,120.47,122.44,707076.0],[1766620800,122.44,124.37,119.68,119.99,441342.0],[1766707200,119.98,125.04,119.17,122.19,1076340.0],[1766793600,122.18,124.98,121.78,124.64,348044.0],[1766880000,124.64,125.53,122.97,125.17,288058.0],[1766966400,125.17,129.96,122.21,123.09,1228760.0],[1767052800,123.08,126.38,122.43,124.88,685456.0],[1767139200,124.87,127.24,123.07,124.45,1209250.0],[1767225600,124.44,127.08,123.94,126.73,561103.0],[1767312000,126.74,133.19,125.68,132.25,1501160.0],[1767398400,132.24,133.92,129.54,133.32,583804.0],[1767484800,133.32,135.49,133.05,134.04,728587.0],[1767571200,134.05,139.85,133.08,137.9,1104570.0],[1767657600,137.89,143.44,136.06,141.04,1355580.0],[1767744000,141.04,141.32,134.28,136.25,913148.0],[1767830400,136.25,139.95,132.54,138.25,1064320.0],[1767916800,138.24,140.99,134.79,135.79,1276870.0],[1768003200,135.79,136.86,135.18,135.67,285542.0],[1768089600,135.66,141.36,135.56,139.5,895926.0],[1768176000,139.5,144.7,138.2,139.05,1505560.0],[1768262400,139.04,148.9,137.66,145.43,1468660.0],[1768348800,145.42,148.41,143.32,146.7,1448380.0],[1768435200,146.68,146.71,140.88,142.37,1073850.0],[1768521600,142.36,145.5,140.15,144.83,823362.0],[1768608000,144.84,144.93,143.26,143.66,334271.0],[1768694400,143.66,143.93,137.62,137.81,572843.0],[1768780800,137.78,137.78,130.05,133.36,1044020.0],[1768867200,133.34,134.54,124.72,125.66,1748520.0],[1768953600,125.66,132.07,125.14,129.44,1309900.0],[1769040000,129.44,130.9,126.58,128.35,688540.0],[1769126400,128.35,130.05,125.15,127.28,665560.0],[1769212800,127.29,127.92,126.46,127.02,234490.0],[1769299200,127.02,127.28,117.12,118.73,1053440.0],[1769385600,118.73,125.46,118.41,124.09,1067420.0],[1769472000,124.09,127.71,122.93,127.02,691067.0],[1769558400,127.02,128.16,124.59,125.16,692817.0],[1769644800,125.16,125.31,115.17,117.61,1477040.0],[1769731200,117.62,118.94,111.79,117.42,1825530.0],[1769817600,117.43,118.72,96.52,105.44,3232740.0],[1769904000,105.44,106.58,97.93,100.66,1913230.0],[1769990400,100.67,106.04,95.83,104.46,2900620.0],[1770076800,104.45,104.99,96.59,97.76,2125190.0],[1770163200,97.74,99.52,89.11,91.92,3632640.0],[1770249600,91.91,93.25,77.43,78.19,6218860.0],[1770336000,78.19,89.77,67.48,87.4,6301030.0],[1770422400,87.38,89.16,84.12,87.54,2028170.0],[1770508800,87.55,89.03,85.7,86.92,1189960.0],[1770595200,86.93,88.65,82.77,86.72,1828740.0],[1770681600,86.72,87.46,81.84,82.95,1320310.0],[1770768000,82.96,84.35,78.0,79.23,2039250.0],[1770854400,79.24,82.19,76.53,78.33,2003700.0],[1770940800,78.32,85.59,77.46,84.27,1882290.0],[1771027200,84.29,88.85,84.17,88.03,1304090.0],[1771113600,88.02,91.21,84.85,86.1,1874290.0],[1771200000,86.1,86.89,82.51,86.4,1442740.0],[1771286400,86.41,87.63,82.88,85.05,1206490.0],[1771372800,85.05,86.03,80.44,81.56,1232740.0],[1771459200,81.56,82.64,79.58,82.46,1031510.0],[1771545600,82.46,85.44,81.74,84.64,1621400.0],[1771632000,84.65,86.74,83.95,85.15,595284.0],[1771718400,85.14,85.58,82.41,82.75,645767.0],[1771804800,82.75,82.81,77.12,77.88,2080060.0],[1771891200,77.87,79.62,75.63,78.99,1438400.0],[1771977600,79.0,92.12,78.73,88.06,2824960.0],[1772064000,88.04,89.27,84.36,85.91,1868440.0],[1772150400,85.91,88.29,80.31,81.84,1878980.0],[1772236800,81.84,85.7,77.13,84.37,2118540.0],[1772323200,84.37,88.89,81.71,83.6,2016060.0],[1772409600,83.61,90.31,82.36,86.64,2747690.0],[1772496000,86.63,87.5,82.47,86.99,2434640.0],[1772582400,86.98,94.11,84.77,90.88,2822810.0],[1772668800,90.89,92.99,87.84,88.78,1503510.0],[1772755200,88.78,89.32,83.64,84.67,1799450.0],[1772841600,84.67,85.07,82.27,83.22,554625.0],[1772928000,83.22,84.11,80.25,81.59,780235.0],[1773014400,81.6,87.06,81.54,84.96,1656070.0],[1773100800,84.95,88.81,84.84,85.89,1240780.0],[1773187200,85.9,88.12,84.34,86.58,1137040.0],[1773273600,86.59,87.73,84.72,86.84,1153700.0],[1773360000,86.83,93.06,86.7,88.19,2146470.0],[1773446400,88.18,88.71,86.54,88.07,439486.0],[1773532800,88.07,93.23,87.34,92.33,953719.0],[1773619200,92.33,97.7,91.19,96.2,2100290.0],[1773705600,96.21,96.96,93.17,94.65,1223580.0],[1773792000,94.64,95.68,88.56,90.08,1414290.0],[1773878400,90.07,91.41,87.01,88.9,1148660.0],[1773964800,88.9,90.44,88.12,89.82,710334.0],[1774051200,89.83,90.79,87.13,87.55,324152.0],[1774137600,87.55,89.2,85.12,86.2,750638.0],[1774224000,86.2,92.27,85.08,91.42,1594410.0],[1774310400,91.43,92.2,88.38,90.76,1337230.0],[1774396800,90.76,93.44,90.7,91.68,1146680.0],[1774483200,91.67,91.98,85.36,86.47,1196520.0],[1774569600,86.48,86.99,81.78,83.05,1360960.0],[1774656000,83.04,84.2,81.67,82.02,520036.0],[1774742400,82.02,83.17,79.0,81.37,517236.0],[1774828800,81.37,84.97,81.09,82.48,1132600.0],[1774915200,82.49,84.53,80.06,83.12,1584200.0],[1775001600,83.12,86.63,80.76,81.17,1503580.0],[1775088000,81.16,81.77,76.69,78.95,1870990.0],[1775174400,78.95,80.91,78.86,80.39,826459.0],[1775260800,80.39,81.59,79.59,80.83,471712.0],[1775347200,80.83,82.1,78.48,81.85,783924.0],[1775433600,81.86,83.17,79.6,80.03,1185700.0],[1775520000,80.01,87.0,78.36,85.56,2182510.0],[1775606400,85.55,85.9,82.25,82.57,1164450.0],[1775692800,82.57,85.9,81.41,83.34,1135520.0],[1775779200,83.35,85.68,82.68,84.86,877816.0],[1775865600,84.86,86.29,83.82,84.97,513391.0],[1775952000,84.97,85.04,81.29,81.54,877245.0],[1776038400,81.54,86.83,81.4,86.56,1471210.0],[1776124800,86.55,87.71,83.34,83.76,1566990.0],[1776211200,83.75,85.85,82.69,84.92,1289740.0],[1776297600,84.92,90.53,83.85,89.09,1665830.0],[1776384000,89.08,90.8,87.39,88.8,1743020.0],[1776470400,88.8,89.2,85.82,86.21,739712.0],[1776556800,86.2,87.15,82.96,83.48,1110170.0],[1776643200,83.5,86.25,83.36,85.31,976038.0],[1776729600,85.33,86.93,84.33,86.07,1242560.0],[1776816000,86.08,89.36,86.03,86.91,1392600.0],[1776902400,86.9,87.19,84.5,86.17,1393140.0],[1776988800,86.17,86.99,84.97,86.22,1352020.0],[1777075200,86.22,86.83,85.54,86.2,339151.0],[1777161600,86.2,87.34,85.86,86.95,507844.0],[1777248000,86.96,88.1,83.65,84.8,1262360.0],[1777334400,84.81,84.92,82.96,84.05,719055.0],[1777420800,84.05,85.56,81.35,83.02,1233290.0],[1777507200,83.02,83.98,82.14,83.05,911504.0],[1777593600,83.05,84.86,83.05,83.76,844901.0],[1777680000,83.75,84.96,83.43,84.26,329133.0],[1777766400,84.26,84.96,83.57,83.91,374873.0],[1777852800,83.9,85.88,83.24,84.09,1090560.0],[1777939200,84.09,86.98,84.02,86.27,947620.0],[1778025600,86.26,90.01,86.09,89.15,1191500.0],[1778112000,89.15,90.43,87.62,88.4,916139.0],[1778198400,88.42,92.84,87.93,92.02,656917.0],[1778284800,92.02,94.16,91.85,93.11,501027.0],[1778371200,93.12,96.9,92.59,96.44,1111630.0],[1778457600,96.44,98.39,94.25,97.36,1688420.0],[1778544000,97.35,97.66,93.56,94.27,944771.0],[1778630400,94.26,95.96,90.22,91.14,1023090.0],[1778716800,91.14,93.66,89.77,92.13,814062.0],[1778803200,92.14,92.65,88.49,89.19,1081660.0],[1778889600,89.19,89.38,85.48,86.51,453805.0],[1778976000,86.51,87.25,83.41,85.19,516440.0],[1779062400,85.19,85.75,83.43,85.31,981068.0],[1779148800,85.32,85.9,83.63,84.23,762297.0],[1779235200,84.22,87.0,83.76,86.09,777452.0],[1779321600,86.09,87.91,85.23,87.27,835780.0],[1779408000,87.26,87.77,83.87,84.29,835533.0],[1779494400,84.3,87.42,81.31,85.65,1065370.0],[1779580800,85.66,86.86,83.58,85.17,652214.0],[1779667200,85.17,86.44,84.63,84.97,380859.0],[1779753600,84.98,86.03,83.03,83.59,672239.0],[1779840000,83.61,84.68,82.0,82.3,677389.0],[1779926400,82.28,82.95,79.88,82.0,1032660.0],[1780012800,81.99,83.1,80.24,81.92,872981.0],[1780099200,81.91,83.05,81.77,82.61,309975.0],[1780185600,82.61,83.27,81.22,82.32,282682.0],[1780272000,82.31,82.98,78.97,81.16,793818.0],[1780358400,81.16,81.18,72.64,74.12,1448940.0],[1780444800,74.13,75.61,70.83,71.52,1377490.0],[1780531200,71.5,72.0,66.67,68.79,1716440.0],[1780617600,68.78,69.02,61.42,63.62,2503640.0],[1780704000,63.63,64.83,60.11,62.15,1185550.0],[1780790400,62.17,67.9,61.91,66.46,1102390.0],[1780876800,66.47,68.16,64.91,66.81,1120170.0],[1780963200,66.8,67.43,63.46,64.92,1149200.0],[1781049600,64.93,65.71,62.28,63.13,1012190.0],[1781136000,63.14,67.32,63.13,66.85,1034460.0],[1781222400,66.86,68.76,65.84,66.79,756290.0],[1781308800,66.77,69.53,66.56,68.9,540176.0],[1781395200,68.9,71.24,66.92,71.24,545034.0],[1781481600,71.24,76.05,70.65,73.93,1136340.0],[1781568000,73.93,75.59,72.27,73.46,784788.0],[1781654400,73.46,74.62,70.72,71.98,1019250.0],[1781740800,71.99,72.61,68.12,69.63,825474.0],[1781827200,69.63,70.0,67.86,69.68,492446.0],[1781913600,69.67,74.21,69.43,73.14,562716.0],[1782000000,73.16,74.58,72.22,72.38,524962.0],[1782086400,72.37,74.92,71.33,71.88,775321.0],[1782172800,71.87,71.97,68.08,69.6,656368.0],[1782259200,69.6,70.33,64.62,68.01,1056360.0],[1782345600,68.0,69.55,63.94,67.61,1347770.0],[1782432000,67.62,73.82,65.82,71.79,2047710.0],[1782518400,71.8,73.07,70.11,70.39,446749.0],[1782604800,70.39,72.27,69.64,71.28,497283.0],[1782691200,71.28,76.33,70.24,75.05,1731600.0],[1782777600,75.05,75.12,71.86,73.55,1027360.0],[1782864000,73.54,78.87,72.16,77.38,1554010.0],[1782950400,77.38,82.68,76.82,80.63,1302950.0],[1783036800,80.62,83.14,80.25,82.28,677192.0],[1783123200,82.28,83.91,81.29,81.72,595843.0],[1783209600,81.72,82.35,79.6,81.52,466146.0],[1783296000,81.52,83.65,79.16,81.89,954228.0],[1783382400,81.9,82.74,80.29,80.52,821538.0],[1783468800,80.53,80.72,76.18,77.76,1167620.0],[1783555200,77.76,78.76,76.64,77.99,833178.0],[1783641600,77.99,79.6,77.01,78.07,845272.0],[1783728000,78.06,78.8,76.7,76.74,409640.0],[1783814400,76.73,77.73,75.6,76.88,414305.0],[1783900800,76.86,78.15,74.02,74.91,832771.0],[1783987200,74.92,77.9,74.47,77.81,880850.0],[1784073600,77.82,78.96,76.89,77.24,668709.0],[1784160000,77.23,77.57,74.97,75.26,581048.0],[1784246400,75.24,75.69,73.31,74.98,680303.0],[1784332800,74.98,75.58,74.46,75.46,272641.0],[1784419200,75.47,76.62,75.29,76.33,304805.0],[1784505600,76.33,78.32,75.4,77.7,721899.0],[1784592000,77.7,78.81,77.42,78.09,644507.0],[1784678400,78.1,78.78,76.93,77.95,546952.0],[1784764800,77.95,78.5,75.36,75.83,586166.0],[1784851200,75.82,76.4,73.38,73.9,456984.0],[1784937600,73.9,74.67,73.48,74.46,240233.0],[1785024000,74.47,77.02,74.4,76.69,260979.0],[1785110400,76.71,77.42,73.67,74.13,533057.0],[1785196800,74.14,74.51,72.27,73.73,683341.0],[1785283200,73.73,74.44,72.24,73.6,657053.0],[1785369600,73.59,74.94,73.06,74.44,544911.0],[1785456000,74.44,75.22,72.48,72.79,778734.0],[1785542400,72.81,73.14,70.51,71.88,387588.0],[1785628800,71.88,74.25,71.86,73.54,361043.0],[1785715200,73.55,74.21,71.88,73.49,596244.0],[1785801600,73.48,74.4,72.98,73.7,474191.0],[1785888000,73.69,74.74,73.19,73.97,542890.0],[1785974400,73.97,74.3,72.28,72.63,458949.0],[1786060800,72.62,74.31,72.38,73.63,642205.0],[1786147200,73.62,76.75,73.54,75.96,401494.0],[1786233600,75.94,77.75,75.69,76.21,422024.0],[1786320000,76.2,77.09,75.48,75.92,594081.0],[1786406400,75.93,76.6,74.58,76.22,708139.0],[1786492800,76.22,77.23,75.24,75.56,583937.0],[1786579200,75.55,76.54,75.04,76.21,485681.0],[1786665600,76.2,76.26,74.59,75.33,395156.0],[1786752000,75.32,75.66,74.96,75.28,225931.0],[1786838400,75.27,75.63,74.09,74.54,223702.0],[1786924800,74.54,76.16,74.36,75.95,454895.0],[1787011200,75.95,77.39,75.15,77.01,537390.0],[1787097600,77.01,87.26,76.58,85.34,1712270.0],[1787184000,85.34,88.05,83.94,87.64,1248010.0],[1787270400,87.63,95.0,87.55,93.72,2184470.0],[1787356800,93.73,102.7,87.8,93.79,2527820.0],[1787443200,93.8,97.4,91.54,95.43,1408210.0],[1787529600,95.44,98.99,93.22,98.97,2025140.0],[1787616000,98.98,102.97,95.34,96.59,2163490.0],[1787702400,96.6,102.45,94.99,102.09,1170420.0],[1787788800,102.09,110.65,100.52,109.18,2482410.0],[1787875200,109.18,110.14,102.24,104.15,1643120.0],[1787961600,104.14,105.88,103.03,105.61,612693.0],[1788048000,105.62,107.47,100.32,101.75,817064.0],[1788134400,101.75,105.0,100.87,103.04,1124660.0],[1788220800,103.03,104.36,98.3,99.94,1004520.0],[1788307200,99.94,100.65,97.33,100.4,811323.0],[1788393600,100.4,105.9,99.19,103.94,1151750.0],[1788480000,103.93,104.76,100.2,101.95,972626.0],[1788566400,101.95,104.39,101.6,103.18,528811.0],[1788652800,103.18,107.36,103.16,106.56,906313.0],[1788739200,106.55,107.07,102.96,103.79,652774.0],[1788825600,103.78,104.81,101.69,103.37,791460.0],[1788912000,103.37,105.17,100.26,101.54,876166.0],[1788998400,101.53,102.18,98.38,98.62,884103.0],[1789084800,98.61,105.79,98.0,102.45,1376550.0],[1789171200,102.44,102.56,101.18,101.74,522614.0],[1789257600,101.75,102.33,99.14,99.26,500012.0],[1789344000,99.26,104.9,98.94,102.52,975088.0],[1789430400,102.53,102.85,95.71,96.82,1237870.0],[1789516800,96.82,98.84,96.0,98.57,847097.0],[1789603200,98.57,101.98,98.38,101.54,1071250.0],[1789689600,101.52,114.34,100.8,112.7,1912910.0],[1789776000,112.7,114.59,109.93,111.03,969465.0],[1789862400,111.03,111.43,107.34,111.15,801545.0],[1789948800,111.15,119.99,110.65,118.9,1740190.0],[1790035200,118.9,119.46,115.54,118.56,1144690.0],[1790121600,118.57,119.75,112.95,114.99,1140590.0],[1790208000,114.97,117.76,112.41,117.02,1341090.0],[1790294400,117.0,122.94,115.82,122.12,1900020.0],[1790380800,122.12,122.43,119.82,121.37,599306.0],[1790467200,121.38,124.93,120.09,121.97,895534.0],[1790553600,121.98,122.92,117.2,118.81,834335.0],[1790640000,118.82,121.65,116.31,119.12,848535.0],[1790726400,119.12,122.79,117.0,118.06,666248.0],[1790812800,118.04,119.56,116.64,118.38,737043.0],[1790899200,118.36,123.73,117.07,118.62,980093.0],[1790985600,118.64,120.08,118.51,119.59,306145.0],[1791072000,119.61,122.26,119.57,121.57,389769.0],[1791158400,121.55,122.04,118.87,120.77,549221.0],[1791244800,120.77,122.0,118.87,120.69,442640.0]],"mas":[{"name":"EMA 13","color":"#2962FF","width":1.0,"style":"step","visible":true,"data":[[1765411200,136.0914],[1765497600,135.5527],[1765584000,135.2123],[1765670400,134.3834],[1765756800,133.4429],[1765843200,132.8239],[1765929600,131.4505],[1766016000,129.7461],[1766102400,129.2381],[1766188800,128.7398],[1766275200,128.3484],[1766361600,127.9915],[1766448000,127.4099],[1766534400,126.6999],[1766620800,125.7413],[1766707200,125.234],[1766793600,125.1491],[1766880000,125.1521],[1766966400,124.8575],[1767052800,124.8607],[1767139200,124.8021],[1767225600,125.0775],[1767312000,126.1021],[1767398400,127.1333],[1767484800,128.1199],[1767571200,129.5171],[1767657600,131.1632],[1767744000,131.8899],[1767830400,132.7985],[1767916800,133.2258],[1768003200,133.575],[1768089600,134.4214],[1768176000,135.0827],[1768262400,136.5609],[1768348800,138.0093],[1768435200,138.6323],[1768521600,139.5176],[1768608000,140.1094],[1768694400,139.7809],[1768780800,138.8637],[1768867200,136.9774],[1768953600,135.9006],[1769040000,134.822],[1769126400,133.7446],[1769212800,132.7839],[1769299200,130.7762],[1769385600,129.821],[1769472000,129.4209],[1769558400,128.8122],[1769644800,127.2119],[1769731200,125.813],[1769817600,122.9026],[1769904000,119.7251],[1769990400,117.5444],[1770076800,114.718],[1770163200,111.4612],[1770249600,106.7081],[1770336000,103.9498],[1770422400,101.6056],[1770508800,99.50763],[1770595200,97.68083],[1770681600,95.57642],[1770768000,93.24122],[1770854400,91.11105],[1770940800,90.13375],[1771027200,89.83322],[1771113600,89.2999],[1771200000,88.88563],[1771286400,88.33768],[1771372800,87.36944],[1771459200,86.66809],[1771545600,86.37837],[1771632000,86.20288],[1771718400,85.70962],[1771804800,84.5911],[1771891200,83.79094],[1771977600,84.40081],[1772064000,84.61641],[1772150400,84.21978],[1772236800,84.24124],[1772323200,84.14963],[1772409600,84.5054],[1772496000,84.86034],[1772582400,85.72029],[1772668800,86.15739],[1772755200,85.94491],[1772841600,85.55564],[1772928000,84.98912],[1773014400,84.98496],[1773100800,85.11425],[1773187200,85.32364],[1773273600,85.54026],[1773360000,85.9188],[1773446400,86.22611],[1773532800,87.0981],[1773619200,88.39837],[1773705600,89.29146],[1773792000,89.40411],[1773878400,89.33209],[1773964800,89.40179],[1774051200,89.13725],[1774137600,88.71764],[1774224000,89.10369],[1774310400,89.34031],[1774396800,89.67455],[1774483200,89.21676],[1774569600,88.33579],[1774656000,87.43354],[1774742400,86.56732],[1774828800,85.98341],[1774915200,85.57436],[1775001600,84.94516],[1775088000,84.08871],[1775174400,83.56032],[1775260800,83.17028],[1775347200,82.98167],[1775433600,82.56],[1775520000,82.98857],[1775606400,82.92878],[1775692800,82.98752],[1775779200,83.25502],[1775865600,83.50002],[1775952000,83.22001],[1776038400,83.69715],[1776124800,83.70613],[1776211200,83.87954],[1776297600,84.62389],[1776384000,85.22048],[1776470400,85.36184],[1776556800,85.09301],[1776643200,85.124],[1776729600,85.25915],[1776816000,85.49498],[1776902400,85.59141],[1776988800,85.68121],[1777075200,85.75532],[1777161600,85.92599],[1777248000,85.76514],[1777334400,85.52012],[1777420800,85.16296],[1777507200,84.86111],[1777593600,84.70381],[1777680000,84.6404],[1777766400,84.53606],[1777852800,84.47234],[1777939200,84.72915],[1778025600,85.3607],[1778112000,85.79488],[1778198400,86.68419],[1778284800,87.60216],[1778371200,88.86471],[1778457600,90.07832],[1778544000,90.67713],[1778630400,90.74326],[1778716800,90.94136],[1778803200,90.69117],[1778889600,90.09386],[1778976000,89.39331],[1779062400,88.80998],[1779148800,88.15569],[1779235200,87.8606],[1779321600,87.77622],[1779408000,87.27819],[1779494400,87.04559],[1779580800,86.77765],[1779667200,86.51942],[1779753600,86.10093],[1779840000,85.55794],[1779926400,85.04966],[1780012800,84.60257],[1780099200,84.31791],[1780185600,84.0325],[1780272000,83.62214],[1780358400,82.26469],[1780444800,80.72974],[1780531200,79.02406],[1780617600,76.82348],[1780704000,74.72727],[1780790400,73.54623],[1780876800,72.58391],[1780963200,71.48907],[1781049600,70.29491],[1781136000,69.80278],[1781222400,69.37239],[1781308800,69.3049],[1781395200,69.58134],[1781481600,70.20258],[1781568000,70.66793],[1781654400,70.85537],[1781740800,70.68031],[1781827200,70.53741],[1781913600,70.90921],[1782000000,71.11932],[1782086400,71.22799],[1782172800,70.99542],[1782259200,70.56893],[1782345600,70.14623],[1782432000,70.38105],[1782518400,70.38233],[1782604800,70.51057],[1782691200,71.15906],[1782777600,71.50062],[1782864000,72.34053],[1782950400,73.52474],[1783036800,74.77549],[1783123200,75.76757],[1783209600,76.58934],[1783296000,77.34658],[1783382400,77.79993],[1783468800,77.79422],[1783555200,77.82219],[1783641600,77.85759],[1783728000,77.69794],[1783814400,77.58109],[1783900800,77.1995],[1783987200,77.28672],[1784073600,77.28004],[1784160000,76.99147],[1784246400,76.70411],[1784332800,76.52638],[1784419200,76.49833],[1784505600,76.67],[1784592000,76.87285],[1784678400,77.02673],[1784764800,76.85577],[1784851200,76.43352],[1784937600,76.15159],[1785024000,76.2285],[1785110400,75.92872],[1785196800,75.61461],[1785283200,75.32681],[1785369600,75.20012],[1785456000,74.85582],[1785542400,74.4307],[1785628800,74.30346],[1785715200,74.18725],[1785801600,74.11764],[1785888000,74.09655],[1785974400,73.88704],[1786060800,73.85032],[1786147200,74.15171],[1786233600,74.44575],[1786320000,74.65636],[1786406400,74.87973],[1786492800,74.97691],[1786579200,75.15307],[1786665600,75.17835],[1786752000,75.19287],[1786838400,75.0996],[1786924800,75.22109],[1787011200,75.47665],[1787097600,76.8857],[1787184000,78.42203],[1787270400,80.60745],[1787356800,82.49067],[1787443200,84.33915],[1787529600,86.42927],[1787616000,87.8808],[1787702400,89.91069],[1787788800,92.66345],[1787875200,94.30438],[1787961600,95.91947],[1788048000,96.7524],[1788134400,97.65063],[1788220800,97.97768],[1788307200,98.32373],[1788393600,99.12605],[1788480000,99.52947],[1788566400,100.051],[1788652800,100.9808],[1788739200,101.3821],[1788825600,101.6661],[1788912000,101.6481],[1788998400,101.2155],[1789084800,101.3919],[1789171200,101.4416],[1789257600,101.1299],[1789344000,101.3285],[1789430400,100.6845],[1789516800,100.3824],[1789603200,100.5478],[1789689600,102.2838],[1789776000,103.5333],[1789862400,104.6214],[1789948800,106.6612],[1790035200,108.361],[1790121600,109.308],[1790208000,110.4097],[1790294400,112.0826],[1790380800,113.4094],[1790467200,114.6323],[1790553600,115.2291],[1790640000,115.785],[1790726400,116.11],[1790812800,116.4343],[1790899200,116.7465],[1790985600,117.1527],[1791072000,117.7838],[1791158400,118.2104],[1791244800,118.5646]]},{"name":"EMA 25","color":"#00BCD4","width":1.0,"style":"step","visible":true,"data":[[1765411200,139.7282],[1765497600,139.1583],[1765584000,138.6977],[1765670400,137.9832],[1765756800,137.1999],[1765843200,136.5776],[1765929600,135.5493],[1766016000,134.3163],[1766102400,133.6912],[1766188800,133.0803],[1766275200,132.5357],[1766361600,132.0214],[1766448000,131.3982],[1766534400,130.7091],[1766620800,129.8846],[1766707200,129.2927],[1766793600,128.9348],[1766880000,128.6452],[1766966400,128.2179],[1767052800,127.9611],[1767139200,127.691],[1767225600,127.6171],[1767312000,127.9735],[1767398400,128.3848],[1767484800,128.8198],[1767571200,129.5182],[1767657600,130.4045],[1767744000,130.8542],[1767830400,131.4231],[1767916800,131.759],[1768003200,132.0599],[1768089600,132.6322],[1768176000,133.1259],[1768262400,134.0723],[1768348800,135.0437],[1768435200,135.6072],[1768521600,136.3167],[1768608000,136.8816],[1768694400,136.953],[1768780800,136.6766],[1768867200,135.8292],[1768953600,135.3377],[1769040000,134.8002],[1769126400,134.2217],[1769212800,133.6677],[1769299200,132.5187],[1769385600,131.8703],[1769472000,131.4972],[1769558400,131.0097],[1769644800,129.979],[1769731200,129.0129],[1769817600,127.1996],[1769904000,125.1581],[1769990400,123.5659],[1770076800,121.5809],[1770163200,119.2993],[1770249600,116.137],[1770336000,113.9265],[1770422400,111.8967],[1770508800,109.9755],[1770595200,108.1866],[1770681600,106.2453],[1770768000,104.1672],[1770854400,102.1797],[1770940800,100.8021],[1771027200,99.81959],[1771113600,98.76423],[1771200000,97.81314],[1771286400,96.83136],[1771372800,95.65664],[1771459200,94.64151],[1771545600,93.87216],[1771632000,93.20123],[1771718400,92.39729],[1771804800,91.28057],[1771891200,90.33515],[1771977600,90.16013],[1772064000,89.8332],[1772150400,89.21834],[1772236800,88.84539],[1772323200,88.4419],[1772409600,88.30329],[1772496000,88.20227],[1772582400,88.40825],[1772668800,88.43684],[1772755200,88.14709],[1772841600,87.76808],[1772928000,87.29284],[1773014400,87.11339],[1773100800,87.01929],[1773187200,86.9855],[1773273600,86.9743],[1773360000,87.06782],[1773446400,87.14491],[1773532800,87.54376],[1773619200,88.20963],[1773705600,88.70504],[1773792000,88.81081],[1773878400,88.81767],[1773964800,88.89477],[1774051200,88.79133],[1774137600,88.59199],[1774224000,88.80953],[1774310400,88.95957],[1774396800,89.16883],[1774483200,88.96123],[1774569600,88.50652],[1774656000,88.00756],[1774742400,87.49698],[1774828800,87.11105],[1774915200,86.80405],[1775001600,86.37066],[1775088000,85.79984],[1775174400,85.3837],[1775260800,85.03342],[1775347200,84.78854],[1775433600,84.4225],[1775520000,84.51],[1775606400,84.36077],[1775692800,84.28225],[1775779200,84.32669],[1775865600,84.37617],[1775952000,84.15801],[1776038400,84.34278],[1776124800,84.29795],[1776211200,84.3458],[1776297600,84.71074],[1776384000,85.02529],[1776470400,85.11643],[1776556800,84.99055],[1776643200,85.01512],[1776729600,85.09626],[1776816000,85.23578],[1776902400,85.30765],[1776988800,85.37783],[1777075200,85.44107],[1777161600,85.55714],[1777248000,85.4989],[1777334400,85.38745],[1777420800,85.20534],[1777507200,85.03954],[1777593600,84.94111],[1777680000,84.88872],[1777766400,84.81343],[1777852800,84.75779],[1777939200,84.87411],[1778025600,85.20302],[1778112000,85.44895],[1778198400,85.95441],[1778284800,86.50484],[1778371200,87.26908],[1778457600,88.04531],[1778544000,88.52413],[1778630400,88.72535],[1778716800,88.98725],[1778803200,89.00284],[1778889600,88.81109],[1778976000,88.53254],[1779062400,88.28465],[1779148800,87.97276],[1779235200,87.82793],[1779321600,87.78501],[1779408000,87.51617],[1779494400,87.37261],[1779580800,87.20318],[1779667200,87.0314],[1779753600,86.76668],[1779840000,86.42309],[1779926400,86.08285],[1780012800,85.76263],[1780099200,85.52012],[1780185600,85.27396],[1780272000,84.9575],[1780358400,84.12384],[1780444800,83.15432],[1780531200,82.04937],[1780617600,80.63173],[1780704000,79.21006],[1780790400,78.22928],[1780876800,77.35088],[1780963200,76.39465],[1781049600,75.3743],[1781136000,74.71858],[1781222400,74.10869],[1781308800,73.70802],[1781395200,73.51817],[1781481600,73.54985],[1781568000,73.54294],[1781654400,73.42271],[1781740800,73.13097],[1781827200,72.86551],[1781913600,72.88662],[1782000000,72.84765],[1782086400,72.77322],[1782172800,72.52912],[1782259200,72.1815],[1782345600,71.82985],[1782432000,71.82678],[1782518400,71.71626],[1782604800,71.6827],[1782691200,71.94172],[1782777600,72.06544],[1782864000,72.47425],[1782950400,73.10161],[1783036800,73.80764],[1783123200,74.41629],[1783209600,74.96273],[1783296000,75.49559],[1783382400,75.88209],[1783468800,76.02654],[1783555200,76.17758],[1783641600,76.32315],[1783728000,76.35521],[1783814400,76.39558],[1783900800,76.28131],[1783987200,76.3989],[1784073600,76.4636],[1784160000,76.37101],[1784246400,76.26401],[1784332800,76.20217],[1784419200,76.212],[1784505600,76.32646],[1784592000,76.46212],[1784678400,76.57657],[1784764800,76.51914],[1784851200,76.31767],[1784937600,76.17477],[1785024000,76.2144],[1785110400,76.05407],[1785196800,75.87529],[1785283200,75.70027],[1785369600,75.60333],[1785456000,75.38692],[1785542400,75.11715],[1785628800,74.99583],[1785715200,74.88],[1785801600,74.78923],[1785888000,74.72621],[1785974400,74.56497],[1786060800,74.49305],[1786147200,74.60589],[1786233600,74.72928],[1786320000,74.82088],[1786406400,74.9285],[1786492800,74.97708],[1786579200,75.07192],[1786665600,75.09177],[1786752000,75.10625],[1786838400,75.06269],[1786924800,75.13095],[1787011200,75.27549],[1787097600,76.04968],[1787184000,76.94124],[1787270400,78.23192],[1787356800,79.42869],[1787443200,80.65956],[1787529600,82.06806],[1787616000,83.18513],[1787702400,84.63935],[1787788800,86.52709],[1787875200,87.8827],[1787961600,89.24634],[1788048000,90.20816],[1788134400,91.19522],[1788220800,91.8679],[1788307200,92.52422],[1788393600,93.40235],[1788480000,94.05986],[1788566400,94.76141],[1788652800,95.669],[1788739200,96.29369],[1788825600,96.83802],[1788912000,97.19971],[1788998400,97.30896],[1789084800,97.70443],[1789171200,98.01486],[1789257600,98.11064],[1789344000,98.44982],[1789430400,98.32445],[1789516800,98.34334],[1789603200,98.58923],[1789689600,99.67468],[1789776000,100.5482],[1789862400,101.3637],[1789948800,102.7126],[1790035200,103.9317],[1790121600,104.7823],[1790208000,105.7237],[1790294400,106.9849],[1790380800,108.0915],[1790467200,109.159],[1790553600,109.9014],[1790640000,110.6105],[1790726400,111.1836],[1790812800,111.7372],[1790899200,112.2666],[1790985600,112.8299],[1791072000,113.5023],[1791158400,114.0613],[1791244800,114.5712]]},{"name":"EMA 32","color":"#F23645","width":1.0,"style":"dots","visible":true,"data":[[1765411200,143.023],[1765497600,142.3743],[1765584000,141.8165],[1765670400,141.0646],[1765756800,140.2606],[1765843200,139.5848],[1765929600,138.5924],[1766016000,137.4365],[1766102400,136.7549],[1766188800,136.088],[1766275200,135.4766],[1766361600,134.8931],[1766448000,134.2281],[1766534400,133.5137],[1766620800,132.694],[1766707200,132.0574],[1766793600,131.6079],[1766880000,131.2177],[1766966400,130.7251],[1767052800,130.3709],[1767139200,130.012],[1767225600,129.8131],[1767312000,129.9608],[1767398400,130.1644],[1767484800,130.3993],[1767571200,130.8539],[1767657600,131.4712],[1767744000,131.7608],[1767830400,132.1541],[1767916800,132.3745],[1768003200,132.5742],[1768089600,132.994],[1768176000,133.361],[1768262400,134.0924],[1768348800,134.8565],[1768435200,135.3119],[1768521600,135.8888],[1768608000,136.3597],[1768694400,136.4476],[1768780800,136.2605],[1768867200,135.618],[1768953600,135.2436],[1769040000,134.8258],[1769126400,134.3685],[1769212800,133.9231],[1769299200,133.0023],[1769385600,132.4622],[1769472000,132.1324],[1769558400,131.7098],[1769644800,130.8553],[1769731200,130.041],[1769817600,128.55],[1769904000,126.8597],[1769990400,125.5022],[1770076800,123.8208],[1770163200,121.8874],[1770249600,119.2391],[1770336000,117.3095],[1770422400,115.5053],[1770508800,113.7728],[1770595200,112.1333],[1770681600,110.3646],[1770768000,108.4776],[1770854400,106.6505],[1770940800,105.2941],[1771027200,104.2478],[1771113600,103.1479],[1771200000,102.1329],[1771286400,101.0976],[1771372800,99.91348],[1771459200,98.8557],[1771545600,97.99414],[1771632000,97.21571],[1771718400,96.339],[1771804800,95.22027],[1771891200,94.23662],[1771977600,93.86228],[1772064000,93.38032],[1772150400,92.68091],[1772236800,92.17722],[1772323200,91.65738],[1772409600,91.3533],[1772496000,91.08886],[1772582400,91.0762],[1772668800,90.93704],[1772755200,90.55722],[1772841600,90.11254],[1772928000,89.59602],[1773014400,89.31505],[1773100800,89.10747],[1773187200,88.95429],[1773273600,88.82615],[1773360000,88.7876],[1773446400,88.74411],[1773532800,88.96143],[1773619200,89.40013],[1773705600,89.71831],[1773792000,89.74023],[1773878400,89.6893],[1773964800,89.69723],[1774051200,89.56709],[1774137600,89.36302],[1774224000,89.48769],[1774310400,89.5648],[1774396800,89.69299],[1774483200,89.49766],[1774569600,89.10689],[1774656000,88.67738],[1774742400,88.23451],[1774828800,87.88575],[1774915200,87.59692],[1775001600,87.20741],[1775088000,86.70696],[1775174400,86.32412],[1775260800,85.99114],[1775347200,85.74016],[1775433600,85.39409],[1775520000,85.40415],[1775606400,85.23238],[1775692800,85.11769],[1775779200,85.10207],[1775865600,85.09407],[1775952000,84.87867],[1776038400,84.98057],[1776124800,84.90659],[1776211200,84.90741],[1776297600,85.1609],[1776384000,85.38145],[1776470400,85.43166],[1776556800,85.31338],[1776643200,85.31318],[1776729600,85.35904],[1776816000,85.45304],[1776902400,85.49649],[1776988800,85.54034],[1777075200,85.58032],[1777161600,85.66333],[1777248000,85.61101],[1777334400,85.5164],[1777420800,85.36511],[1777507200,85.2248],[1777593600,85.13602],[1777680000,85.08293],[1777766400,85.01184],[1777852800,84.95597],[1777939200,85.03561],[1778025600,85.28497],[1778112000,85.47376],[1778198400,85.8705],[1778284800,86.30926],[1778371200,86.92324],[1778457600,87.55577],[1778544000,87.9627],[1778630400,88.15526],[1778716800,88.39615],[1778803200,88.44426],[1778889600,88.32704],[1778976000,88.13691],[1779062400,87.96558],[1779148800,87.73919],[1779235200,87.63924],[1779321600,87.61686],[1779408000,87.41523],[1779494400,87.30825],[1779580800,87.17866],[1779667200,87.0448],[1779753600,86.83542],[1779840000,86.56054],[1779926400,86.28415],[1780012800,86.01965],[1780099200,85.81301],[1780185600,85.60131],[1780272000,85.33214],[1780358400,84.65262],[1780444800,83.8567],[1780531200,82.94357],[1780617600,81.77244],[1780704000,80.5832],[1780790400,79.72725],[1780876800,78.94439],[1780963200,78.09442],[1781049600,77.18749],[1781136000,76.56097],[1781222400,75.96879],[1781308800,75.54038],[1781395200,75.27975],[1781481600,75.19795],[1781568000,75.09262],[1781654400,74.90398],[1781740800,74.58434],[1781827200,74.28711],[1781913600,74.21759],[1782000000,74.10622],[1782086400,73.9713],[1782172800,73.70637],[1782259200,73.36113],[1782345600,73.01258],[1782432000,72.93848],[1782518400,72.78403],[1782604800,72.69288],[1782691200,72.83573],[1782777600,72.87902],[1782864000,73.15181],[1782950400,73.60503],[1783036800,74.13079],[1783123200,74.59074],[1783209600,75.0107],[1783296000,75.42762],[1783382400,75.73625],[1783468800,75.8589],[1783555200,75.98806],[1783641600,76.11424],[1783728000,76.15216],[1783814400,76.19628],[1783900800,76.11832],[1783987200,76.22085],[1784073600,76.28261],[1784160000,76.22064],[1784246400,76.14545],[1784332800,76.1039],[1784419200,76.11761],[1784505600,76.21351],[1784592000,76.32724],[1784678400,76.42558],[1784764800,76.38949],[1784851200,76.23861],[1784937600,76.13082],[1785024000,76.16471],[1785110400,76.04139],[1785196800,75.90131],[1785283200,75.76183],[1785369600,75.68172],[1785456000,75.50647],[1785542400,75.28668],[1785628800,75.18082],[1785715200,75.07835],[1785801600,74.99481],[1785888000,74.9327],[1785974400,74.79314],[1786060800,74.72265],[1786147200,74.79764],[1786233600,74.88324],[1786320000,74.94607],[1786406400,75.02328],[1786492800,75.05581],[1786579200,75.12576],[1786665600,75.13814],[1786752000,75.14674],[1786838400,75.10996],[1786924800,75.16087],[1787011200,75.27294],[1787097600,75.88307],[1787184000,76.59561],[1787270400,77.63345],[1787356800,78.61264],[1787443200,79.63187],[1787529600,80.80388],[1787616000,81.76061],[1787702400,82.9927],[1787788800,84.57981],[1787875200,85.76588],[1787961600,86.96855],[1788048000,87.8644],[1788134400,88.78413],[1788220800,89.46024],[1788307200,90.12326],[1788393600,90.96064],[1788480000,91.62666],[1788566400,92.32686],[1788652800,93.18948],[1788739200,93.83193],[1788825600,94.41],[1788912000,94.84212],[1788998400,95.07108],[1789084800,95.51829],[1789171200,95.89536],[1789257600,96.09928],[1789344000,96.48841],[1789430400,96.50851],[1789516800,96.63345],[1789603200,96.93082],[1789689600,97.88652],[1789776000,98.6831],[1789862400,99.43867],[1789948800,100.6181],[1790035200,101.7055],[1790121600,102.5106],[1790208000,103.39],[1790294400,104.5252],[1790380800,105.5461],[1790467200,106.5414],[1790553600,107.285],[1790640000,108.0023],[1790726400,108.6118],[1790812800,109.2038],[1790899200,109.7745],[1790985600,110.3694],[1791072000,111.0482],[1791158400,111.6374],[1791244800,112.1861]]},{"name":"EMA 200","color":"#434651","width":2.0,"style":"step","visible":true,"data":[[1765411200,173.3293],[1765497600,172.9212],[1765584000,172.5257],[1765670400,172.0967],[1765756800,171.6559],[1765843200,171.2326],[1765929600,170.7547],[1766016000,170.2449],[1766102400,169.8066],[1766188800,169.3682],[1766275200,168.9367],[1766361600,168.508],[1766448000,168.0643],[1766534400,167.6103],[1766620800,167.1365],[1766707200,166.6893],[1766793600,166.2709],[1766880000,165.8619],[1766966400,165.4363],[1767052800,165.0328],[1767139200,164.629],[1767225600,164.2519],[1767312000,163.9334],[1767398400,163.6288],[1767484800,163.3344],[1767571200,163.0813],[1767657600,162.862],[1767744000,162.5972],[1767830400,162.355],[1767916800,162.0906],[1768003200,161.8277],[1768089600,161.6056],[1768176000,161.3811],[1768262400,161.2224],[1768348800,161.0779],[1768435200,160.8918],[1768521600,160.7319],[1768608000,160.5621],[1768694400,160.3357],[1768780800,160.0673],[1768867200,159.7249],[1768953600,159.4236],[1769040000,159.1144],[1769126400,158.7976],[1769212800,158.4814],[1769299200,158.0859],[1769385600,157.7476],[1769472000,157.4419],[1769558400,157.1207],[1769644800,156.7275],[1769731200,156.3364],[1769817600,155.83],[1769904000,155.281],[1769990400,154.7753],[1770076800,154.208],[1770163200,153.5882],[1770249600,152.838],[1770336000,152.1869],[1770422400,151.5436],[1770508800,150.9006],[1770595200,150.262],[1770681600,149.5922],[1770768000,148.8921],[1770854400,148.19],[1770940800,147.554],[1771027200,146.9617],[1771113600,146.3561],[1771200000,145.7595],[1771286400,145.1554],[1771372800,144.5227],[1771459200,143.9051],[1771545600,143.3154],[1771632000,142.7367],[1771718400,142.1398],[1771804800,141.5004],[1771891200,140.8784],[1771977600,140.3528],[1772064000,139.8111],[1772150400,139.2343],[1772236800,138.6884],[1772323200,138.1402],[1772409600,137.6278],[1772496000,137.1239],[1772582400,136.6638],[1772668800,136.1873],[1772755200,135.6747],[1772841600,135.1528],[1772928000,134.6198],[1773014400,134.1257],[1773100800,133.6457],[1773187200,133.1774],[1773273600,132.7163],[1773360000,132.2733],[1773446400,131.8335],[1773532800,131.4404],[1773619200,131.0897],[1773705600,130.7272],[1773792000,130.3227],[1773878400,129.9105],[1773964800,129.5116],[1774051200,129.0941],[1774137600,128.6673],[1774224000,128.2967],[1774310400,127.9232],[1774396800,127.5626],[1774483200,127.1537],[1774569600,126.7148],[1774656000,126.2701],[1774742400,125.8233],[1774828800,125.3921],[1774915200,124.9714],[1775001600,124.5356],[1775088000,124.082],[1775174400,123.6473],[1775260800,123.2212],[1775347200,122.8096],[1775433600,122.3839],[1775520000,122.0175],[1775606400,121.625],[1775692800,121.244],[1775779200,120.882],[1775865600,120.5247],[1775952000,120.1368],[1776038400,119.8027],[1776124800,119.444],[1776211200,119.1005],[1776297600,118.8019],[1776384000,118.5034],[1776470400,118.1821],[1776556800,117.8368],[1776643200,117.5131],[1776729600,117.2002],[1776816000,116.8988],[1776902400,116.5931],[1776988800,116.2909],[1777075200,115.9915],[1777161600,115.7025],[1777248000,115.395],[1777334400,115.0831],[1777420800,114.7641],[1777507200,114.4485],[1777593600,114.1432],[1777680000,113.8458],[1777766400,113.5479],[1777852800,113.2548],[1777939200,112.9863],[1778025600,112.7491],[1778112000,112.5069],[1778198400,112.303],[1778284800,112.112],[1778371200,111.9561],[1778457600,111.8109],[1778544000,111.6363],[1778630400,111.4324],[1778716800,111.2403],[1778803200,111.0209],[1778889600,110.777],[1778976000,110.5224],[1779062400,110.2716],[1779148800,110.0124],[1779235200,109.7744],[1779321600,109.5505],[1779408000,109.2991],[1779494400,109.0638],[1779580800,108.8261],[1779667200,108.5887],[1779753600,108.3399],[1779840000,108.0808],[1779926400,107.8213],[1780012800,107.5636],[1780099200,107.3153],[1780185600,107.0666],[1780272000,106.8088],[1780358400,106.4836],[1780444800,106.1357],[1780531200,105.7641],[1780617600,105.3447],[1780704000,104.9149],[1780790400,104.5323],[1780876800,104.1569],[1780963200,103.7665],[1781049600,103.3622],[1781136000,102.9989],[1781222400,102.6386],[1781308800,102.3029],[1781395200,101.9938],[1781481600,101.7146],[1781568000,101.4334],[1781654400,101.1404],[1781740800,100.8268],[1781827200,100.5169],[1781913600,100.2445],[1782000000,99.96723],[1782086400,99.68776],[1782172800,99.38837],[1782259200,99.07615],[1782345600,98.76306],[1782432000,98.49467],[1782518400,98.21502],[1782604800,97.94701],[1782691200,97.71918],[1782777600,97.47869],[1782864000,97.2787],[1782950400,97.11304],[1783036800,96.96545],[1783123200,96.81375],[1783209600,96.66158],[1783296000,96.5146],[1783382400,96.35545],[1783468800,96.17042],[1783555200,95.98952],[1783641600,95.81121],[1783728000,95.62145],[1783814400,95.43497],[1783900800,95.23074],[1783987200,95.0574],[1784073600,94.88011],[1784160000,94.68489],[1784246400,94.48882],[1784332800,94.29948],[1784419200,94.12068],[1784505600,93.95729],[1784592000,93.7994],[1784678400,93.6417],[1784764800,93.46447],[1784851200,93.2698],[1784937600,93.08263],[1785024000,92.91952],[1785110400,92.73256],[1785196800,92.54348],[1785283200,92.35499],[1785369600,92.17673],[1785456000,91.98383],[1785542400,91.78379],[1785628800,91.60226],[1785715200,91.42204],[1785801600,91.2457],[1785888000,91.0738],[1785974400,90.89028],[1786060800,90.71854],[1786147200,90.57169],[1786233600,90.42878],[1786320000,90.28442],[1786406400,90.14447],[1786492800,89.99935],[1786579200,89.86215],[1786665600,89.71755],[1786752000,89.57389],[1786838400,89.4243],[1786924800,89.29023],[1787011200,89.16804],[1787097600,89.12995],[1787184000,89.11512],[1787270400,89.16094],[1787356800,89.207],[1787443200,89.26892],[1787529600,89.36545],[1787616000,89.43734],[1787702400,89.56323],[1787788800,89.75842],[1787875200,89.90162],[1787961600,90.05793],[1788048000,90.17427],[1788134400,90.30228],[1788220800,90.39818],[1788307200,90.4977],[1788393600,90.63146],[1788480000,90.74408],[1788566400,90.86782],[1788652800,91.02396],[1788739200,91.15098],[1788825600,91.27257],[1788912000,91.37473],[1788998400,91.44682],[1789084800,91.55631],[1789171200,91.65764],[1789257600,91.73328],[1789344000,91.84061],[1789430400,91.89016],[1789516800,91.95663],[1789603200,92.05198],[1789689600,92.25744],[1789776000,92.44423],[1789862400,92.63035],[1789948800,92.89174],[1790035200,93.14715],[1790121600,93.36449],[1790208000,93.59987],[1790294400,93.88365],[1790380800,94.15715],[1790467200,94.43389],[1790553600,94.67644],[1790640000,94.91966],[1790726400,95.14991],[1790812800,95.38106],[1790899200,95.61229],[1790985600,95.85087],[1791072000,96.10679],[1791158400,96.35219],[1791244800,96.59436]]},{"name":"MA 100","color":"#5FA8A0","width":1.0,"style":"line","visible":true,"data":[[1765411200,183.6376],[1765497600,182.8525],[1765584000,182.161],[1765670400,181.4214],[1765756800,180.6976],[1765843200,179.9253],[1765929600,179.0159],[1766016000,178.0385],[1766102400,177.059],[1766188800,176.028],[1766275200,174.8644],[1766361600,173.6979],[1766448000,172.5385],[1766534400,171.4194],[1766620800,170.2492],[1766707200,169.022],[1766793600,167.7928],[1766880000,166.6578],[1766966400,165.4929],[1767052800,164.3786],[1767139200,163.4175],[1767225600,162.5517],[1767312000,161.7575],[1767398400,161.1627],[1767484800,160.4505],[1767571200,159.7939],[1767657600,159.0954],[1767744000,158.3294],[1767830400,157.6245],[1767916800,156.7609],[1768003200,155.7689],[1768089600,154.8341],[1768176000,153.945],[1768262400,153.1125],[1768348800,152.255],[1768435200,151.4782],[1768521600,150.6351],[1768608000,149.8614],[1768694400,149.3513],[1768780800,148.9067],[1768867200,148.1913],[1768953600,147.397],[1769040000,146.655],[1769126400,145.9884],[1769212800,145.4098],[1769299200,144.7766],[1769385600,144.1412],[1769472000,143.532],[1769558400,142.8857],[1769644800,142.2047],[1769731200,141.5773],[1769817600,140.7174],[1769904000,139.7877],[1769990400,138.8936],[1770076800,137.8705],[1770163200,136.8029],[1770249600,135.6427],[1770336000,134.5772],[1770422400,133.6059],[1770508800,132.6037],[1770595200,131.6083],[1770681600,130.5611],[1770768000,129.6933],[1770854400,128.9267],[1770940800,128.1459],[1771027200,127.4742],[1771113600,126.7181],[1771200000,126.0024],[1771286400,125.2077],[1771372800,124.3502],[1771459200,123.6294],[1771545600,122.9422],[1771632000,122.3467],[1771718400,121.7862],[1771804800,121.1695],[1771891200,120.5887],[1771977600,120.1611],[1772064000,119.6139],[1772150400,119.063],[1772236800,118.5719],[1772323200,118.1222],[1772409600,117.7134],[1772496000,117.278],[1772582400,116.8028],[1772668800,116.3016],[1772755200,115.7183],[1772841600,115.1422],[1772928000,114.5845],[1773014400,114.0746],[1773100800,113.5988],[1773187200,113.198],[1773273600,112.6794],[1773360000,112.1145],[1773446400,111.6046],[1773532800,111.1946],[1773619200,110.8343],[1773705600,110.458],[1773792000,110.026],[1773878400,109.5362],[1773964800,109.0713],[1774051200,108.5824],[1774137600,108.1212],[1774224000,107.7037],[1774310400,107.3172],[1774396800,106.956],[1774483200,106.5296],[1774569600,106.128],[1774656000,105.753],[1774742400,105.3048],[1774828800,104.8721],[1774915200,104.4433],[1775001600,103.9965],[1775088000,103.5468],[1775174400,103.1263],[1775260800,102.7347],[1775347200,102.3313],[1775433600,101.8852],[1775520000,101.4891],[1775606400,101.0839],[1775692800,100.6685],[1775779200,100.2726],[1775865600,99.855],[1775952000,99.3479],[1776038400,98.8803],[1776124800,98.3775],[1776211200,97.8477],[1776297600,97.3282],[1776384000,96.8537],[1776470400,96.3333],[1776556800,95.8102],[1776643200,95.3066],[1776729600,94.7723],[1776816000,94.2509],[1776902400,93.6583],[1776988800,93.0535],[1777075200,92.4918],[1777161600,91.913],[1777248000,91.3244],[1777334400,90.7868],[1777420800,90.2834],[1777507200,89.8573],[1777593600,89.4005],[1777680000,88.9596],[1777766400,88.5259],[1777852800,88.0966],[1777939200,87.772],[1778025600,87.4226],[1778112000,87.0364],[1778198400,86.705],[1778284800,86.46],[1778371200,86.2502],[1778457600,86.1694],[1778544000,86.1055],[1778630400,85.9723],[1778716800,85.916],[1778803200,85.8887],[1778889600,85.9719],[1778976000,85.9498],[1779062400,85.9275],[1779148800,85.9006],[1779235200,85.8943],[1779321600,85.9375],[1779408000,85.9881],[1779494400,86.0613],[1779580800,86.0703],[1779667200,86.0397],[1779753600,86.0146],[1779840000,85.9736],[1779926400,85.9431],[1780012800,85.9467],[1780099200,85.9482],[1780185600,85.925],[1780272000,85.8851],[1780358400,85.7988],[1780444800,85.7352],[1780531200,85.6332],[1780617600,85.3888],[1780704000,85.1512],[1780790400,84.9974],[1780876800,84.8218],[1780963200,84.635],[1781049600,84.3999],[1781136000,84.1985],[1781222400,83.9576],[1781308800,83.7588],[1781395200,83.6245],[1781481600,83.5316],[1781568000,83.4503],[1781654400,83.3205],[1781740800,83.1579],[1781827200,82.9889],[1781913600,82.8519],[1782000000,82.6938],[1782086400,82.5319],[1782172800,82.3046],[1782259200,82.0227],[1782345600,81.7523],[1782432000,81.5694],[1782518400,81.3843],[1782604800,81.1989],[1782691200,81.0739],[1782777600,80.9474],[1782864000,80.807],[1782950400,80.7057],[1783036800,80.6117],[1783123200,80.5642],[1783209600,80.5489],[1783296000,80.5476],[1783382400,80.5391],[1783468800,80.4919],[1783555200,80.4406],[1783641600,80.4096],[1783728000,80.3875],[1783814400,80.3524],[1783900800,80.2932],[1783987200,80.2528],[1784073600,80.2249],[1784160000,80.1219],[1784246400,80.046],[1784332800,79.9672],[1784419200,79.8819],[1784505600,79.8092],[1784592000,79.7747],[1784678400,79.6886],[1784764800,79.6093],[1784851200,79.4991],[1784937600,79.3528],[1785024000,79.2317],[1785110400,79.1109],[1785196800,79.0134],[1785283200,78.8963],[1785369600,78.78],[1785456000,78.6388],[1785542400,78.4959],[1785628800,78.3691],[1785715200,78.242],[1785801600,78.1095],[1785888000,78.0012],[1785974400,77.887],[1786060800,77.7931],[1786147200,77.7222],[1786233600,77.6467],[1786320000,77.5633],[1786406400,77.4864],[1786492800,77.4011],[1786579200,77.3005],[1786665600,77.1623],[1786752000,77.0311],[1786838400,76.8563],[1786924800,76.6847],[1787011200,76.4904],[1787097600,76.3702],[1787184000,76.3039],[1787270400,76.3297],[1787356800,76.3463],[1787443200,76.4087],[1787529600,76.5333],[1787616000,76.6473],[1787702400,76.8151],[1787788800,77.0646],[1787875200,77.2452],[1787961600,77.4286],[1788048000,77.6032],[1788134400,77.7771],[1788220800,77.9248],[1788307200,78.0791],[1788393600,78.2826],[1788480000,78.4791],[1788566400,78.6909],[1788652800,78.9373],[1788739200,79.1491],[1788825600,79.3596],[1788912000,79.5634],[1788998400,79.8084],[1789084800,80.1177],[1789171200,80.4472],[1789257600,80.8036],[1789344000,81.2073],[1789430400,81.5109],[1789516800,81.8285],[1789603200,82.1947],[1789689600,82.6904],[1789776000,83.1322],[1789862400,83.5758],[1789948800,84.0758],[1790035200,84.549],[1790121600,84.9596],[1790208000,85.3952],[1790294400,85.8966],[1790380800,86.414],[1790467200,86.9369],[1790553600,87.3936],[1790640000,87.861],[1790726400,88.3228],[1790812800,88.8106],[1790899200,89.3167],[1790985600,89.8365],[1791072000,90.3343],[1791158400,90.8381],[1791244800,91.3322]]},{"name":"MA 200","color":"#9C27B0","width":1.0,"style":"line","visible":true,"data":[[1765411200,176.4689],[1765497600,176.2557],[1765584000,176.0376],[1765670400,175.8232],[1765756800,175.6287],[1765843200,175.4928],[1765929600,175.3262],[1766016000,175.135],[1766102400,174.9814],[1766188800,174.8338],[1766275200,174.6971],[1766361600,174.6045],[1766448000,174.4843],[1766534400,174.3458],[1766620800,174.1831],[1766707200,173.9879],[1766793600,173.7853],[1766880000,173.6061],[1766966400,173.4596],[1767052800,173.3407],[1767139200,173.2394],[1767225600,173.108],[1767312000,173.0154],[1767398400,172.944],[1767484800,172.8821],[1767571200,172.8365],[1767657600,172.8409],[1767744000,172.8449],[1767830400,172.8773],[1767916800,172.8333],[1768003200,172.7817],[1768089600,172.761],[1768176000,172.7605],[1768262400,172.7768],[1768348800,172.7563],[1768435200,172.7014],[1768521600,172.6512],[1768608000,172.6349],[1768694400,172.5624],[1768780800,172.4672],[1768867200,172.3568],[1768953600,172.2659],[1769040000,172.1482],[1769126400,172.0401],[1769212800,171.9166],[1769299200,171.7247],[1769385600,171.5234],[1769472000,171.3437],[1769558400,171.1656],[1769644800,170.9476],[1769731200,170.7234],[1769817600,170.4305],[1769904000,170.0652],[1769990400,169.7076],[1770076800,169.3097],[1770163200,168.8841],[1770249600,168.3674],[1770336000,167.8253],[1770422400,167.234],[1770508800,166.7211],[1770595200,166.2399],[1770681600,165.7206],[1770768000,165.1921],[1770854400,164.6402],[1770940800,164.1459],[1771027200,163.6788],[1771113600,163.2204],[1771200000,162.7915],[1771286400,162.4035],[1771372800,162.0189],[1771459200,161.6212],[1771545600,161.1965],[1771632000,160.8019],[1771718400,160.3749],[1771804800,159.8873],[1771891200,159.3981],[1771977600,158.9385],[1772064000,158.4546],[1772150400,157.9894],[1772236800,157.4526],[1772323200,156.8624],[1772409600,156.3326],[1772496000,155.8383],[1772582400,155.344],[1772668800,154.8322],[1772755200,154.3405],[1772841600,153.8756],[1772928000,153.3437],[1773014400,152.8672],[1773100800,152.2935],[1773187200,151.7061],[1773273600,151.1104],[1773360000,150.6153],[1773446400,150.0763],[1773532800,149.5233],[1773619200,148.9321],[1773705600,148.3799],[1773792000,147.8166],[1773878400,147.2579],[1773964800,146.7204],[1774051200,146.11],[1774137600,145.4869],[1774224000,144.9324],[1774310400,144.3693],[1774396800,143.8268],[1774483200,143.2275],[1774569600,142.5719],[1774656000,141.8958],[1774742400,141.1819],[1774828800,140.4501],[1774915200,139.6538],[1775001600,138.8472],[1775088000,138.0427],[1775174400,137.2729],[1775260800,136.492],[1775347200,135.6766],[1775433600,134.839],[1775520000,134.0735],[1775606400,133.2884],[1775692800,132.5236],[1775779200,131.8451],[1775865600,131.2034],[1775952000,130.5527],[1776038400,130.0215],[1776124800,129.414],[1776211200,128.8208],[1776297600,128.2118],[1776384000,127.5916],[1776470400,126.9789],[1776556800,126.2856],[1776643200,125.5378],[1776729600,124.8032],[1776816000,124.0979],[1776902400,123.3854],[1776988800,122.6542],[1777075200,121.985],[1777161600,121.2741],[1777248000,120.5929],[1777334400,120.069],[1777420800,119.595],[1777507200,119.0243],[1777593600,118.3988],[1777680000,117.8073],[1777766400,117.2571],[1777852800,116.7532],[1777939200,116.2743],[1778025600,115.7819],[1778112000,115.2842],[1778198400,114.7953],[1778284800,114.3324],[1778371200,113.9137],[1778457600,113.4434],[1778544000,112.9466],[1778630400,112.433],[1778716800,111.8933],[1778803200,111.3458],[1778889600,110.8073],[1778976000,110.2635],[1779062400,109.7667],[1779148800,109.2522],[1779235200,108.7513],[1779321600,108.2493],[1779408000,107.8407],[1779494400,107.494],[1779580800,107.1081],[1779667200,106.757],[1779753600,106.3663],[1779840000,105.988],[1779926400,105.5754],[1780012800,105.1485],[1780099200,104.7888],[1780185600,104.4336],[1780272000,104.1159],[1780358400,103.7925],[1780444800,103.4524],[1780531200,103.111],[1780617600,102.775],[1780704000,102.3826],[1780790400,102.0302],[1780876800,101.6968],[1780963200,101.3786],[1781049600,101.0567],[1781136000,100.7383],[1781222400,100.3802],[1781308800,100.0302],[1781395200,99.6714],[1781481600,99.3369],[1781568000,99.0174],[1781654400,98.69755],[1781740800,98.37835],[1781827200,98.09345],[1781913600,97.76565],[1782000000,97.40415],[1782086400,97.06825],[1782172800,96.7496],[1782259200,96.4285],[1782345600,96.10515],[1782432000,95.7977],[1782518400,95.46025],[1782604800,95.1351],[1782691200,94.82815],[1782777600,94.5343],[1782864000,94.25535],[1782950400,94.01145],[1783036800,93.78385],[1783123200,93.5469],[1783209600,93.33845],[1783296000,93.1503],[1783382400,92.92195],[1783468800,92.682],[1783555200,92.44195],[1783641600,92.20305],[1783728000,91.96715],[1783814400,91.73935],[1783900800,91.51395],[1783987200,91.29205],[1784073600,91.05505],[1784160000,90.8055],[1784246400,90.56495],[1784332800,90.31785],[1784419200,90.07725],[1784505600,89.8321],[1784592000,89.5613],[1784678400,89.28445],[1784764800,88.9934],[1784851200,88.6734],[1784937600,88.3405],[1785024000,88.0427],[1785110400,87.7221],[1785196800,87.4118],[1785283200,87.10145],[1785369600,86.77615],[1785456000,86.44485],[1785542400,86.0771],[1785628800,85.7113],[1785715200,85.3669],[1785801600,85.01125],[1785888000,84.6628],[1785974400,84.3369],[1786060800,84.03825],[1786147200,83.78975],[1786233600,83.5236],[1786320000,83.26145],[1786406400,83.00615],[1786492800,82.74885],[1786579200,82.53625],[1786665600,82.29245],[1786752000,82.03375],[1786838400,81.78065],[1786924800,81.57235],[1787011200,81.3703],[1787097600,81.2698],[1787184000,81.2047],[1787270400,81.151],[1787356800,81.13115],[1787443200,81.1487],[1787529600,81.2526],[1787616000,81.29855],[1787702400,81.3713],[1787788800,81.4826],[1787875200,81.56975],[1787961600,81.68305],[1788048000,81.79565],[1788134400,81.9192],[1788220800,81.99755],[1788307200,82.0594],[1788393600,82.1486],[1788480000,82.22635],[1788566400,82.317],[1788652800,82.442],[1788739200,82.54865],[1788825600,82.6423],[1788912000,82.72425],[1788998400,82.8036],[1789084800,82.92645],[1789171200,83.0402],[1789257600,83.0962],[1789344000,83.17925],[1789430400,83.25415],[1789516800,83.32515],[1789603200,83.41485],[1789689600,83.54515],[1789776000,83.66535],[1789862400,83.7667],[1789948800,83.9173],[1790035200,84.08675],[1790121600,84.2456],[1790208000,84.42275],[1790294400,84.60855],[1790380800,84.78595],[1790467200,84.9629],[1790553600,85.12275],[1790640000,85.2774],[1790726400,85.42735],[1790812800,85.5576],[1790899200,85.6697],[1790985600,85.7944],[1791072000,85.95185],[1791158400,86.1112],[1791244800,86.26555]]}],"vma":[[1765411200,1168760.0],[1765497600,1169870.0],[1765584000,1136500.0],[1765670400,1077520.0],[1765756800,1081880.0],[1765843200,1072730.0],[1765929600,1110880.0],[1766016000,1149070.0],[1766102400,1191850.0],[1766188800,1172450.0],[1766275200,1085630.0],[1766361600,1060060.0],[1766448000,1035030.0],[1766534400,1012950.0],[1766620800,978902.0],[1766707200,1010560.0],[1766793600,990846.0],[1766880000,948694.0],[1766966400,946117.0],[1767052800,915440.0],[1767139200,901674.0],[1767225600,873889.0],[1767312000,930924.0],[1767398400,931883.0],[1767484800,890055.0],[1767571200,881364.0],[1767657600,868344.0],[1767744000,818445.0],[1767830400,807549.0],[1767916800,855621.0],[1768003200,849948.0],[1768089600,849128.0],[1768176000,888025.0],[1768262400,926104.0],[1768348800,976456.0],[1768435200,976332.0],[1768521600,1000100.0],[1768608000,1002410.0],[1768694400,969613.0],[1768780800,987541.0],[1768867200,1014500.0],[1768953600,1051940.0],[1769040000,1011310.0],[1769126400,1015400.0],[1769212800,990696.0],[1769299200,988140.0],[1769385600,973731.0],[1769472000,962627.0],[1769558400,944052.0],[1769644800,954061.0],[1769731200,1031060.0],[1769817600,1147900.0],[1769904000,1168280.0],[1769990400,1239880.0],[1770076800,1273720.0],[1770163200,1401660.0],[1770249600,1671440.0],[1770336000,1969770.0],[1770422400,2042540.0],[1770508800,2049840.0],[1770595200,2053850.0],[1770681600,2054370.0],[1770768000,2121900.0],[1770854400,2188810.0],[1770940800,2271200.0],[1771027200,2283730.0],[1771113600,2324080.0],[1771200000,2361660.0],[1771286400,2387340.0],[1771372800,2375130.0],[1771459200,2335430.0],[1771545600,2254860.0],[1771632000,2188960.0],[1771718400,2076220.0],[1771804800,2073970.0],[1771891200,1964250.0],[1771977600,1794560.0],[1772064000,1572930.0],[1772150400,1565470.0],[1772236800,1611900.0],[1772323200,1621260.0],[1772409600,1692630.0],[1772496000,1712400.0],[1772582400,1753360.0],[1772668800,1734420.0],[1772755200,1759190.0],[1772841600,1693200.0],[1772928000,1660080.0],[1773014400,1682560.0],[1773100800,1682960.0],[1773187200,1688240.0],[1773273600,1664850.0],[1773360000,1742410.0],[1773446400,1732100.0],[1773532800,1675780.0],[1773619200,1708870.0],[1773705600,1628810.0],[1773792000,1606100.0],[1773878400,1569580.0],[1773964800,1499170.0],[1774051200,1414580.0],[1774137600,1314720.0],[1774224000,1272710.0],[1774310400,1198430.0],[1774396800,1180590.0],[1774483200,1150440.0],[1774569600,1190760.0],[1774656000,1177750.0],[1774742400,1120810.0],[1774828800,1115400.0],[1774915200,1137760.0],[1775001600,1155250.0],[1775088000,1141480.0],[1775174400,1160830.0],[1775260800,1136730.0],[1775347200,1070910.0],[1775433600,1069010.0],[1775520000,1107430.0],[1775606400,1108220.0],[1775692800,1129480.0],[1775779200,1157160.0],[1775865600,1145300.0],[1775952000,1109440.0],[1776038400,1116140.0],[1776124800,1137150.0],[1776211200,1141810.0],[1776297600,1157060.0],[1776384000,1218210.0],[1776470400,1229330.0],[1776556800,1228210.0],[1776643200,1197800.0],[1776729600,1184750.0],[1776816000,1160830.0],[1776902400,1189160.0],[1776988800,1233180.0],[1777075200,1210940.0],[1777161600,1177050.0],[1777248000,1131040.0],[1777334400,1108770.0],[1777420800,1113660.0],[1777507200,1115340.0],[1777593600,1131920.0],[1777680000,1104510.0],[1777766400,1049700.0],[1777852800,1025880.0],[1777939200,1008770.0],[1778025600,985052.0],[1778112000,943708.0],[1778198400,939568.0],[1778284800,909111.0],[1778371200,915890.0],[1778457600,938183.0],[1778544000,915792.0],[1778630400,897290.0],[1778716800,870392.0],[1778803200,907517.0],[1778889600,904815.0],[1778976000,867519.0],[1779062400,880620.0],[1779148800,857070.0],[1779235200,850368.0],[1779321600,849912.0],[1779408000,875232.0],[1779494400,909757.0],[1779580800,887839.0],[1779667200,859501.0],[1779753600,833538.0],[1779840000,821601.0],[1779926400,840388.0],[1780012800,858985.0],[1780099200,818903.0],[1780185600,748616.0],[1780272000,741069.0],[1780358400,762361.0],[1780444800,790533.0],[1780531200,822272.0],[1780617600,924764.0],[1780704000,958220.0],[1780790400,964286.0],[1780876800,982179.0],[1780963200,1000770.0],[1781049600,1009590.0],[1781136000,1019530.0],[1781222400,1004080.0],[1781308800,998478.0],[1781395200,1006690.0],[1781481600,1029890.0],[1781568000,1035260.0],[1781654400,1034590.0],[1781740800,1032220.0],[1781827200,1041340.0],[1781913600,1055340.0],[1782000000,1041900.0],[1782086400,1008220.0],[1782172800,972161.0],[1782259200,939156.0],[1782345600,881363.0],[1782432000,924471.0],[1782518400,891689.0],[1782604800,860544.0],[1782691200,889664.0],[1782777600,890423.0],[1782864000,916401.0],[1782950400,943734.0],[1783036800,950584.0],[1783123200,953125.0],[1783209600,919615.0],[1783296000,928087.0],[1783382400,918201.0],[1783468800,935309.0],[1783555200,952346.0],[1783641600,966473.0],[1783728000,960707.0],[1783814400,942656.0],[1783900800,951477.0],[1783987200,942701.0],[1784073600,908748.0],[1784160000,835415.0],[1784246400,847093.0],[1784332800,835861.0],[1784419200,764521.0],[1784505600,749248.0],[1784592000,703772.0],[1784678400,665973.0],[1784764800,661421.0],[1784851200,654478.0],[1784937600,643183.0],[1785024000,608520.0],[1785110400,594096.0],[1785196800,569882.0],[1785283200,561076.0],[1785369600,546058.0],[1785456000,564512.0],[1785542400,563177.0],[1785628800,539590.0],[1785715200,525360.0],[1785801600,515634.0],[1785888000,513726.0],[1785974400,502658.0],[1786060800,521136.0],[1786147200,525971.0],[1786233600,510977.0],[1786320000,508456.0],[1786406400,516515.0],[1786492800,516404.0],[1786579200,517839.0],[1786665600,525585.0],[1786752000,523832.0],[1786838400,508365.0],[1786924800,496942.0],[1787011200,490959.0],[1787097600,549327.0],[1787184000,572791.0],[1787270400,662636.0],[1787356800,770975.0],[1787443200,811573.0],[1787529600,889121.0],[1787616000,970151.0],[1787702400,1005720.0],[1787788800,1097730.0],[1787875200,1159820.0],[1787961600,1169350.0],[1788048000,1180500.0],[1788134400,1201320.0],[1788220800,1222350.0],[1788307200,1238640.0],[1788393600,1276470.0],[1788480000,1313800.0],[1788566400,1329060.0],[1788652800,1351630.0],[1788739200,1357400.0],[1788825600,1311360.0],[1788912000,1292760.0],[1788998400,1227740.0],[1789084800,1170180.0],[1789171200,1125900.0],[1789257600,1049640.0],[1789344000,990224.0],[1789430400,993596.0],[1789516800,911831.0],[1789603200,883237.0],[1789689600,948248.0],[1789776000,955868.0],[1789862400,939712.0],[1789948800,976496.0],[1790035200,993164.0],[1790121600,992606.0],[1790208000,1011030.0],[1790294400,1079590.0],[1790380800,1064240.0],[1790467200,1076380.0],[1790553600,1078520.0],[1790640000,1077140.0],[1790726400,1066250.0],[1790812800,1034270.0],[1790899200,1057140.0],[1790985600,1047450.0],[1791072000,1018190.0],[1791158400,983753.0],[1791244800,963531.0]],"zones":[{"low":116.1369,"high":117.3981,"color":"#c62828","alpha":0.168,"label":"S/R 116.14–117.40 (3x, f=0.77)","short":"S/R 116.14–117.40 (3x, f=0.77)","kind":"sr"},{"low":119.17,"high":121.69,"color":"#c62828","alpha":0.18,"label":"S/R 119.17–121.69 (4x, f=0.86)","short":"S/R 119.17–121.69 (4x, f=0.86)","kind":"sr"},{"low":110.0719,"high":112.0,"color":"#2e7d32","alpha":0.149,"label":"S/R 110.07–112.00 (2x, f=0.64)","short":"S/R 110.07–112.00 (2x, f=0.64)","kind":"sr"},{"low":122.68,"high":125.36,"color":"#c62828","alpha":0.166,"label":"S/R 122.68–125.36 (6x, f=0.76)","short":"S/R 122.68–125.36 (6x, f=0.76)","kind":"sr"},{"low":125.4519,"high":128.7,"color":"#c62828","alpha":0.2,"label":"S/R 125.45–128.70 (5x, f=1.00)","short":"S/R 125.45–128.70 (5x, f=1.00)","kind":"sr"},{"low":105.79,"high":107.36,"color":"#2e7d32","alpha":0.122,"label":"S/R 105.79–107.36 (2x, f=0.44)","short":"S/R 105.79–107.36 (2x, f=0.44)","kind":"sr"}],"bands":[],"lines":[],"autoscale":[120.5,123.5,126.5],"initial":90,"minMove":0.0001,"expires":"2026-10-14T22:47:27+02:00","live":[1791331200,120.68,120.69,115.47,116.05,582553.0],"liveAt":"2026-10-07T22:47:27+02:00","markers":[],"x":{"oid":"SOL-261007-D7P2","v":1,"sym":"SOL-USDC","symbol":"SOL","exchange":"Coinbase","side":"sell","quote":"USDC","size":52.0,"size_usdc":null,"size_base":52.0,"capital":52.0,"cap_kind":"live","cap_read":"07/10/2026 22:47","cap_pf":"Anna trading","cap_why":null,"cap_others":[{"currency":"USDC","available":0.0},{"currency":"EUR","available":0.0}],"entry":null,"stop":null,"stop_def":107.92,"tp_def":127.64,"tps":[{"px":120.5,"pct_size":35},{"px":123.5,"pct_size":40},{"px":126.5,"pct_size":25}],"tick":0.01,"dec":2,"base_inc":1e-08,"base_dec":8,"base_min":1e-08,"quote_min":1.0,"lo":42.08,"hi":202.4,"last":116.04,"risk_warn_pct":2.0,"prefix":"ANNA1.","entry_type":"limit","sl_slip":0.5,"fee_t":0.012,"fee_m":0.006}}</script>
+<script src="../assets/lightweight-charts-5.2.1.standalone.production.js"></script>
+<script>
+
+function initChart(){
+"use strict";
+var D=JSON.parse(document.getElementById('chart-data').textContent);
+function $(id){return document.getElementById(id);}
+function hideChart(){['wrap','chips','legend'].forEach(function(i){$(i).style.display='none';});
+  document.querySelector('.toolbar').style.display='none';document.querySelector('.hint').style.display='none';}
+if(D.expires && Date.now()>Date.parse(D.expires)){hideChart();$('expired').style.display='block';return;}
+if(!window.LightweightCharts){hideChart();$('err').style.display='block';return;}
+var LC=window.LightweightCharts;
+function fmt(p){
+  if(p===null||p===undefined||!isFinite(p))return '?';
+  if(p>=1000)return Math.round(p).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+  if(p>=100)return p.toFixed(2);
+  if(p>=1)return String(Number(p.toPrecision(4)));
+  if(p<=0)return String(p);
+  var dec=Math.max(4,-Math.floor(Math.log10(p))+3);return p.toFixed(dec);
+}
+function fmtVol(v){var a=Math.abs(v);if(a>=1e9)return (v/1e9).toFixed(2)+' G';if(a>=1e6)return (v/1e6).toFixed(2)+' M';if(a>=1e3)return (v/1e3).toFixed(1)+' k';return v.toFixed(0);}
+function rgba(hex,a){var n=parseInt(hex.replace('#',''),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+var TZ='Europe/Paris';
+function F(o){o.timeZone=TZ;return new Intl.DateTimeFormat('fr-FR',o);}
+var fDate=F({day:'2-digit',month:'2-digit',year:'2-digit'}),fDT=F({day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+var fDay=F({day:'numeric'}),fMon=F({month:'short'}),fYear=F({year:'numeric'}),fHM=F({hour:'2-digit',minute:'2-digit'});
+var intraday=D.tf!=='1d'&&D.tf!=='1w';
+function tlabel(t){return (intraday?fDT:fDate).format(new Date(t*1000));}
+var priceFormat={type:'custom',minMove:D.minMove,formatter:fmt};
+var FONT='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+var el=$('chart');
+var chart=LC.createChart(el,{
+  autoSize:true,
+  layout:{background:{type:'solid',color:'#ffffff'},textColor:'#131722',fontSize:11,fontFamily:FONT,
+          panes:{separatorColor:'#d1d4dc',separatorHoverColor:'rgba(41,98,255,0.15)',enableResize:true}},
+  grid:{vertLines:{color:'#e6e6e6',style:LC.LineStyle.Dotted},horzLines:{color:'#e6e6e6',style:LC.LineStyle.Dotted}},
+  rightPriceScale:{borderColor:'#d1d4dc',scaleMargins:{top:0.04,bottom:0.04},entireTextOnly:true},
+  timeScale:{borderColor:'#d1d4dc',timeVisible:intraday,secondsVisible:false,rightOffset:3,minBarSpacing:0.5,
+             tickMarkFormatter:function(t,type){var d=new Date(t*1000);
+               if(type===0)return fYear.format(d);if(type===1)return fMon.format(d).replace('.','');
+               if(type===2)return fDay.format(d);return fHM.format(d);}},
+  crosshair:{mode:LC.CrosshairMode.Normal,vertLine:{color:'#9598a1',labelBackgroundColor:'#434651'},
+             horzLine:{color:'#9598a1',labelBackgroundColor:'#434651'}},
+  localization:{locale:'fr-FR',timeFormatter:function(t){return tlabel(t);}},
+  handleScale:{axisPressedMouseMove:{time:true,price:true},pinch:true,mouseWheel:true},
+  handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true}
+});
+// --- bougies (pane 0) ---
+var auto=D.autoscale.slice();
+D.bands.forEach(function(b){auto.push(b.low,b.high);});
+var candle=chart.addSeries(LC.CandlestickSeries,{upColor:'#FFFFFF',downColor:'#434651',borderUpColor:'#434651',borderDownColor:'#000000',
+  wickUpColor:'#434651',wickDownColor:'#2A2E39',priceFormat:priceFormat,priceLineVisible:false,lastValueVisible:true,
+  autoscaleInfoProvider:function(orig){var r=orig();if(!r||!r.priceRange)return r;
+    var lo=r.priceRange.minValue,hi=r.priceRange.maxValue;
+    auto.forEach(function(p){if(p>0){lo=Math.min(lo,p);hi=Math.max(hi,p);}});
+    r.priceRange.minValue=lo*0.985;r.priceRange.maxValue=hi*1.015;return r;}},0);
+// bougie en cours (D.live) : affichage seul, estompée (~35 %), jamais utilisée par les MA / niveaux
+var LV=D.live,FADE=0.35,bars=D.candles.slice();if(LV)bars.push(LV);
+var liveAt=D.liveAt?new Date(D.liveAt):null;
+function liveStyle(c){var up=c[4]>=c[1];return up?{color:'rgba(255,255,255,'+FADE+')',borderColor:rgba('#434651',FADE),wickColor:rgba('#434651',FADE)}
+  :{color:rgba('#434651',FADE),borderColor:rgba('#000000',FADE),wickColor:rgba('#2A2E39',FADE)};}
+if(LV)candle.applyOptions({lastValueVisible:false});
+candle.setData(bars.map(function(c){var o={time:c[0],open:c[1],high:c[2],low:c[3],close:c[4]};
+  if(LV&&c===LV){var st=liveStyle(c);for(var k in st)o[k]=st[k];}return o;}));
+if(D.markers&&D.markers.length&&candle.setMarkers){
+  candle.setMarkers(D.markers.map(function(m){return {time:m.time,position:m.position||'aboveBar',color:m.color||'#2962ff',
+    shape:m.shape||'circle',text:m.text||''};}).sort(function(a,b){return a.time-b.time;}));
+}
+// --- moyennes mobiles (exclues de l'autoscale, comme l'ylim du PNG) ---
+var maSeries=[];
+D.mas.forEach(function(m){
+  var dots=m.style==='dots';
+  var s=chart.addSeries(LC.LineSeries,{color:m.color,lineWidth:Math.min(4,Math.max(1,Math.round(m.width))),
+    lineType:m.style==='step'?LC.LineType.WithSteps:LC.LineType.Simple,lineVisible:!dots,
+    pointMarkersVisible:dots,pointMarkersRadius:1.5,visible:m.visible,priceFormat:priceFormat,
+    priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false,
+    autoscaleInfoProvider:function(){return null;}},0);
+  s.setData(m.data.map(function(p){return {time:p[0],value:p[1]};}));
+  maSeries.push({m:m,s:s,map:new Map(m.data.map(function(p){return [p[0],p[1]];}))});
+});
+// --- volume (pane 1, en bas) ---
+var vol=chart.addSeries(LC.HistogramSeries,{priceFormat:{type:'volume'},lastValueVisible:false,priceLineVisible:false},1);
+vol.setData(bars.map(function(c){var col=c[4]>=c[1]?'#B2B5BE':'#434651';return {time:c[0],value:c[5],color:(LV&&c===LV)?rgba(col,FADE):col};}));
+var vma=chart.addSeries(LC.LineSeries,{color:'#555555',lineWidth:1,lineStyle:LC.LineStyle.Dashed,priceFormat:{type:'volume'},
+  lastValueVisible:false,priceLineVisible:false,crosshairMarkerVisible:false},1);
+vma.setData(D.vma.map(function(p){return {time:p[0],value:p[1]};}));
+vol.priceScale().applyOptions({scaleMargins:{top:0.12,bottom:0}});
+var panes=chart.panes();panes[0].setStretchFactor(4);panes[1].setStretchFactor(1.1);
+// --- lignes de prix (stop / invalidation / objectif / entrée / dernière clôture) ---
+var LS={solid:LC.LineStyle.Solid,dashed:LC.LineStyle.Dashed,dotted:LC.LineStyle.Dotted};
+// Titres des lignes dessinés À GAUCHE (avec les étiquettes S/R, empilés sans chevauchement) : à droite, seule
+// la petite étiquette de prix colorée reste sur l'axe, pour ne pas masquer l'échelle ni les dernières bougies.
+var lineLabels=[];
+D.lines.forEach(function(l){candle.createPriceLine({price:l.price,color:l.color,lineWidth:l.width||1,
+  lineStyle:LS[l.style]||LC.LineStyle.Solid,axisLabelVisible:true,title:''});
+  if(l.title)lineLabels.push({price:l.price,color:l.color,label:l.title,kind:'line'});});
+if(LV){candle.createPriceLine({price:LV[4],color:'#ef6c00',lineWidth:1,lineStyle:LC.LineStyle.Dotted,axisLabelVisible:true,title:''});
+  lineLabels.push({price:LV[4],color:'#ef6c00',label:'Prix actuel '+fmt(LV[4])+' (bougie en cours)',kind:'line'});}
+// --- primitive : bandes S/R + zones du plan (rectangles pleins) avec étiquettes ---
+function BandsPrimitive(zones,bands,lines){this.items=zones.concat(bands);this.lines=lines||[];this.series=null;this.show=true;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'bottom';},renderer:function(){return {draw:function(){},drawBackground:function(t){self.drawFill(t);}};}},
+              {zOrder:function(){return 'top';},renderer:function(){return {draw:function(t){self.drawLabels(t);}};}}];}
+BandsPrimitive.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+BandsPrimitive.prototype.detached=function(){this.series=null;};
+BandsPrimitive.prototype.updateAllViews=function(){};
+BandsPrimitive.prototype.paneViews=function(){return this.views;};
+BandsPrimitive.prototype.drawFill=function(target){var s=this.series,items=this.items;if(!s)return;
+  target.useBitmapCoordinateSpace(function(sc){var ctx=sc.context,vr=sc.verticalPixelRatio,W=sc.bitmapSize.width,px=Math.max(1,Math.round(vr));
+    items.forEach(function(b){var y1=s.priceToCoordinate(b.high),y2=s.priceToCoordinate(b.low);if(y1===null||y2===null)return;
+      var top=Math.round(Math.min(y1,y2)*vr),h=Math.max(Math.round(Math.abs(y2-y1)*vr),2*px);
+      ctx.fillStyle=rgba(b.color,b.alpha);ctx.fillRect(0,top,W,h);
+      if(b.kind!=='sr'){ctx.fillStyle=rgba(b.color,0.6);ctx.fillRect(0,top,W,px);ctx.fillRect(0,top+h-px,W,px);}
+    });});};
+BandsPrimitive.prototype.drawLabels=function(target){var s=this.series,items=this.items,lines=this.lines;if(!s||!this.show)return;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width,H=sc.mediaSize.height,narrow=W<520;
+    var fs=narrow?10:11,lh=fs+4,labs=[];
+    items.forEach(function(b){var y1=s.priceToCoordinate(b.high),y2=s.priceToCoordinate(b.low);if(y1===null||y2===null)return;
+      var y=(y1+y2)/2;if(y<-lh||y>H+lh)return;labs.push({y:y,b:b});});
+    lines.forEach(function(b){var y=s.priceToCoordinate(b.price);if(y===null||y<-lh||y>H+lh)return;labs.push({y:y,b:b});});
+    labs.sort(function(a,b){return a.y-b.y;});
+    for(var i=1;i<labs.length;i++){if(labs[i].y-labs[i-1].y<lh)labs[i].y=labs[i-1].y+lh;}
+    for(var j=labs.length-1;j>=0;j--){var mx=(j===labs.length-1?H-lh/2:labs[j+1].y-lh);if(labs[j].y>mx)labs[j].y=mx;}
+    labs.forEach(function(L){var b=L.b,txt=(narrow?b.short:b.label)||b.label,bold=b.kind!=='sr';
+      if(b.kind==='line'){ctx.font='600 '+fs+'px '+FONT;var lw=ctx.measureText(txt).width+8;
+        ctx.fillStyle=b.color;if(ctx.roundRect){ctx.beginPath();ctx.roundRect(2,L.y-lh/2,lw,lh,3);ctx.fill();}else ctx.fillRect(2,L.y-lh/2,lw,lh);
+        ctx.fillStyle='#fff';ctx.textBaseline='middle';ctx.fillText(txt,6,L.y+0.5);return;}
+      ctx.font=(bold?'700 ':'500 ')+fs+'px '+FONT;
+      var w=ctx.measureText(txt).width,x=5;
+      ctx.fillStyle='rgba(255,255,255,0.8)';ctx.fillRect(x-3,L.y-lh/2,w+6,lh);
+      ctx.fillStyle=b.kind==='entry'?'#0d47a1':b.color;ctx.textBaseline='middle';ctx.fillText(txt,x,L.y+0.5);});
+  });};
+var bandsPrim=new BandsPrimitive(D.zones,D.bands,lineLabels);candle.attachPrimitive(bandsPrim);
+// étiquettes de gauche (S/R, zones, titres des lignes) : bouton « Labels » ; « Tout » les masque, « Recentrer » les rétablit
+var bLab=$('bLab');
+function setLabels(v){bandsPrim.show=v;bLab.classList.toggle('on',v);if(bandsPrim.req)bandsPrim.req();}
+bLab.onclick=function(){setLabels(!bandsPrim.show);};
+// --- vue initiale : même fenêtre que le PNG (réduite sur petit écran pour garder des bougies lisibles) ---
+var n=bars.length;
+function initialBars(){var w=el.clientWidth||400;return Math.min(D.initial,n,Math.max(60,Math.floor((w-60)/3)));}
+function fit(){chart.timeScale().setVisibleLogicalRange({from:Math.max(0,n-initialBars())-0.5,to:n-1+3});
+  candle.priceScale().applyOptions({autoScale:true});vol.priceScale().applyOptions({autoScale:true});}
+fit();
+$('bFit').onclick=function(){fit();setLabels(true);};
+$('bAll').onclick=function(){chart.timeScale().fitContent();candle.priceScale().applyOptions({autoScale:true});setLabels(false);};
+var isLog=!!D.log,bLog=$('bLog');
+function setLog(v){isLog=v;candle.priceScale().applyOptions({mode:v?LC.PriceScaleMode.Logarithmic:LC.PriceScaleMode.Normal,autoScale:true});
+  bLog.textContent=v?'Log':'Linéaire';bLog.title='Échelle de prix : '+(v?'logarithmique':'linéaire')+' (toucher pour changer)';bLog.classList.toggle('on',v);}
+setLog(isLog);bLog.onclick=function(){setLog(!isLog);};
+// --- pastilles MA (toucher = afficher / masquer) ---
+var chips=$('chips');
+maSeries.forEach(function(o){var c=document.createElement('span');c.className='chip'+(o.m.visible?'':' off');
+  var i=document.createElement('i');i.style.borderTopColor=o.m.color;i.style.borderTopStyle=o.m.style==='dots'?'dotted':'solid';
+  if(o.m.width>=2)i.style.borderTopWidth='3px';c.appendChild(i);c.appendChild(document.createTextNode(o.m.name));
+  c.onclick=function(){o.m.visible=!o.m.visible;o.s.applyOptions({visible:o.m.visible});c.classList.toggle('off',!o.m.visible);legend(lastT);};
+  chips.appendChild(c);});
+// --- lecture au réticule (OHLC, variation, volume, MA) ---
+var leg=$('legend'),byT=new Map(bars.map(function(c){return [c[0],c];})),lastT=null;
+function legend(t){lastT=t;var c=(t!==null&&byT.get(t))||bars[n-1];t=c[0];
+  var ch=(c[4]/c[1]-1)*100,col=ch>=0?'#2e7d32':'#c62828';
+  var h='<b>'+tlabel(t)+'</b> &nbsp;O <b>'+fmt(c[1])+'</b> H <b>'+fmt(c[2])+'</b> B <b>'+fmt(c[3])+'</b> C <b>'+fmt(c[4])+
+    '</b> <span style="color:'+col+'">'+(ch>=0?'+':'')+ch.toFixed(2)+' %</span> · Vol '+fmtVol(c[5]);
+  if(LV&&c===LV)h+=' <span style="color:#ef6c00">· bougie en cours'+(liveAt?' (au '+fHM.format(liveAt)+')':'')+'</span>';
+  var mm=[];maSeries.forEach(function(o){if(!o.m.visible)return;var v=o.map.get(t);if(v!==undefined)mm.push('<span style="color:'+o.m.color+'">'+o.m.name+' '+fmt(v)+'</span>');});
+  if(mm.length)h+='<br>'+mm.join(' · ');leg.innerHTML=h;}
+legend(null);
+chart.subscribeCrosshairMove(function(p){legend(p&&p.time!==undefined?p.time:null);});
+// --- outil « Mesure » (règle façon TradingView) : A puis B, rectangle + variation en % ---
+// Points en coordonnées logiques (index de bougie) + prix : la mesure reste alignée au zoom / déplacement.
+var TFS={'4h':14400,'1d':86400,'1w':604800}[D.tf]||86400;
+var M={on:false,a:null,b:null,hover:null},bMes=$('bMes'),mbar=$('mbar'),mtxt=$('mtxt'),mclr=$('mclr');
+var tsc=chart.timeScale();
+function MeasurePrimitive(){this.series=null;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'top';},renderer:function(){return {draw:function(t){self.draw(t);}};}}];}
+MeasurePrimitive.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+MeasurePrimitive.prototype.detached=function(){this.series=null;this.req=null;};
+MeasurePrimitive.prototype.updateAllViews=function(){};
+MeasurePrimitive.prototype.paneViews=function(){return this.views;};
+MeasurePrimitive.prototype.update=function(){if(this.req)this.req();};
+function mStats(A,B){var nb=Math.abs(Math.round(B.l)-Math.round(A.l)),sec=nb*TFS,dur;
+  if(TFS<86400){var hh=sec/3600;dur=hh+' h'+(hh>=24?' ('+(Math.round(hh/24*10)/10).toString().replace('.',',')+' j)':'');}
+  else{dur=(Math.round(sec/86400*10)/10).toString().replace('.',',')+' j';}
+  var d=B.p-A.p,pct=(B.p/A.p-1)*100;
+  return {pct:pct,abs:d,nb:nb,dur:dur,up:B.p>=A.p,
+    l1:(pct>=0?'+':'−')+Math.abs(pct).toFixed(2).replace('.',',')+' %',
+    l2:(d>=0?'+':'−')+fmt(Math.abs(d))+' · '+nb+' bougie'+(nb>1?'s':'')+' · '+dur};}
+MeasurePrimitive.prototype.draw=function(target){var s=this.series;if(!s||!M.a)return;
+  var A=M.a,B=M.b||M.hover;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width,H=sc.mediaSize.height;
+    var xa=tsc.logicalToCoordinate(A.l),ya=s.priceToCoordinate(A.p);if(xa===null||ya===null)return;
+    if(!B){ctx.fillStyle='#2962ff';ctx.beginPath();ctx.arc(xa,ya,4,0,2*Math.PI);ctx.fill();return;}
+    var xb=tsc.logicalToCoordinate(B.l),yb=s.priceToCoordinate(B.p);if(xb===null||yb===null)return;
+    var st=mStats(A,B),c=st.up?'#2e7d32':'#c62828',x0=Math.min(xa,xb),x1=Math.max(xa,xb),y0=Math.min(ya,yb),y1=Math.max(ya,yb);
+    ctx.fillStyle=rgba(c,0.16);ctx.fillRect(x0,y0,Math.max(x1-x0,1),Math.max(y1-y0,1));
+    ctx.strokeStyle=rgba(c,0.75);ctx.lineWidth=1;ctx.strokeRect(Math.round(x0)+0.5,Math.round(y0)+0.5,Math.max(Math.round(x1-x0),1),Math.max(Math.round(y1-y0),1));
+    // flèches : verticale (prix) et horizontale (temps) au centre
+    var xm=(x0+x1)/2,ym=(y0+y1)/2;ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.beginPath();
+    ctx.moveTo(xm,ya);ctx.lineTo(xm,yb);ctx.moveTo(xa,ym);ctx.lineTo(xb,ym);ctx.stroke();
+    function head(x,y,dx,dy){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-dx*7-dy*4,y-dy*7+dx*4);ctx.lineTo(x-dx*7+dy*4,y-dy*7-dx*4);ctx.closePath();ctx.fill();}
+    ctx.fillStyle=c;if(Math.abs(yb-ya)>14)head(xm,yb,0,yb>ya?1:-1);if(Math.abs(xb-xa)>14)head(xb,ym,xb>xa?1:-1,0);
+    [[xa,ya],[xb,yb]].forEach(function(q){ctx.beginPath();ctx.arc(q[0],q[1],3.5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.stroke();});
+    // étiquette : % en gros, puis variation absolue · bougies · durée
+    var big=W<520?17:19,sm=W<520?11:11.5,pad=7;
+    ctx.font='700 '+big+'px '+FONT;var w1=ctx.measureText(st.l1).width;ctx.font='500 '+sm+'px '+FONT;var w2=ctx.measureText(st.l2).width;
+    var bw=Math.max(w1,w2)+2*pad,bh=big+sm+2*pad+4,bx=Math.min(Math.max(xm-bw/2,3),W-bw-3),by;
+    if(st.up){by=y0-bh-6;if(by<3)by=Math.min(y1+6,H-bh-3);}else{by=y1+6;if(by+bh>H-3)by=Math.max(y0-bh-6,3);}
+    ctx.fillStyle=rgba(c,0.92);if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,by,bw,bh,5);ctx.fill();}else ctx.fillRect(bx,by,bw,bh);
+    ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='top';ctx.font='700 '+big+'px '+FONT;ctx.fillText(st.l1,bx+bw/2,by+pad);
+    ctx.font='500 '+sm+'px '+FONT;ctx.fillText(st.l2,bx+bw/2,by+pad+big+4);ctx.textAlign='left';
+  });};
+var mp=new MeasurePrimitive();candle.attachPrimitive(mp);
+function mUI(){bMes.classList.toggle('on',M.on);mbar.style.display=(M.on||M.a)?'flex':'none';mclr.style.display=M.a?'inline-block':'none';
+  mtxt.style.display=M.on?'inline-block':'none';
+  mtxt.textContent=!M.a?'Mesure : toucher le point A':(!M.b?'Toucher le point B':'Toucher pour une nouvelle mesure');
+  window.__measure=M.a&&M.b?Object.assign(mStats(M.a,M.b),{a:M.a,b:M.b}):null;}
+window.__range=function(){return tsc.getVisibleLogicalRange();};
+// point touché -> {l: index de bougie, p: prix}, aimanté au plus haut / bas / clôture / ouverture à < 8 px
+// (x, y) en px relatifs au graphique ; seul le pane des prix (pane 0, en haut) est accepté
+function mPoint(x,y){if(x<0||y<0||x>tsc.width()||y>chart.panes()[0].getHeight())return null;
+  var lg=tsc.coordinateToLogical(x);if(lg===null)return null;
+  var li=Math.round(lg),pr=candle.coordinateToPrice(y);if(pr===null||!(pr>0))return null;
+  var c=bars[li];if(c){var best=8,bp=null;[c[2],c[3],c[4],c[1]].forEach(function(v){var yy=candle.priceToCoordinate(v);
+    if(yy!==null&&Math.abs(yy-y)<best){best=Math.abs(yy-y);bp=v;}});if(bp!==null)pr=bp;}
+  return {l:li,p:pr};}
+function panOpts(){return {handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true},
+  handleScale:{axisPressedMouseMove:{time:true,price:true},axisDoubleClickReset:{time:true,price:true},pinch:true,mouseWheel:true}};}
+function setMeasure(v){M.on=v;M.hover=null;
+  chart.applyOptions(v?{handleScroll:false,handleScale:false}:panOpts());
+  if(v&&M.a&&!M.b)M.a=null;mUI();mp.update();}
+bMes.onclick=function(){setMeasure(!M.on);};
+function mClear(e){if(e){e.stopPropagation();e.preventDefault();}M.a=M.b=M.hover=null;down=null;mUI();mp.update();}
+mclr.onclick=mClear;mclr.addEventListener('pointerup',mClear);mclr.addEventListener('pointerdown',function(e){e.stopPropagation();});
+// touchers / clics lus directement (pointer events, souris + tactile) : indépendant des gestes de la librairie,
+// deux touchers rapides ne sont pas pris pour un double-clic
+var down=null;
+function rel(e){var r=el.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+el.addEventListener('pointerdown',function(e){if(!M.on||(e.pointerType==='mouse'&&e.button!==0))return;
+  down={id:e.pointerId,p:rel(e),t:Date.now()};},true);
+el.addEventListener('pointerup',function(e){if(!M.on||!down||down.id!==e.pointerId)return;var p=rel(e),d=down;down=null;
+  if(Math.abs(p.x-d.p.x)>12||Math.abs(p.y-d.p.y)>12||Date.now()-d.t>800)return;
+  var q=mPoint(p.x,p.y);if(!q)return;if(!M.a||M.b){M.a=q;M.b=null;M.hover=null;}else{M.b=q;M.hover=null;}mUI();mp.update();},true);
+el.addEventListener('pointercancel',function(){down=null;},true);
+el.addEventListener('pointermove',function(e){if(!M.on||!M.a||M.b||e.pointerType!=='mouse')return;var p=rel(e);
+  M.hover=mPoint(p.x,p.y);mp.update();},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(M.a||M.on)){M.a=M.b=M.hover=null;if(M.on)setMeasure(false);else{mUI();mp.update();}}});
+mUI();
+
+// ===================== page « ORDRE » (scanner/orderpage.py) =====================
+(function(){
+var O=D.x;if(!O)return;
+var wrap=$('wrap'),TICK=O.tick,DEC=O.dec,Q=O.quote,SYM=O.symbol;
+var TPC=['#2e7d32','#1b8a5a','#00796b'];
+// --- SHA-256 (synchrone, pur JS : fonctionne aussi hors contexte sécurisé) ---
+var SK=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function sha256(s){var b=[],i,j;for(i=0;i<s.length;i++)b.push(s.charCodeAt(i)&255);
+  var l=b.length*8;b.push(0x80);while(b.length%64!==56)b.push(0);
+  b.push(0,0,0,0,(l>>>24)&255,(l>>>16)&255,(l>>>8)&255,l&255);
+  var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19],w=new Array(64);
+  function R(x,n){return (x>>>n)|(x<<(32-n));}
+  for(i=0;i<b.length;i+=64){for(j=0;j<16;j++)w[j]=(b[i+4*j]<<24)|(b[i+4*j+1]<<16)|(b[i+4*j+2]<<8)|b[i+4*j+3];
+    for(j=16;j<64;j++){var s0=R(w[j-15],7)^R(w[j-15],18)^(w[j-15]>>>3),s1=R(w[j-2],17)^R(w[j-2],19)^(w[j-2]>>>10);w[j]=(w[j-16]+s0+w[j-7]+s1)|0;}
+    var a=H[0],c=H[1],d=H[2],e=H[3],f=H[4],g=H[5],h=H[6],k=H[7];
+    for(j=0;j<64;j++){var t1=(k+(R(f,6)^R(f,11)^R(f,25))+((f&g)^(~f&h))+SK[j]+w[j])|0,
+      t2=((R(a,2)^R(a,13)^R(a,22))+((a&c)^(a&d)^(c&d)))|0;k=h;h=g;g=f;f=(e+t1)|0;e=d;d=c;c=a;a=(t1+t2)|0;}
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+c)|0;H[2]=(H[2]+d)|0;H[3]=(H[3]+e)|0;H[4]=(H[4]+f)|0;H[5]=(H[5]+g)|0;H[6]=(H[6]+h)|0;H[7]=(H[7]+k)|0;}
+  return H.map(function(x){return ('00000000'+(x>>>0).toString(16)).slice(-8);}).join('');}
+function b64u(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+window.__sha256=sha256;
+// --- formats ---
+function snapP(p){return Number((Math.round(p/TICK)*TICK).toFixed(DEC));}
+function px(p){return Number(p).toFixed(DEC);}
+function pc(x,d){d=d===undefined?2:d;if(!isFinite(x))return '?';return (x>=0?'+':'−')+Math.abs(x).toFixed(d).replace('.',',')+' %';}
+function grp(s){return s.replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');}
+function mo(x,d){d=d===undefined?2:d;if(!isFinite(x))return '?';var p=Math.abs(x).toFixed(d).split('.');return (x<0?'−':'')+grp(p[0])+(p[1]?','+p[1]:'');}
+function rr(x){return isFinite(x)?x.toFixed(2).replace('.',','):'?';}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function parseNum(s){s=String(s).replace(/\s/g,'').replace(',','.');var v=parseFloat(s);return isFinite(v)?v:null;}
+// --- état (proposition initiale + ajustements, conservés localement si la page est rechargée) ---
+// SELL : vente d'une crypto déjà détenue (taille = quantité en base, curseur = % du solde détenu) ;
+// achat : taille en USDC (curseur = % du capital disponible). Stop optionnel (null = sans stop), 0 à 3 TP (0 = HODL).
+var SELL=O.side==='sell',UNIT=SELL?SYM:Q,SDEC=SELL?O.base_dec:2;
+var ETL=SELL?{limit:'limite',market:'au marché'}:{limit:'limite',stop_limit:'stop-limit (cassure)'};
+var INIT={entry:SELL?null:O.entry,stop:(O.stop===null||O.stop===undefined)?null:O.stop,size:O.size,
+          tps:O.tps.map(function(t){return {px:t.px,pct:t.pct_size};}),etype:ETL[O.entry_type]?O.entry_type:'limit'};
+function clone(s){return JSON.parse(JSON.stringify(s));}
+var KEY='anna-order:'+O.oid+':v'+O.v,S=clone(INIT),stopPrev=null;
+// --- capital / solde DISPONIBLE (paramètre de la page, jamais inventé) : null = non lu ; 0 = non alimenté / non détenu ---
+var CK=O.cap_kind||'unread',CAP=(CK==='unread'||O.capital===null||O.capital===undefined||!isFinite(+O.capital))?null:+O.capital;
+var CAPOK=CAP!==null&&CAP>0,CEX=CK==='example',CAPN=SELL?'solde '+SYM+' détenu':'capital disponible';
+var BINC=O.base_inc||0.01;
+function floorInc(v,inc){return Number((Math.floor(Number((v/inc).toFixed(6)))*inc).toFixed(SELL?O.base_dec:2));}
+// arrondi INFÉRIEUR (centime pour un achat, pas de quantité pour une vente) : jamais au-dessus du solde
+function capMax(){return CAPOK?floorInc(CAP,SELL?BINC:0.01):0;}
+function sizeOfPct(p){if(!CAPOK)return null;p=Math.max(0,Math.min(100,+p));if(p>=100)return capMax();
+  return Math.min(capMax(),floorInc(CAP*p/100,SELL?BINC:0.01));}
+function pctOf(sz){return CAPOK?sz/CAP*100:null;}
+try{var sv=JSON.parse(localStorage.getItem(KEY)||'null');if(sv&&(SELL||sv.entry>0)&&(sv.stop===null||sv.stop>0)&&sv.size>=0&&sv.tps&&sv.tps.length>=0){
+  if(!ETL[sv.etype])sv.etype=INIT.etype;S=sv;}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function mkt(){return SELL&&S.etype==='market';}
+function levels(){var a=[];if(!SELL)a.push({k:'entry',name:'Entrée',short:'ENTRÉE',color:'#1565c0',p:S.entry});
+  if(mkt())return a;
+  if(S.stop!==null)a.push({k:'stop',name:'Stop',short:'STOP',color:'#d32f2f',p:S.stop});
+  S.tps.forEach(function(t,i){a.push({k:'tp'+i,name:'TP'+(i+1),short:'TP'+(i+1),color:TPC[i],p:t.px});});return a;}
+function getP(k){return k==='entry'?S.entry:k==='stop'?S.stop:S.tps[+k.slice(2)].px;}
+function setP(k,p){if(k==='entry')S.entry=p;else if(k==='stop')S.stop=p;else S.tps[+k.slice(2)].px=p;}
+function refPx(){return SELL?O.last:S.entry;}
+// --- calculs ---
+function calcSell(){var q=S.size,L=O.last,s=mkt()?null:S.stop,errs=[],warns=[],ft=O.fee_t||0,fm=O.fee_m||0;
+  var T=mkt()?[]:S.tps;
+  var tps=T.map(function(t){var un=q*t.pct/100;return {px:t.px,pct:t.pct,d:L?(t.px/L-1)*100:NaN,units:un,pr:un*t.px,net:un*t.px*(1-fm),rr:NaN,gain:un*t.px};});
+  if(!(q>0))errs.push({k:'size',t:'Quantité nulle.'});
+  if(q>0&&Math.abs(q/BINC-Math.round(q/BINC))>1e-6)errs.push({k:'size',t:'Quantité '+q+' '+SYM+' non alignée sur le pas de quantité Coinbase ('+BINC+') : rien n’est arrondi, corrige la quantité.'});
+  if(O.base_min&&q>0&&q<O.base_min)errs.push({k:'size',t:'Quantité sous le minimum Coinbase ('+O.base_min+' '+SYM+').'});
+  if(CAP===null)errs.push({k:'size',t:'Solde '+SYM+' détenu non lu'+(O.cap_why?' ('+O.cap_why+')':'')+' : quantité non vérifiable — validation bloquée, aucune valeur inventée.'});
+  else if(q>CAP+1e-12)errs.push({k:'size',t:'Quantité '+mo(q,O.base_dec)+' '+SYM+' supérieure au solde détenu '+(CEX?'(EXEMPLE : ':'réel (')+mo(CAP,O.base_dec)+' '+SYM+(CAP>0?'':', aucun '+SYM+' détenu')+') : on ne vend pas ce qu’on n’a pas, rien n’est ajusté.'});
+  if(!mkt()){
+    if(!T.length&&s===null)errs.push({k:null,t:'Vente limite : ajoute au moins un TP (prix de vente limite) ou un stop.'});
+    if(s!==null&&L&&s>=L)errs.push({k:'stop',t:'Stop au-dessus/au niveau du dernier prix ('+px(L)+') : il se déclencherait tout de suite. Un stop de vente se place SOUS le prix actuel.'});
+    tps.forEach(function(t,i){
+      if(s!==null&&!(t.px>s))errs.push({k:'tp'+i,t:'TP'+(i+1)+' sous le stop : un prix de vente limite doit être au-dessus du stop.'});
+      else if(i>0&&!(t.px>tps[i-1].px))errs.push({k:'tp'+i,t:'TP'+(i+1)+' doit être au-dessus de TP'+i+' (ordre TP1 < TP2 < TP3).'});
+      if(!(t.pct>0)||t.pct!==Math.round(t.pct))errs.push({k:'tp'+i,t:'Part vendue au TP'+(i+1)+' invalide (entier de 1 à 100 %).'});
+      if(O.base_min&&t.units<O.base_min)errs.push({k:'tp'+i,t:'Quantité du TP'+(i+1)+' ('+mo(t.units,O.base_dec)+' '+SYM+') sous le minimum Coinbase ('+O.base_min+').'});});
+    var sp=tps.reduce(function(a,t){return a+t.pct;},0);
+    if(tps.length&&Math.abs(sp-100)>1e-9)errs.push({k:null,t:'Parts vendues aux TP : total '+sp+' % (doit faire 100 %).'});
+    if(tps.length&&L&&tps[0].px<L*0.9995)warns.push({k:'tp0',t:'TP1 sous le dernier prix ('+px(L)+') : la vente limite serait exécutée tout de suite (comme au marché).'});}
+  var ref=mkt()?L:(T.length?T[0].px:s);
+  if(O.quote_min&&ref&&q>0&&q*ref<O.quote_min)errs.push({k:'size',t:'Montant estimé sous le minimum Coinbase ('+O.quote_min+' '+Q+').'});
+  var gnet=tps.reduce(function(a,t){return a+t.net;},0),snet=s!==null?q*s*(1-ft):NaN,mnet=L?q*L*(1-ft):NaN;
+  return {e:L,s:s,sz:q,u:q,R:NaN,risk:NaN,tps:tps,gain:gnet,wr:NaN,errs:errs,warns:warns,un:q,gnet:gnet,lnet:snet,mnet:mnet,val:L?q*L:NaN};}
+function calc(){if(SELL)return calcSell();
+  var e=S.entry,s=S.stop,hs=s!==null,sz=S.size,u=sz/e,R=hs?e-s:NaN,risk=hs?u*R:NaN,errs=[],warns=[];
+  var tps=S.tps.map(function(t){return {px:t.px,pct:t.pct,d:(t.px/e-1)*100,rr:R>0?(t.px-e)/R:NaN,gain:u*t.pct/100*(t.px-e),units:u*t.pct/100};});
+  var gain=tps.reduce(function(a,t){return a+t.gain;},0),wr=(R>0&&tps.length)?tps.reduce(function(a,t){return a+t.pct/100*t.rr;},0):NaN;
+  if(hs&&!(s<e))errs.push({k:'stop',t:'Stop au-dessus de l’entrée : pour un achat (long), le stop doit être SOUS l’entrée.'});
+  if(tps.length&&!hs)errs.push({k:null,t:'TP sans stop non géré (Coinbase lie TP et stop en OCO) : coche « Stop de protection » ou retire les TP (achat HODL).'});
+  tps.forEach(function(t,i){
+    if(!(t.px>e))errs.push({k:'tp'+i,t:'TP'+(i+1)+' sous l’entrée : un objectif de vente doit être AU-DESSUS de l’entrée.'});
+    else if(i>0&&!(t.px>tps[i-1].px))errs.push({k:'tp'+i,t:'TP'+(i+1)+' doit être au-dessus de TP'+i+' (ordre TP1 < TP2 < TP3).'});
+    if(!(t.pct>0)||t.pct!==Math.round(t.pct))errs.push({k:'tp'+i,t:'Part vendue au TP'+(i+1)+' invalide (entier de 1 à 100 %).'});
+    if(O.base_min&&t.units<O.base_min)errs.push({k:'tp'+i,t:'Quantité du TP'+(i+1)+' ('+mo(t.units,O.base_dec)+' '+SYM+') sous le minimum Coinbase ('+O.base_min+').'});});
+  var sp=tps.reduce(function(a,t){return a+t.pct;},0);
+  if(tps.length&&Math.abs(sp-100)>1e-9)errs.push({k:null,t:'Parts vendues aux TP : total '+sp+' % (doit faire 100 %).'});
+  if(!tps.length&&O.base_min&&sz>0&&u<O.base_min)errs.push({k:'size',t:'Quantité sous le minimum Coinbase ('+O.base_min+' '+SYM+').'});
+  if(!(sz>0))errs.push({k:'size',t:'Taille nulle.'});
+  if(CAP===null)errs.push({k:'size',t:'Capital disponible non lu'+(O.cap_why?' ('+O.cap_why+')':'')+' : taille '+mo(sz)+' '+Q+' non vérifiable contre le solde réel — validation bloquée, aucune valeur inventée.'});
+  else if(sz>CAP+1e-9)errs.push({k:'size',t:'Taille '+mo(sz)+' '+Q+' supérieure au capital disponible '+(CEX?'(EXEMPLE : ':'réel (')+mo(CAP)+' '+Q+(CAP>0?'':', portefeuille non alimenté')+') : rien n’est ajusté — réduis la taille (curseur ou champ)'+(CAP>0?'':' ou alimente le portefeuille')+'.'});
+  if(O.quote_min&&sz<O.quote_min)errs.push({k:'size',t:'Taille sous le minimum Coinbase ('+O.quote_min+' '+Q+').'});
+  if(CAPOK&&risk>0&&risk/CAP*100>O.risk_warn_pct)warns.push({k:'stop',t:'Risque au stop = '+pc(risk/CAP*100).replace('+','')+' du capital'+(CEX?' d’EXEMPLE':'')+' (> '+String(O.risk_warn_pct).replace('.',',')+' %).'});
+  if(R>0&&tps.length&&tps[0].rr<1&&tps[0].px>e)warns.push({k:'tp0',t:'R:R du TP1 inférieur à 1 ('+rr(tps[0].rr)+').'});
+  if(!hs)warns.push({k:null,t:'Achat SANS stop : aucune protection, perte non bornée (HODL assumé).'});
+  if(S.etype!=='stop_limit'&&O.last&&e>O.last*1.0005)warns.push({k:'entry',t:'Entrée au-dessus du dernier prix ('+px(O.last)+') : un achat limite à ce prix serait exécuté tout de suite (comme au marché). Pour acheter la cassure de ce niveau, choisis « Stop-limit · cassure ».'});
+  if(S.etype==='stop_limit'&&O.last&&e<=O.last)warns.push({k:'entry',t:'Entrée stop-limit (cassure) sous/au dernier prix ('+px(O.last)+') : le stop d’achat se déclencherait tout de suite. Une cassure s’achète AU-DESSUS du prix actuel.'});
+  // estimation FRAIS INCLUS (même règle que order_place.py) : quantité = taille / (prix max × (1 + taker)) ;
+  // entrée maker seulement si achat limite sous le marché ; TP maker ; stop taker
+  var ft=O.fee_t||0,fm=O.fee_m||0,bmax=S.etype==='stop_limit'?Math.ceil(e*(1+O.sl_slip/100)/TICK-1e-9)*TICK:e;
+  var un=sz/(bmax*(1+ft)),fin=(S.etype!=='stop_limit'&&O.last&&e<O.last)?fm:ft;
+  var gnet=tps.reduce(function(a,t){return a+un*t.pct/100*(t.px*(1-fm)-e*(1+fin));},0),lnet=hs?un*(s*(1-ft)-e*(1+fin)):NaN;
+  return {e:e,s:s,sz:sz,u:u,R:R,risk:risk,tps:tps,gain:gain,wr:wr,errs:errs,warns:warns,sp:sp,un:un,gnet:gnet,lnet:lnet,fin:fin};}
+// --- lignes de prix (dessinées par la librairie : ligne + étiquette de prix sur l'axe) ---
+var PL={},drag=null,HD={},hov=null;
+function syncLines(bad){var seen={};levels().forEach(function(l){seen[l.k]=1;var act=(drag&&drag.k===l.k)||hov===l.k;
+  var o={price:l.p,color:l.color,lineWidth:act?4:2,lineStyle:l.k==='entry'?LC.LineStyle.Solid:(l.k==='stop'?LC.LineStyle.Dashed:LC.LineStyle.LargeDashed),
+         axisLabelVisible:true,title:'',lineVisible:true};
+  if(PL[l.k])PL[l.k].applyOptions(o);else PL[l.k]=candle.createPriceLine(o);});
+  for(var k in PL)if(!seen[k]){candle.removePriceLine(PL[k]);delete PL[k];}}
+// --- primitive : boîte risque (rouge) / gain (vert) dans l'espace à droite des bougies, façon outil « position » ---
+function OrderPrim(){this.series=null;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'bottom';},renderer:function(){return {draw:function(){},drawBackground:function(t){self.draw(t);}};}}];}
+OrderPrim.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+OrderPrim.prototype.detached=function(){this.series=null;this.req=null;};
+OrderPrim.prototype.updateAllViews=function(){};
+OrderPrim.prototype.paneViews=function(){return this.views;};
+OrderPrim.prototype.draw=function(target){var s=this.series;if(!s)return;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width;
+    var lr=tsc.getVisibleLogicalRange(),x0=W-24;
+    if(lr&&lr.to>lr.from){x0=W*(n-0.5-lr.from)/(lr.to-lr.from);if(!(x0>=0))x0=0;if(x0>W-24)x0=W-24;}
+    var rp=refPx();if(!rp||mkt())return;var ye=s.priceToCoordinate(rp);if(ye===null)return;
+    var ys=S.stop!==null?s.priceToCoordinate(S.stop):null,yt=S.tps.length?s.priceToCoordinate(S.tps[S.tps.length-1].px):null;
+    if(ys!==null){ctx.fillStyle=S.stop<rp?'rgba(211,47,47,0.13)':'rgba(211,47,47,0.30)';ctx.fillRect(x0,Math.min(ye,ys),W-x0,Math.abs(ys-ye));}
+    if(yt!==null){ctx.fillStyle='rgba(46,125,50,0.12)';ctx.fillRect(x0,Math.min(ye,yt),W-x0,Math.abs(yt-ye));}
+  });};
+var oprim=new OrderPrim();candle.attachPrimitive(oprim);
+function repaint(){if(oprim.req)oprim.req();}
+// --- vue initiale : espace libre à droite des bougies pour les poignées / la boîte (comme l'outil position de TV) ---
+// échelle de prix « focus ordre » (vue initiale / Recentrer) : niveaux d'ordre + dernier prix + 12 dernières bougies,
+// pour que les lignes soient espacées et faciles à saisir ; « Tout » revient à l'échelle complète des pages d'analyse.
+var focus=true,FK=12;
+candle.applyOptions({autoscaleInfoProvider:function(orig){var r=orig();if(!r||!r.priceRange)return r;var lo,hi;
+  if(focus){lo=Infinity;hi=-Infinity;levels().forEach(function(l){lo=Math.min(lo,l.p);hi=Math.max(hi,l.p);});
+    if(O.last){lo=Math.min(lo,O.last);hi=Math.max(hi,O.last);}
+    for(var i=Math.max(0,n-FK);i<n;i++){lo=Math.min(lo,bars[i][3]);hi=Math.max(hi,bars[i][2]);}
+    r.priceRange.minValue=lo*0.965;r.priceRange.maxValue=hi*1.03;return r;}
+  lo=r.priceRange.minValue;hi=r.priceRange.maxValue;
+  auto.forEach(function(p){if(p>0){lo=Math.min(lo,p);hi=Math.max(hi,p);}});
+  r.priceRange.minValue=lo*0.985;r.priceRange.maxValue=hi*1.015;return r;}});
+var allBtn=$('bAll').onclick;$('bAll').onclick=function(){focus=false;allBtn();};
+fit=function(){focus=true;var k=initialBars(),pad=Math.max(5,Math.round(k*0.30));
+  chart.timeScale().setVisibleLogicalRange({from:Math.max(0,n-k)-0.5,to:n-1+pad});
+  candle.priceScale().applyOptions({autoScale:true});vol.priceScale().applyOptions({autoScale:true});};
+function updAuto(){auto.length=0;D.autoscale.forEach(function(p){auto.push(p);});levels().forEach(function(l){auto.push(l.p);});
+  if(O.last)auto.push(O.last);}
+updAuto();fit();
+// --- poignées (DOM au-dessus du graphique : jamais en conflit avec les gestes de la librairie) ---
+function mkHandle(k){var h=document.createElement('div');h.className='oh';h.dataset.k=k;h.setAttribute('role','slider');
+  h.innerHTML='<span class=g>⇕</span><span class=t></span>';wrap.appendChild(h);
+  h.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'&&e.button!==0)return;e.preventDefault();e.stopPropagation();
+    try{h.setPointerCapture(e.pointerId);}catch(_){}var r=el.getBoundingClientRect();startDrag(h.dataset.k,e.pointerId,e.clientY-r.top);});
+  ['touchstart','mousedown'].forEach(function(t){h.addEventListener(t,function(e){e.stopPropagation();},{passive:true});});
+  return h;}
+function syncHandles(){var seen={};levels().forEach(function(l){seen[l.k]=1;if(!HD[l.k])HD[l.k]=mkHandle(l.k);HD[l.k].style.background=l.color;});
+  for(var k in HD)if(!seen[k]){HD[k].remove();delete HD[k];}}
+var lastSig='';
+function place(force){var pH=chart.panes()[0].getHeight(),aw=candle.priceScale().width(),L=levels(),ys=[];
+  L.forEach(function(l){ys.push(candle.priceToCoordinate(l.p));});
+  var sig=pH+'|'+aw+'|'+ys.join(',')+'|'+(drag?drag.k:'')+'|'+hov;if(!force&&sig===lastSig)return;lastSig=sig;
+  // colonnes : si deux poignées se chevauchent verticalement, la seconde se décale vers la gauche
+  var items=L.map(function(l,i){return {l:l,y:ys[i],h:HD[l.k]};}).filter(function(o){return o.h;});
+  items.sort(function(a,b){return (a.y===null?1e9:a.y)-(b.y===null?1e9:b.y);});
+  var placed=[];
+  items.forEach(function(o){var h=o.h;if(o.y===null||o.y<-4||o.y>pH+4){h.style.display='none';return;}
+    h.style.display='flex';h.classList.toggle('act',!!(drag&&drag.k===o.l.k));
+    var right=aw+6;placed.forEach(function(p){if(Math.abs(p.y-o.y)<30&&p.right+p.w+4>right&&p.right<=right+1)right=p.right+p.w+4;});
+    h.style.right=right+'px';h.style.top=Math.min(Math.max(o.y,0),pH)+'px';placed.push({y:o.y,right:right,w:h.offsetWidth||90});});}
+(function loop(){try{place(false);}catch(e){}requestAnimationFrame(loop);})();
+// --- glisser : poignées + ligne elle-même (tolérance 8 px souris / 18 px doigt) ---
+function startDrag(k,id,y){var yc=candle.priceToCoordinate(getP(k));drag={k:k,id:id,off:(yc===null?0:y-yc)};window.__lastDrag={k:k,y:y,yc:yc};
+  candle.priceScale().applyOptions({autoScale:false});chart.applyOptions({handleScroll:false,handleScale:false});
+  wrap.classList.add('dragging');render();}
+function moveDrag(clientY){var r=el.getBoundingClientRect(),pH=chart.panes()[0].getHeight();
+  var y=Math.min(Math.max(clientY-r.top-drag.off,0),pH),p=candle.coordinateToPrice(y);if(p===null||!(p>0))return;
+  p=snapP(Math.min(Math.max(p,O.lo),O.hi));if(p===getP(drag.k))return;setP(drag.k,p);render();}
+function endDrag(){if(!drag)return;drag=null;chart.applyOptions(M.on?{handleScroll:false,handleScale:false}:panOpts());
+  wrap.classList.remove('dragging');updAuto();save();render();}
+function hit(y,touch){var best=touch?18:8,k=null;levels().forEach(function(l){var yy=candle.priceToCoordinate(l.p);
+  if(yy!==null&&Math.abs(yy-y)<best){best=Math.abs(yy-y);k=l.k;}});return k;}
+el.addEventListener('pointerdown',function(e){if(M.on||drag||(e.pointerType==='mouse'&&e.button!==0))return;var p=rel(e);
+  if(p.y>chart.panes()[0].getHeight()||p.x>tsc.width())return;var k=hit(p.y,e.pointerType!=='mouse');if(!k)return;
+  e.preventDefault();e.stopPropagation();try{el.setPointerCapture(e.pointerId);}catch(_){}startDrag(k,e.pointerId,p.y);},true);
+window.addEventListener('pointermove',function(e){if(drag&&drag.id===e.pointerId){e.preventDefault();moveDrag(e.clientY);return;}
+  if(!drag&&e.pointerType==='mouse'&&!M.on&&el.contains(e.target)){var p=rel(e),k=(p.y<=chart.panes()[0].getHeight()&&p.x<=tsc.width())?hit(p.y,false):null;
+    if(k!==hov){hov=k;wrap.classList.toggle('hov',!!k);syncLines();}}},{capture:true,passive:false});
+['pointerup','pointercancel'].forEach(function(t){window.addEventListener(t,function(e){if(drag&&drag.id===e.pointerId)endDrag();},true);});
+// pendant un glisser, la librairie ne reçoit aucun geste (pas de défilement / zoom parasite)
+['touchstart','touchmove','touchend','mousedown','mousemove','mouseup'].forEach(function(t){
+  el.addEventListener(t,function(e){if(drag){e.stopPropagation();if(e.cancelable&&t!=='touchend'&&t!=='mouseup')e.preventDefault();}},{capture:true,passive:false});});
+// --- panneau ---
+$('ooid').textContent='#'+O.oid+' · v'+O.v+' · '+O.sym+(SELL?' · VENTE':'');
+function feeTxt(){return 'taker '+String(+(O.fee_t*100).toFixed(2)).replace('.',',')+' %, maker '+String(+(O.fee_m*100).toFixed(2)).replace('.',',')+' %';}
+function sumHTML(c){var cap=CAPOK?CAP:null,cx=CEX?' (exemple)':'';
+  if(SELL)return '<div class=f><span class=k>Côté</span><span class=v>Vente spot <span class=sub>· '+ETL[S.etype]+' · crypto déjà détenue</span></span></div>'+
+   '<div class=f><span class=k>Quantité ('+esc(SYM)+')</span><span class=v><input id=oSize inputmode=decimal value="'+esc(S.size)+'"> <span class=sub>≈ '+mo(c.val)+' '+Q+' au dernier prix</span></span></div>'+
+   '<div class=f><span class=k>Solde '+esc(SYM)+' détenu</span><span class=v>'+(CAP===null?'non lu':mo(CAP,O.base_dec)+' '+esc(SYM)+cx)+(cap?' <span class=sub>· vend '+pc(c.sz/cap*100,1).replace('+','')+'</span>':'')+'</span></div>'+
+   (mkt()?'<div class=f><span class=k>Produit estimé (marché)</span><span class=v style="color:#2e7d32">'+mo(c.mnet)+' '+Q+' <span class=sub>· net de frais taker, au dernier prix (le prix réel peut différer)</span></span></div>':
+   '<div class=f><span class=k>Si tous les TP</span><span class=v style="color:#2e7d32">'+(c.tps.length?mo(c.gnet)+' '+Q+' <span class=sub>· produit net (maker)</span>':'— <span class=sub>· aucun TP</span>')+'</span></div>'+
+   '<div class=f><span class=k>Si stop</span><span class=v style="color:#c62828">'+(c.s!==null?mo(c.lnet)+' '+Q+' <span class=sub>· produit net (taker)</span>':'— <span class=sub>· aucun stop</span>')+'</span></div>')+
+   '<div class=f><span class=k>Frais estimés</span><span class=v><span class=sub>'+feeTxt()+'</span></span></div>'+
+   '<div class=f><span class=k>Dernier prix</span><span class=v>'+(O.last?px(O.last):'?')+'</span></div>';
+  return '<div class=f><span class=k>Côté</span><span class=v>Achat spot (long) <span class=sub>· entrée '+ETL[S.etype]+(S.tps.length?'':' · HODL')+'</span></span></div>'+
+   '<div class=f><span class=k>Taille ('+Q+')</span><span class=v><input id=oSize inputmode=decimal value="'+esc(S.size)+'"> <span class=sub>≈ '+mo(c.u,O.base_dec)+' '+esc(SYM)+'</span></span></div>'+
+   '<div class=f><span class=k>Capital engagé</span><span class=v>'+mo(c.sz)+' '+Q+(cap?' <span class=sub>· '+pc(c.sz/cap*100,1).replace('+','')+' de '+mo(cap,0)+cx+'</span>':' <span class=sub>· capital dispo '+(CAP===null?'non lu':'0 '+Q)+'</span>')+'</span></div>'+
+   '<div class=f><span class=k>Risque au stop</span><span class=v style="color:#c62828">'+(c.s===null?'aucun stop <span class=sub>· perte non bornée</span>':(c.R>0?'−'+mo(c.risk):'?')+' '+Q+(cap&&c.R>0?' <span class=sub>· '+pc(c.risk/cap*100).replace('+','')+' du capital'+cx+'</span>':''))+'</span></div>'+
+   '<div class=f><span class=k>Gain si tous les TP</span><span class=v style="color:#2e7d32">'+(c.tps.length?'+'+mo(c.gain)+' '+Q+' <span class=sub>· R:R moyen '+rr(c.wr)+'</span>':'— <span class=sub>· HODL : aucun TP</span>')+'</span></div>'+
+   '<div class=f><span class=k>Net de frais (estim.)</span><span class=v><span style="color:#2e7d32">'+(c.tps.length?(c.gnet>=0?'+':'')+mo(c.gnet):'—')+'</span> / <span style="color:#c62828">'+(c.s!==null?mo(c.lnet):'—')+'</span> '+Q+' <span class=sub>· TP / stop · frais inclus ≈ '+mo(c.un,O.base_dec)+' '+esc(SYM)+' ('+feeTxt()+')</span></span></div>'+
+   '<div class=f><span class=k>Dernier prix</span><span class=v>'+(O.last?px(O.last)+' <span class=sub>· entrée '+pc((c.e/O.last-1)*100)+'</span>':'?')+'</span></div>';}
+// --- curseur de volume (façon Coinbase) : % du capital disponible (achat) / du solde détenu (vente) <-> taille ---
+// la taille (size_usdc / size_base) reste la seule source de vérité du code ; le % se déduit du solde
+var rng=$('oRange'),QB=Array.prototype.slice.call($('ovq').querySelectorAll('button'));
+function setSize(v){S.size=SELL?v:Math.round(v*100)/100;save();}      // vente : quantité tapée gardée telle quelle
+function pctTxt(p){if(p===null||!isFinite(p))return '—';var r=Math.round(p*10)/10;if(r>=100&&p<100)r=99.9;
+  return (r%1===0?r.toFixed(0):r.toFixed(1)).replace('.',',')+' %';}
+function capTxt(v){return mo(v,SELL?O.base_dec:2)+' '+esc(UNIT);}
+function updVol(c){var p=pctOf(c.sz),over=CAPOK?c.sz>CAP+(SELL?1e-12:1e-9):(CAP!==null&&c.sz>0),pos=CAPOK?Math.min(100,Math.max(0,p)):0;
+  rng.disabled=!CAPOK;if(document.activeElement!==rng||!CAPOK)rng.value=String(Math.round(pos));
+  $('ovfill').style.width=pos+'%';$('ovtr').classList.toggle('over',!!over);$('ovol').classList.toggle('off',!CAPOK);
+  Array.prototype.forEach.call(document.querySelectorAll('.ovbar i'),function(t,i){t.classList.toggle('on',CAPOK&&pos>=i*25-1e-9);});
+  QB.forEach(function(b){var bp=+b.dataset.p;b.disabled=!CAPOK;b.classList.toggle('on',CAPOK&&Math.abs(c.sz-sizeOfPct(bp))<(SELL?BINC/2:0.005));});
+  $('ovpct').textContent=CAPOK?(over?'> 100 %':pctTxt(p)):'—';
+  rng.setAttribute('aria-valuetext',CAPOK?pctTxt(p)+' du '+CAPN+' = '+capTxt(c.sz):'curseur désactivé');
+  $('ovamt').innerHTML=SELL?capTxt(c.sz)+' <span class=sub>≈ '+mo(c.val)+' '+Q+'</span>':mo(c.sz)+' '+Q+' <span class=sub>≈ '+mo(c.u,O.base_dec)+' '+esc(SYM)+'</span>';
+  var pf=O.cap_pf?'« '+esc(O.cap_pf)+' »':'Coinbase',rd=O.cap_read?' · lu le '+esc(O.cap_read):'',cap,msg,cls,Nm=SELL?'Solde '+esc(SYM)+' détenu':'Capital disponible';
+  var oth=(O.cap_others||[]).map(function(o){return esc(o.currency)+' '+mo(o.available);}).join(', ');
+  if(CEX){cap=Nm+' : <b>'+capTxt(CAP)+'</b> <span class=ex>EXEMPLE</span>';cls='ex';
+    msg='⚠ EXEMPLE de démonstration : ce '+(SELL?'solde':'capital')+' ('+capTxt(CAP)+') n’est PAS un solde réel lu sur Coinbase ; il sert seulement à montrer le curseur. Au passage d’ordre, seul le solde RÉEL compte (refus net s’il ne couvre pas la '+(SELL?'quantité':'taille')+', rien n’est ajusté).';}
+  else if(CAP===null){cap=Nm+' : <b>non lu</b> <span class=nl>NON LU</span>';cls='ko';
+    msg='⛔ '+Nm+' non lu'+(O.cap_why?' ('+esc(O.cap_why)+')':'')+'. Curseur désactivé : aucune valeur n’est inventée. La '+(SELL?'quantité':'taille')+' ne peut pas être vérifiée contre le solde réel, la validation est bloquée — régénérer la page quand la lecture du solde fonctionne.';}
+  else if(!CAPOK){cap=Nm+' : <b>0 '+esc(UNIT)+'</b> <span class=re>RÉEL</span>';cls='ko';
+    msg=SELL?'⛔ Solde réel : 0 '+esc(SYM)+' dans '+pf+rd+' — aucun '+esc(SYM)+' détenu (rien de rapatrié pour l’instant). Curseur désactivé (borné à 0). Rien n’est inventé ni ajusté : la quantité saisie reste affichée mais n’est pas validable tant que le solde ne la couvre pas.'
+      :'⛔ Capital disponible réel : 0 '+Q+' dans '+pf+rd+' — portefeuille non alimenté en '+Q+'. Curseur désactivé (borné à 0). Rien n’est inventé ni ajusté : la taille saisie reste affichée mais n’est pas validable tant que le solde ne la couvre pas.'+(oth?' Autres soldes du portefeuille : '+oth+' (non comptés : aucune conversion supposée).':'');}
+  else{cap=Nm+' : <b>'+capTxt(CAP)+'</b> <span class=re>RÉEL</span>';cls=over?'ko':'ok';
+    msg=(over?'⛔ '+(SELL?'Quantité':'Taille')+' supérieure au solde : rien n’est ajusté, réduis-la (curseur ou champ). ':'')+'Solde '+esc(UNIT)+' lu en lecture seule dans '+pf+rd+'. Le curseur ne dépasse jamais 100 % (Max = '+capTxt(capMax())+') ; le solde est re-vérifié au passage d’ordre (refus net s’il ne couvre plus la '+(SELL?'quantité':'taille')+').';}
+  $('ovcap').innerHTML=cap;var m=$('ovmsg');m.className='ovm '+cls;m.innerHTML=msg;}
+function fromPct(p){var v=sizeOfPct(p);if(v===null)return;setSize(v);render();}
+rng.addEventListener('input',function(){fromPct(+rng.value);});
+rng.addEventListener('change',function(){fromPct(+rng.value);render(true);});
+QB.forEach(function(b){b.addEventListener('click',function(){fromPct(+b.dataset.p);render(true);});});
+// --- stop optionnel (achat HODL sans stop / vente sans stop) ---
+var stopCb=$('oStopOn');
+stopCb.addEventListener('change',function(){if(stopCb.checked){if(S.stop===null)S.stop=stopPrev||O.stop_def;}
+  else if(S.stop!==null){stopPrev=S.stop;S.stop=null;}updAuto();save();render(true);});
+var built='';
+function buildRows(){var h='';levels().forEach(function(l){var tp=l.k.indexOf('tp')===0;
+  h+='<div class=orow id=or_'+l.k+'><span class=nm><i style="background:'+l.color+'"></i>'+l.name+'</span>'+
+     '<span class=ctl><input class=px inputmode=decimal data-k="'+l.k+'"><button class="btn nb" type=button data-k="'+l.k+'" data-d=-1 aria-label="moins un pas">−</button>'+
+     '<button class="btn nb" type=button data-k="'+l.k+'" data-d=1 aria-label="plus un pas">+</button>'+
+     (tp?'<span class=sub>part</span><input class=pc inputmode=numeric data-i="'+l.k.slice(2)+'"><span class=sub>%</span>':'')+'</span>'+
+     '<span class=det id=od_'+l.k+'></span></div>';});
+  if(mkt())h+='<div class=orow><span class=nm>Marché</span><span class=det style="grid-column:2">Vente immédiate de toute la quantité au meilleur prix disponible : pas de TP ni de stop (rien ne reste à protéger).</span></div>';
+  else if(!levels().length)h+='<div class=orow><span class=nm>—</span><span class=det style="grid-column:2">Aucun niveau : ajoute un TP (prix de vente limite) ou coche « Stop ».</span></div>';
+  $('olv').innerHTML=h;built=levels().map(function(l){return l.k;}).join(',')+'|'+S.etype;
+  Array.prototype.forEach.call($('olv').querySelectorAll('input.px'),function(inp){inp.addEventListener('change',function(){var v=parseNum(inp.value);
+    if(v!==null&&v>0){setP(inp.dataset.k,snapP(Math.min(Math.max(v,O.lo),O.hi)));updAuto();save();}render(true);});});
+  Array.prototype.forEach.call($('olv').querySelectorAll('input.pc'),function(inp){inp.addEventListener('change',function(){var v=parseNum(inp.value);
+    if(v!==null){S.tps[+inp.dataset.i].pct=Math.max(0,Math.min(100,Math.round(v)));save();}render(true);});});
+  Array.prototype.forEach.call($('olv').querySelectorAll('button.nb'),function(b){b.addEventListener('click',function(){var k=b.dataset.k;
+    setP(k,snapP(Math.min(Math.max(getP(k)+(+b.dataset.d)*TICK,O.lo),O.hi)));updAuto();save();render(true);});});}
+function setInp(inp,val,force){if(inp&&(force||document.activeElement!==inp))inp.value=val;}
+var codeSig=null;
+function render(force){var c=calc(),bad={};c.errs.forEach(function(x){if(x.k)bad[x.k]=1;});
+  if(built!==levels().map(function(l){return l.k;}).join(',')+'|'+S.etype)buildRows();
+  syncLines();syncHandles();
+  var rp=refPx();
+  levels().forEach(function(l){var h=HD[l.k],t,det;
+    if(l.k==='entry'){t=(S.etype==='stop_limit'?'CASSURE ':'ENTRÉE ')+px(l.p);det='<b>'+px(l.p)+'</b> · '+mo(c.u,O.base_dec)+' '+esc(SYM)+' · '+mo(c.sz)+' '+Q;}
+    else if(l.k==='stop'){var d=(l.p/rp-1)*100;t='STOP '+pc(d,1);
+      det=SELL?'<b>'+pc(d)+'</b> vs dernier prix · vente stop-limit de '+mo(c.sz,O.base_dec)+' '+esc(SYM)+' → ≈ <b style="color:#c62828">'+mo(c.lnet)+' '+Q+'</b> net'
+              :'<b>'+pc(d)+'</b> · distance '+px(c.e-l.p)+' · perte <b style="color:#c62828">'+(c.R>0?'−'+mo(c.risk):'?')+' '+Q+'</b>';}
+    else{var i=+l.k.slice(2),q=c.tps[i];
+      if(SELL){t=l.short+' '+pc(q.d,1);det='<b>'+pc(q.d)+'</b> vs dernier prix · vend '+q.pct+' % ('+mo(q.units,O.base_dec)+' '+esc(SYM)+') · ≈ <b style="color:#2e7d32">'+mo(q.net)+' '+Q+'</b> net';}
+      else{t=l.short+' '+pc(q.d,1)+' · '+rr(q.rr)+'R';
+        det='<b>'+pc(q.d)+'</b> · R:R <b>'+rr(q.rr)+'</b> · vend '+q.pct+' % ('+mo(q.units,O.base_dec)+' '+esc(SYM)+') · gain <b style="color:#2e7d32">+'+mo(q.gain)+' '+Q+'</b>';}}
+    if(h){h.querySelector('.t').textContent=t;h.classList.toggle('bad',!!bad[l.k]);}
+    var row=$('or_'+l.k);if(row){row.classList.toggle('bad',!!bad[l.k]);setInp(row.querySelector('input.px'),px(l.p),force);
+      if(l.k.indexOf('tp')===0)setInp(row.querySelector('input.pc'),S.tps[+l.k.slice(2)].pct,force);$('od_'+l.k).innerHTML=det;}});
+  var si=$('oSize'),focus=si&&document.activeElement===si;
+  if(!focus){$('osum').innerHTML=sumHTML(c);var ni=$('oSize');ni.addEventListener('change',function(){var v=parseNum(ni.value);
+    if(v!==null&&v>=0)setSize(v);render(true);});
+    // saisie au clavier : le curseur suit en direct (aucune correction de la valeur tapée)
+    ni.addEventListener('input',function(){var v=parseNum(ni.value);if(v!==null&&v>=0){setSize(v);render();}});}
+  updVol(c);
+  stopCb.checked=S.stop!==null;stopCb.disabled=mkt();$('ostopl').classList.toggle('on',S.stop!==null&&!mkt());
+  $('ohodl').textContent=SELL?(mkt()?'':(S.tps.length?'':'Aucun TP : '+(S.stop!==null?'stop de protection seul.':'ajoute un TP ou un stop.')))
+    :(S.tps.length?'':'HODL : aucun TP'+(S.stop!==null?' (stop de protection posé après l’achat).':' ni stop (achat seul).'));
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=oet]'),function(r){r.checked=(r.value===S.etype);
+    $('oetl_'+r.value).classList.toggle('on',r.checked);});
+  $('oetd').textContent=SELL?(mkt()
+      ?'Vente au marché : toute la quantité est vendue tout de suite au meilleur prix disponible (taker). Le prix réel peut s’écarter du dernier prix.'
+      :'Vente limite : chaque TP est un prix de vente limite (au-dessus du marché) ; avec un stop, TP et stop sont liés en OCO par lot ; stop seul = vente stop-limit de protection (limite 5 % sous le déclencheur).')
+    :(S.etype==='stop_limit'
+    ?'Achat stop-limit : rien n’est acheté tant que le prix n’a pas franchi '+px(c.e)+' à la hausse ; ensuite achat limite jusqu’à '+px(Math.ceil(c.e*(1+O.sl_slip/100)/TICK-1e-9)*TICK)+' (+'+String(O.sl_slip).replace('.',',')+' %). TP et stop posés après le remplissage.'
+    :'Achat limite posé tout de suite à '+px(c.e)+' : exécuté à ce prix ou mieux (entrée au niveau du marché ou en dessous). '+(S.tps.length?'TP et stop liés en OCO dès le remplissage.':(S.stop!==null?'Stop posé après le remplissage.':'Aucune sortie posée (HODL).')));
+  var w='';c.errs.forEach(function(x){w+='<div class=er>⛔ '+esc(x.t)+'</div>';});c.warns.forEach(function(x){w+='<div class=wa>⚠ '+esc(x.t)+'</div>';});
+  $('owarn').innerHTML=w;
+  var st=c.errs.length?'<span class=ko>'+c.errs.length+' incohérence'+(c.errs.length>1?'s':'')+'</span>':(c.warns.length?'<span class=wa>Cohérent · '+c.warns.length+' avertissement'+(c.warns.length>1?'s':'')+'</span>':'<span class=ok>Cohérent</span>');
+  $('ostat').innerHTML=st;$('oVal').disabled=!!c.errs.length;$('oAdd').disabled=S.tps.length>=3||mkt();$('oDel').disabled=S.tps.length<=0||mkt();
+  var s='<span class="st'+(c.errs.length?' bad':(c.warns.length?' warn':''))+'"></span>';
+  if(SELL)s+='<span class=s>VENTE <b>'+mo(c.sz,O.base_dec)+'</b> '+esc(SYM)+' · '+ETL[S.etype]+'</span>'+(c.s!==null?'<span class=s>S <b>'+px(c.s)+'</b></span>':'');
+  else s+='<span class=e>'+(S.etype==='stop_limit'?'E⤒':'E')+' <b>'+px(c.e)+'</b></span>'+(c.s!==null?'<span class=s>S <b>'+px(c.s)+'</b> '+pc((c.s/c.e-1)*100,1)+'</span>':'<span class=s>sans stop</span>');
+  c.tps.forEach(function(q,i){s+='<span class=t>TP'+(i+1)+' <b>'+px(q.px)+'</b>'+(SELL?'':' '+rr(q.rr)+'R')+'</span>';});
+  if(!SELL&&!c.tps.length)s+='<span class=t>HODL</span>';
+  s+=(SELL?'<span>≈ <b>'+mo(c.val)+'</b> '+Q+'</span>':'<span>Risque <b>'+(c.R>0?mo(c.risk):'—')+'</b> '+Q+'</span>')+'<button class="btn go" id=oGo type=button>Valider ↓</button>';
+  $('ostrip').innerHTML=s;$('oGo').onclick=function(){validate();$('opanel').scrollIntoView({behavior:'smooth',block:'start'});};
+  var cb=$('ocode');if(codeSig!==null){var stale=codeSig!==JSON.stringify(S);cb.classList.toggle('stale',stale);
+    $('ocodel').textContent=stale?'Niveaux modifiés depuis la validation : clique de nouveau sur « Valider l’ordre ».':'Code de validation : copie-le et colle-le dans le chat';
+    $('oCopy').disabled=stale;}
+  window.__order={state:clone(S),calc:c};
+  window.__vol={cap:CAP,kind:CK,enabled:CAPOK,pct:pctOf(c.sz),slider:+rng.value,max:capMax(),side:O.side};
+  place(true);repaint();}
+// --- différences avec la proposition initiale (affichées sous le code ; l'assistant refait ce contrôle) ---
+function diffList(){var out=[];function ch(name,a,b){if(a===b)return;if(a===null)out.push(name+' ajouté : '+px(b));else if(b===null)out.push(name+' supprimé (était '+px(a)+')');
+    else out.push(name+' : '+px(a)+' → '+px(b)+' ('+pc((b/a-1)*100)+')');}
+  if(S.etype!==INIT.etype)out.push('Type d’entrée : '+ETL[INIT.etype]+' → '+ETL[S.etype]);
+  if(S.size!==INIT.size)out.push((SELL?'Quantité : ':'Taille : ')+mo(INIT.size,SDEC)+' → '+mo(S.size,SDEC)+' '+UNIT);
+  if(!SELL)ch('Entrée',INIT.entry,S.entry);
+  var mk=mkt(),st=mk?null:S.stop,T=mk?[]:S.tps;ch('Stop',INIT.stop,st);
+  var nmax=Math.max(INIT.tps.length,T.length);
+  for(var i=0;i<nmax;i++){var a=INIT.tps[i],b=T[i];
+    if(!a)out.push('TP'+(i+1)+' ajouté : '+px(b.px)+' ('+b.pct+' %)');else if(!b)out.push('TP'+(i+1)+' supprimé (était '+px(a.px)+', '+a.pct+' %)');
+    else{ch('TP'+(i+1),a.px,b.px);if(a.pct!==b.pct)out.push('Part TP'+(i+1)+' : '+a.pct+' % → '+b.pct+' %');}}
+  if(!SELL&&INIT.tps.length&&!T.length)out.push('→ achat HODL : aucun TP');
+  return out;}
+// code : même ordre de clés que order_code.code_fields
+function codeObj(){var o={oid:O.oid,sym:O.sym,side:O.side};
+  if(SELL){o.entry_type=S.etype;o.size_base=S.size;if(!mkt()&&S.stop!==null)o.stop=S.stop;
+    o.tps=mkt()?[]:S.tps.map(function(t){return {px:t.px,pct_size:t.pct};});}
+  else{if(S.etype!=='limit')o.entry_type=S.etype;o.size_usdc=S.size;o.entry=S.entry;if(S.stop!==null)o.stop=S.stop;
+    o.tps=S.tps.map(function(t){return {px:t.px,pct_size:t.pct};});}
+  o.v=O.v;return o;}
+function validate(){var c=calc();if(c.errs.length){render(true);$('owarn').scrollIntoView({behavior:'smooth',block:'center'});return null;}
+  var b=b64u(JSON.stringify(codeObj())),code=O.prefix+b+'.'+sha256(b).slice(0,6);
+  $('ocodet').value=code;$('ocode').style.display='block';$('ocmsg').textContent='';codeSig=JSON.stringify(S);
+  var d=diffList();$('odiff').innerHTML=d.length?d.map(function(x){return '<li>'+esc(x)+'</li>';}).join(''):'<li>Aucun changement par rapport à la proposition v'+O.v+'.</li>';
+  window.__code=code;render(true);return code;}
+$('oVal').onclick=function(){validate();};
+Array.prototype.forEach.call(document.querySelectorAll('input[name=oet]'),function(r){r.addEventListener('change',function(){
+  if(r.checked&&ETL[r.value]){S.etype=r.value;updAuto();save();render(true);}});});
+function copyCode(){var t=$('ocodet'),m=$('ocmsg');function ok(){m.textContent='Copié ✓ — colle-le dans le chat';}
+  function manual(){t.focus();t.select();try{t.setSelectionRange(0,t.value.length);}catch(_){}
+    var r=false;try{r=document.execCommand('copy');}catch(_){}m.textContent=r?'Copié ✓ — colle-le dans le chat':'Sélectionné : copie-le à la main';}
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t.value).then(ok,manual);else manual();}
+$('oCopy').onclick=copyCode;
+$('oAdd').onclick=function(){if(S.tps.length>=3||mkt())return;
+  if(!S.tps.length){S.tps.push({px:snapP(Math.min(O.hi,O.tp_def)),pct:100});}
+  else{var l=S.tps[S.tps.length-1],np=Math.floor(l.pct/2);if(np<1)return;var base=refPx()||l.px;
+    l.pct-=np;S.tps.push({px:snapP(Math.min(O.hi,l.px+Math.max((l.px-base)*0.5,TICK))),pct:np});}
+  updAuto();save();render(true);};
+$('oDel').onclick=function(){if(S.tps.length<=0||mkt())return;var r=S.tps.pop();if(S.tps.length)S.tps[S.tps.length-1].pct+=r.pct;updAuto();save();render(true);};
+$('oRst').onclick=function(){S=clone(INIT);stopPrev=null;try{localStorage.removeItem(KEY);}catch(e){}codeSig=null;$('ocode').style.display='none';updAuto();render(true);fit();};
+window.__orderY=function(k){return candle.priceToCoordinate(getP(k));};
+window.__orderPx=function(k){return getP(k);};
+window.__codeObj=codeObj;
+render(true);
+})();
+}
+
+(function(){if(window.LightweightCharts){initChart();return;}
+var s=document.createElement('script');s.src='https://unpkg.com/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';s.integrity='sha384-KkYqTZlM13Zya6fVUF3IGCBOQ1ehFeJVVgxaVvD/0MebineF9EI8Jkd3NnWNChqN';s.crossOrigin='anonymous';
+s.onload=initChart;s.onerror=initChart;document.head.appendChild(s);})();
+</script>
+</body>
+</html>
