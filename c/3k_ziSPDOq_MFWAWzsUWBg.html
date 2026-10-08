@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="googlebot" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>STONK/USDT 1D</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:#131722;font:14px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+header{padding:8px 10px 6px;border-bottom:1px solid #e0e3eb}
+h1{margin:0;font-size:18px;font-weight:700;display:flex;flex-wrap:wrap;align-items:center;gap:4px 9px}
+h1 .tf{font-weight:600;color:#434651}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.3px;padding:2px 7px;border-radius:10px;background:#e3f2fd;color:#0d47a1;border:1px solid #bbdefb}
+.verdict{margin:3px 0 4px;font-weight:600;color:#2a2e39;font-size:13.5px}
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:2px 10px;margin:2px 0}
+.f{display:flex;flex-direction:column;padding:2px 0}
+.k{font-size:10px;color:#787b86;text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v{font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.reasons,.context{margin:5px 0 2px;background:#fafafa;border:1px solid #e0e3eb;border-radius:6px;padding:2px 9px}
+.reasons summary,.context summary{cursor:pointer;font-weight:600;color:#2a2e39;padding:4px 0;font-size:13px}
+.reasons ul,.context ul{margin:2px 0 6px;padding-left:0;list-style:none}
+.reasons li{margin:3px 0;font-size:13px;padding-left:18px;list-style:disc;list-style-position:inside}
+.context li{margin:6px 0;padding:6px 8px;border-radius:5px;background:#fff;border:1px solid #e8eaef;font-size:13px}
+.context .tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;
+  padding:1px 6px;border-radius:8px;margin-right:6px;vertical-align:middle}
+.context .when{font-size:11px;color:#787b86;font-variant-numeric:tabular-nums}
+.context .ttl{font-weight:600;margin:3px 0 1px;color:#131722}
+.context .detail{font-size:12.5px;color:#434651;line-height:1.35}
+.context .event .tag,.context .catalyst .tag{background:#e3f2fd;color:#0d47a1}
+.context .narrative .tag{background:#f3e5f5;color:#4a148c}
+.context .risk .tag{background:#ffebee;color:#b71c1c}
+.context .note .tag{background:#eceff1;color:#37474f}
+.context .position .tag{background:#e8eaf6;color:#1a237e}
+.meta{font-size:10.5px;color:#787b86;margin-top:3px}
+.live{margin:4px 0 2px;font-size:12.5px;color:#2a2e39;font-variant-numeric:tabular-nums}
+.live i{display:inline-block;width:16px;height:0;border-top:2px dotted #ef6c00;vertical-align:middle;margin-right:6px}
+.live .up{color:#2e7d32;font-weight:600}.live .dn{color:#c62828;font-weight:600}.live .lk{color:#9598a1;font-size:10.5px}
+.toolbar{display:flex;gap:6px;align-items:center;padding:6px 10px;border-bottom:1px solid #e0e3eb;background:#fbfbfc}
+.btn{appearance:none;border:1px solid #c9ccd4;background:#fff;color:#131722;border-radius:6px;padding:6px 9px;font:600 12.5px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;text-decoration:none;cursor:pointer;min-height:32px;display:inline-flex;align-items:center;white-space:nowrap}
+.btn.on{background:#131722;color:#fff;border-color:#131722}
+.btn.tv{margin-left:auto;background:#2962ff;color:#fff;border-color:#2962ff}
+.btn.ms.on{background:#2962ff;border-color:#2962ff}
+.tv .sm{display:none}
+@media (max-width:440px){.toolbar{gap:5px;padding:6px 8px}.btn{padding:6px 8px}.tv .lg{display:none}.tv .sm{display:inline}}
+#mbar{position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:5;display:none;align-items:center;gap:6px;pointer-events:none}
+#mtxt{font:600 11.5px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:rgba(19,23,34,.82);color:#fff;border-radius:12px;padding:5px 10px;white-space:nowrap}
+#mclr{pointer-events:auto;appearance:none;border:1px solid #c9ccd4;background:#fff;color:#131722;border-radius:50%;width:30px;height:30px;font:700 15px/1 sans-serif;cursor:pointer;display:none;padding:0;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.chips{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:5px;padding:5px 10px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-size:11px;border:1px solid #d1d4dc;border-radius:12px;padding:2px 8px 2px 6px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:5px;user-select:none;-webkit-user-select:none}
+.chip i{display:inline-block;width:14px;height:0;border-top:2px solid}
+.chip.off{opacity:.38}
+#legend{font-size:11px;line-height:1.35;font-variant-numeric:tabular-nums;padding:3px 10px 2px;min-height:34px;color:#2a2e39}
+#legend b{font-weight:700}
+#wrap{position:relative;width:100%;height:74vh;height:74svh;min-height:420px;max-height:980px}
+#chart{position:absolute;inset:0;touch-action:none}
+.hint{font-size:10.5px;color:#9598a1;padding:5px 10px 14px}
+#expired,#err{display:none;padding:40px 16px;text-align:center;color:#434651}
+@media (min-width:900px){header,.toolbar,.chips,.hint,#legend{padding-left:18px;padding-right:18px}#wrap{height:76vh}h1{font-size:22px}
+ .facts{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.v{font-size:14px}#legend{font-size:12px;min-height:20px}}
+</style>
+</head>
+<body>
+<header>
+<h1><span>STONK/USDT</span><span class=tf>1D</span><span class=badge>ANALYSE · ATTENTE</span></h1>
+<div class=verdict>Tendance daily baissière, couteau qui tombe sur S1 : pas d&#x27;entrée maintenant. Deux plans conditionnels (A réaction / B reprise).</div>
+<div class=facts><div class=f><span class=k>Structure 1D</span><span class=v>baissière : sommets et creux descendants depuis 0.4031 (21/09)</span></div><div class=f><span class=k>EMA20 / EMA50 1D</span><span class=v>0.2272 / 0.1793 · EMA200 : historique insuffisant (64 bougies)</span></div><div class=f><span class=k>ATR14 1D</span><span class=v>0.05732 (~34 % du prix)</span></div><div class=f><span class=k>Dernière clôture 1D</span><span class=v>0.1668 (08/10 02:00 Paris)</span></div><div class=f><span class=k>Verdict</span><span class=v>pas d&#x27;entrée maintenant : attendre une réaction daily ou la reprise de 0.1848</span></div><div class=f><span class=k>A</span><span class=v>0.1580 / stop 0.1385 / TP 0.1765 – 0.2000 · R:R 2.1</span></div><div class=f><span class=k>B</span><span class=v>0.1820 / stop 0.1690 / TP 0.2000 – 0.2170 · R:R 2.7</span></div></div>
+<div class=live><i></i>Prix au 08/10 09:56 (Paris) : <b>0.1612</b>, <span class=dn>-3.34 %</span> depuis la dernière clôture <span class=lk>(bougie en cours, non utilisée par l'analyse)</span></div>
+<details class=context open><summary>Contexte (9)</summary><ul><li class="cx risk"><span class=tag>Risque</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>⚠️ Identification : vérifier le mint complet avant tout achat</div><div class=detail>STONK = jeton du launchpad StonkFun (Solana). Mint officiel : 6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx. Un CLONE « 6mNy… » apparaît sur DexScreener à ~0,16 $ avec une fausse liquidité de 161 M$ (réelle : 56 $). Faux compte X : @LaunchOnnSF (le vrai : @LaunchOnSF).</div></li><li class="cx note"><span class=tag>Note</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>Où ça se trade</div><div class=detail>DEX : Meteora (pool principal STONK/SOL), Orca, Raydium. CEX : Gate, HTX, MEXC, BingX, KCEX. Rien sur Binance, Coinbase ni OKX.</div></li><li class="cx note"><span class=tag>Note</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>Prix / liquidité : 0,1634 $ · 24h −19 % · 7j −32 % · 14j −53 %</div><div class=detail>Mcap = FDV = 132 M$ (mint révoqué, 20 % de la supply brûlée). Liquidité DEX 4–8 M$, mais profondeur ±2 % ~47 k$ seulement. Top 10 holders : 17,8 %. Perps : OI 9,2 M$, funding +0,05 %/8h (les longs paient).</div></li><li class="cx narrative"><span class=tag>Narratif</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>Narratif : rachats/brûlages financés par des revenus en chute</div><div class=detail>~60 % des revenus de StonkFun rachètent et brûlent du STONK, mais les revenus s&#x27;effondrent (1,81 M$ le 21/09 → 428 k$ le 06/10) ; rachats ≈ 1,3 % du volume. Le volume repart vers pump.fun ; marché risk-off.</div></li><li class="cx catalyst"><span class=tag>Catalyseur</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>Catalyseurs : rien de daté</div><div class=detail>Pas d&#x27;unlock (aucun vesting équipe), aucun listing annoncé. À suivre : bilan revenus/rachats publié par @LaunchOnSF chaque nuit vers 02h ; nouvelles paires ; CPI US le 14/10.</div></li><li class="cx risk"><span class=tag>Risque</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>Risques : contrat sain, risque équipe élevé</div><div class=detail>Contrat : rugcheck 1, pas de mint/freeze/taxe. Équipe : ≥ 630 k$ de taxe rewards partis vers ses wallets jusqu&#x27;au 20/09, ~10,4 M$ USDC déplacés vers 2 wallets opaques, compte X brièvement suspendu le 27/09. Pools DLMM retirables à tout moment ; marché mené par les perps (risque de cascade de liquidations).</div></li><li class="cx note"><span class=tag>Note</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>Sentiment X : divisé</div><div class=detail>@gem_insider annonce un « bottom » ; @RoundtableSpace : « Is it over? » ; rotation vers PUMP évoquée.</div></li><li class="cx note"><span class=tag>Note</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>Niveaux Nara : supports 0,15 puis 0,10 · résistances 0,19–0,20 puis 0,25</div><div class=detail>0,19–0,20 = achat baleine du 09/09 + zone de sortie du trade précédent. Rebond possible si bilan quotidien &gt; 600 k$, paire virale, ou funding négatif + OI en baisse. Baisse si clôture 4h &lt; 0,15 (cible 0,10), revenus &lt; 300 k$, rachats suspendus ou mouvements des wallets équipe.</div></li><li class="cx event"><span class=tag>Événement</span><span class=when>08/10 ~09:50 (Nara)</span><div class=ttl>Verdict Nara : pas de go sur le fond, au mieux un petit rebond tactique</div><div class=detail>Entrée 0,15–0,157 (idéalement après purge du funding ou bon bilan revenus), invalidation sous 0,15, objectif 0,19–0,20 ; exécuter sur le pool STONK/SOL ou Gate en vérifiant le mint.</div></li></ul></details>
+<details class=reasons><summary>Analyse et plan (10)</summary><ul><li>Historique MEXC court : 64 bougies 1D (depuis le 05/08/2026) ; EMA200 impossible, EMA50 fortement influencée par la période d&#x27;avant pump (prix ~0.005–0.04) : à lire avec prudence.</li><li>Structure 1D : sommets descendants 0.4031 (21/09) → 0.3814 (24/09) → 0.3139 (30/09) → 0.2717 (02/10) → 0.2250 (05/10) → 0.2178 (06/10) ; creux descendants 0.2463 → 0.2260 → 0.2184 → 0.2019 → 0.1828 → 0.1777 → 0.1553 (07/10).</li><li>Prix sous l&#x27;EMA20 1D (0.2272, en baisse depuis le 29/09) et désormais sous l&#x27;EMA50 1D (0.1793) : clôture 07/10 à 0.1668, la plus basse depuis le 08/09.</li><li>Volume MEXC : 0,9–2,7 M$/jour pendant le pump (06–22/09), 0,47–0,88 M$/jour depuis le 25/09 ; la cassure du 07/10 s&#x27;est faite sur 0,59 M$ (≈ 0,65× la moyenne 20 j de 0.90 M$) : pas de volume de capitulation.</li><li>Bougie 07/10 : grande bougie baissière (0.2096 → 0.1668) qui clôture dans le bas de sa range : aucun signe de stabilisation en daily à ce stade.</li><li>A (contre-tendance) : attendre une bougie daily clôturée qui teste S1/S2 en mèche puis clôture au-dessus de 0.1577 dans la moitié haute de sa range (idéalement volume ≥ moyenne 20 j). Ensuite limite 0.1580 ; sortie sur clôture daily sous 0.1470, stop dur 0.1385.</li><li>B (reprise) : clôture daily au-dessus de 0.1848 (R1 + EMA50 repris), puis achat limite au retest 0.1800–0.1848 ; sortie sur clôture daily sous 0.1777, stop dur 0.1690.</li><li>Abandon : clôture daily sous 0.1470 (double creux de septembre perdu) = plus d&#x27;idée d&#x27;achat ; aucune condition remplie d&#x27;ici le 13/10 = pas de trade ; détention 14 jours maximum.</li><li>Volume affiché en USDT (MEXC) ; bougie en cours : volume USDT estimé.</li><li>4h = timing seulement : premier signe = clôture 4h au-dessus de 0.1807 (sommet de la 4h de cassure 07/10 22:00) ; alerte de faiblesse = clôture 4h sous 0.1553.</li></ul></details>
+<div class=meta>Généré le 08/10/2026 09:56 (Paris) · dernière bougie 1D clôturée 08/10 02:00 · source MEXC · page supprimée après le 15/10/2026</div>
+</header>
+<div class=toolbar>
+<button class="btn" id=bLog type=button>Log</button>
+<button class="btn" id=bFit type=button>Recentrer</button>
+<button class="btn" id=bAll type=button>Tout</button>
+<button class="btn on" id=bLab type=button title="Afficher / masquer les étiquettes de gauche">Labels</button>
+<button class="btn ms" id=bMes type=button title="Mesurer une variation : toucher le point A puis le point B">Mesure</button>
+<a class="btn tv" href="https://www.tradingview.com/chart/?symbol=MEXC:STONKUSDT" target="_blank" rel="noopener noreferrer"><span class=lg>TradingView</span><span class=sm>TV</span>&nbsp;↗</a>
+</div>
+<div class=chips id=chips></div>
+<div id=legend></div>
+<div id=wrap><div id=chart></div><div id=mbar><span id=mtxt></span><button id=mclr type=button title="Effacer la mesure" aria-label="Effacer la mesure">✕</button></div></div>
+<div class=hint>Pincer pour zoomer, glisser pour se déplacer, appui long pour le réticule. « Mesure » : toucher un point A puis un point B pour lire la variation. Analyse automatique, pas un conseil financier.</div>
+<div id=expired>Cette page a expiré.</div>
+<div id=err>Graphique indisponible (librairie non chargée).</div>
+<script type="application/json" id="chart-data">{"symbol":"STONK","tf":"1d","log":true,"candles":[[1785888000,0.0007,0.005467,0.0007,0.00483,71012.4],[1785974400,0.00483,0.00779,0.0045,0.006136,149136.0],[1786060800,0.006136,0.0107,0.004001,0.009415,138578.0],[1786147200,0.009415,0.010152,0.005929,0.006904,105780.0],[1786233600,0.006904,0.00889,0.00531,0.007257,104676.0],[1786320000,0.007257,0.014786,0.007081,0.013433,129298.0],[1786406400,0.013433,0.015828,0.009945,0.0112,115758.0],[1786492800,0.0112,0.015,0.009456,0.01122,88656.1],[1786579200,0.01122,0.012832,0.00928,0.011,81756.4],[1786665600,0.011,0.01145,0.00826,0.009784,72631.2],[1786752000,0.009784,0.011649,0.008461,0.009197,63110.1],[1786838400,0.009197,0.009836,0.006214,0.007879,81456.0],[1786924800,0.007879,0.009268,0.005267,0.005844,85289.8],[1787011200,0.005844,0.007785,0.005,0.005001,88326.9],[1787097600,0.005001,0.0056,0.003929,0.005279,80073.9],[1787184000,0.005279,0.006799,0.004666,0.006234,83128.8],[1787270400,0.006234,0.008617,0.00596,0.007212,69934.4],[1787356800,0.007212,0.008999,0.0065,0.008416,74645.1],[1787443200,0.008416,0.013164,0.007728,0.010263,103044.0],[1787529600,0.010263,0.011678,0.008064,0.008712,77464.2],[1787616000,0.008712,0.010235,0.007735,0.007826,67759.4],[1787702400,0.007826,0.016691,0.007668,0.013628,92910.8],[1787788800,0.013628,0.019826,0.012557,0.015651,81129.0],[1787875200,0.015651,0.017738,0.012582,0.013474,75406.8],[1787961600,0.013474,0.023166,0.01221,0.020722,86395.3],[1788048000,0.020722,0.029999,0.019491,0.020393,80135.9],[1788134400,0.020393,0.02353,0.01706,0.018279,91898.4],[1788220800,0.018279,0.034316,0.015232,0.016299,133490.0],[1788307200,0.016299,0.02847,0.013417,0.025177,147150.0],[1788393600,0.025177,0.03,0.019074,0.023486,105996.0],[1788480000,0.023486,0.0265,0.018401,0.022841,89753.8],[1788566400,0.022841,0.050802,0.020829,0.043275,169413.0],[1788652800,0.043275,0.216745,0.042841,0.157711,1306210.0],[1788739200,0.157711,0.184507,0.0949,0.1565,902742.0],[1788825600,0.1565,0.221447,0.136495,0.166109,1285500.0],[1788912000,0.166109,0.25,0.147023,0.188157,2075090.0],[1788998400,0.188157,0.24,0.165,0.203412,1284650.0],[1789084800,0.203412,0.35,0.197752,0.315393,2684030.0],[1789171200,0.315393,0.33,0.246102,0.294003,1512780.0],[1789257600,0.294003,0.32,0.1994,0.211309,1555260.0],[1789344000,0.211309,0.240362,0.187,0.211453,1186470.0],[1789430400,0.211453,0.217238,0.163339,0.173096,1099550.0],[1789516800,0.173096,0.211038,0.148023,0.204454,858771.0],[1789603200,0.204454,0.2509,0.201,0.247854,968857.0],[1789689600,0.247854,0.29,0.235011,0.244132,1100340.0],[1789776000,0.244132,0.327266,0.2252,0.290278,1267990.0],[1789862400,0.290278,0.35,0.245766,0.326461,1293820.0],[1789948800,0.326461,0.403057,0.326461,0.365968,1634980.0],[1790035200,0.365968,0.378776,0.288732,0.298029,1684610.0],[1790121600,0.298029,0.3622,0.291811,0.321413,1078680.0],[1790208000,0.321413,0.381365,0.320906,0.347354,961272.0],[1790294400,0.347354,0.359576,0.289899,0.310507,876154.0],[1790380800,0.310507,0.327308,0.2502,0.282428,789557.0],[1790467200,0.282428,0.317792,0.246307,0.247773,746182.0],[1790553600,0.247773,0.262103,0.231714,0.242418,559962.0],[1790640000,0.242418,0.299,0.226038,0.279342,766091.0],[1790726400,0.279342,0.313932,0.236385,0.238037,746607.0],[1790812800,0.238037,0.265605,0.224025,0.249918,856815.0],[1790899200,0.249918,0.2717,0.218351,0.230048,488886.0],[1790985600,0.230048,0.245967,0.201891,0.203608,520120.0],[1791072000,0.203608,0.222949,0.182794,0.222336,731943.0],[1791158400,0.222336,0.224998,0.182065,0.184799,471297.0],[1791244800,0.184799,0.217795,0.1777,0.209598,494879.0],[1791331200,0.209598,0.212859,0.1553,0.166812,588784.0]],"mas":[{"name":"EMA 20","color":"#2962FF","width":1.5,"style":"line","visible":true,"data":[[1787529600,0.007697647],[1787616000,0.007709871],[1787702400,0.008273503],[1787788800,0.008976122],[1787875200,0.009404491],[1787961600,0.01048235],[1788048000,0.01142622],[1788134400,0.01207887],[1788220800,0.01248078],[1788307200,0.01368995],[1788393600,0.0146229],[1788480000,0.01540558],[1788566400,0.01805981],[1788652800,0.03135992],[1788739200,0.04327803],[1788825600,0.05497621],[1788912000,0.0676601],[1788998400,0.08058885],[1789084800,0.1029512],[1789171200,0.1211466],[1789257600,0.1297335],[1789344000,0.1375163],[1789430400,0.1409048],[1789516800,0.1469571],[1789603200,0.1565664],[1789689600,0.1649059],[1789776000,0.1768461],[1789862400,0.1910952],[1789948800,0.2077497],[1790035200,0.2163477],[1790121600,0.226354],[1790208000,0.2378778],[1790294400,0.2447948],[1790380800,0.248379],[1790467200,0.2483212],[1790553600,0.247759],[1790640000,0.2507669],[1790726400,0.2495546],[1790812800,0.2495892],[1790899200,0.2477281],[1790985600,0.2435262],[1791072000,0.2415081],[1791158400,0.2361072],[1791244800,0.2335825],[1791331200,0.2272234]]},{"name":"EMA 50","color":"#FF9800","width":1.5,"style":"line","visible":true,"data":[[1790121600,0.1358487],[1790208000,0.144143],[1790294400,0.1506671],[1790380800,0.1558342],[1790467200,0.1594397],[1790553600,0.1626937],[1790640000,0.1672682],[1790726400,0.1700434],[1790812800,0.1731757],[1790899200,0.175406],[1790985600,0.176512],[1791072000,0.178309],[1791158400,0.1785635],[1791244800,0.1797806],[1791331200,0.179272]]}],"vma":[[1786233600,113837.0],[1786320000,116414.0],[1786406400,116320.0],[1786492800,112862.0],[1786579200,109406.0],[1786665600,105728.0],[1786752000,101854.0],[1786838400,100154.0],[1786924800,99010.7],[1787011200,98247.5],[1787097600,97035.9],[1787184000,96166.8],[1787270400,94623.7],[1787356800,93513.7],[1787443200,94015.4],[1787529600,93187.8],[1787616000,93025.1],[1787702400,90213.9],[1787788800,87341.4],[1787875200,85822.8],[1787961600,84908.7],[1788048000,82450.6],[1788134400,81257.6],[1788220800,83499.3],[1788307200,86769.0],[1788393600,88437.3],[1788480000,89769.4],[1788566400,94167.3],[1788652800,155213.0],[1788739200,195934.0],[1788825600,256205.0],[1788912000,355803.0],[1788998400,416539.0],[1789084800,547008.0],[1789171200,617495.0],[1789257600,691385.0],[1789344000,747320.0],[1789430400,797653.0],[1789516800,836535.0],[1789603200,881207.0],[1789689600,931904.0],[1789776000,991297.0],[1789862400,1051390.0],[1789948800,1126470.0],[1790035200,1203340.0],[1790121600,1251970.0],[1790208000,1295550.0],[1790294400,1330890.0],[1790380800,1305060.0],[1790467200,1297230.0],[1790553600,1260950.0],[1790640000,1195500.0],[1790726400,1168600.0],[1790812800,1077240.0],[1790899200,1026040.0],[1790985600,974286.0],[1791072000,951559.0],[1791158400,920147.0],[1791244800,901952.0],[1791331200,882948.0]],"zones":[{"low":0.1553,"high":0.1577,"color":"#2e7d32","alpha":0.16,"label":"S1 0.1553–0.1577 · plus bas 07/10 (0.1553) + clôtures 06–07/09","short":"S1 0.1553–0.1577","kind":"sr"},{"low":0.147,"high":0.148,"color":"#2e7d32","alpha":0.16,"label":"S2 0.1470–0.1480 · double creux daily 09/09 + 16/09","short":"S2 0.1470–0.1480","kind":"sr"},{"low":0.1365,"high":0.137319,"color":"#2e7d32","alpha":0.16,"label":"S3 0.1365 · plus bas 08/09 (vide en dessous jusqu'à 0.0949)","short":"S3 0.1365","kind":"sr"},{"low":0.1777,"high":0.1848,"color":"#c62828","alpha":0.12,"label":"R1 0.1777–0.1848 · support cassé 04–06/10 + EMA50 1D","short":"R1 0.1777–0.1848","kind":"sr"},{"low":0.2019,"high":0.2096,"color":"#c62828","alpha":0.12,"label":"R2 0.2019–0.2096 · creux 03/10, clôtures 03 et 06/10, 0.20 rond","short":"R2 0.2019–0.2096","kind":"sr"},{"low":0.2178,"high":0.2272,"color":"#c62828","alpha":0.12,"label":"R3 0.2178–0.2272 · sommets 04–06/10 + EMA20 1D","short":"R3 0.2178–0.2272","kind":"sr"},{"low":0.238,"high":0.2499,"color":"#c62828","alpha":0.12,"label":"R4 0.2380–0.2499 · clôtures 28/09–01/10","short":"R4 0.2380–0.2499","kind":"sr"}],"bands":[{"low":0.1553,"high":0.158,"color":"#1565c0","alpha":0.22,"kind":"entry","label":"A : entrée limite 0.1580 SEULEMENT après une bougie daily de réaction sur S1/S2","short":"A entrée (conditionnelle)"},{"low":0.18,"high":0.1848,"color":"#6a1b9a","alpha":0.18,"kind":"entry","label":"B : retest 0.1800–0.1848 après clôture daily > 0.1848","short":"B entrée (retest)"}],"lines":[{"price":0.1385,"color":"#d32f2f","style":"dashed","width":2,"title":"A stop dur 0.1385"},{"price":0.1765,"color":"#2e7d32","style":"dashed","width":1,"title":"A TP1 0.1765"},{"price":0.2,"color":"#2e7d32","style":"dashed","width":2,"title":"A TP2 / B TP1 0.2000"},{"price":0.169,"color":"#d32f2f","style":"dotted","width":2,"title":"B stop dur 0.1690"},{"price":0.217,"color":"#2e7d32","style":"dotted","width":2,"title":"B TP2 0.2170"}],"autoscale":[0.1385,0.217,0.25],"initial":36,"minMove":1e-07,"expires":"2026-10-15T09:56:33+02:00","live":[1791417600,0.166812,0.170481,0.155478,0.161235,149122.0],"liveAt":"2026-10-08T09:56:33+02:00","markers":[]}</script>
+<script src="../assets/lightweight-charts-5.2.1.standalone.production.js"></script>
+<script>
+
+function initChart(){
+"use strict";
+var D=JSON.parse(document.getElementById('chart-data').textContent);
+function $(id){return document.getElementById(id);}
+function hideChart(){['wrap','chips','legend'].forEach(function(i){$(i).style.display='none';});
+  document.querySelector('.toolbar').style.display='none';document.querySelector('.hint').style.display='none';}
+if(D.expires && Date.now()>Date.parse(D.expires)){hideChart();$('expired').style.display='block';return;}
+if(!window.LightweightCharts){hideChart();$('err').style.display='block';return;}
+var LC=window.LightweightCharts;
+function fmt(p){
+  if(p===null||p===undefined||!isFinite(p))return '?';
+  if(p>=1000)return Math.round(p).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+  if(p>=100)return p.toFixed(2);
+  if(p>=1)return String(Number(p.toPrecision(4)));
+  if(p<=0)return String(p);
+  var dec=Math.max(4,-Math.floor(Math.log10(p))+3);return p.toFixed(dec);
+}
+function fmtVol(v){var a=Math.abs(v);if(a>=1e9)return (v/1e9).toFixed(2)+' G';if(a>=1e6)return (v/1e6).toFixed(2)+' M';if(a>=1e3)return (v/1e3).toFixed(1)+' k';return v.toFixed(0);}
+function rgba(hex,a){var n=parseInt(hex.replace('#',''),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+var TZ='Europe/Paris';
+function F(o){o.timeZone=TZ;return new Intl.DateTimeFormat('fr-FR',o);}
+var fDate=F({day:'2-digit',month:'2-digit',year:'2-digit'}),fDT=F({day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+var fDay=F({day:'numeric'}),fMon=F({month:'short'}),fYear=F({year:'numeric'}),fHM=F({hour:'2-digit',minute:'2-digit'});
+var intraday=D.tf!=='1d'&&D.tf!=='1w';
+function tlabel(t){return (intraday?fDT:fDate).format(new Date(t*1000));}
+var priceFormat={type:'custom',minMove:D.minMove,formatter:fmt};
+var FONT='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+var el=$('chart');
+var chart=LC.createChart(el,{
+  autoSize:true,
+  layout:{background:{type:'solid',color:'#ffffff'},textColor:'#131722',fontSize:11,fontFamily:FONT,
+          panes:{separatorColor:'#d1d4dc',separatorHoverColor:'rgba(41,98,255,0.15)',enableResize:true}},
+  grid:{vertLines:{color:'#e6e6e6',style:LC.LineStyle.Dotted},horzLines:{color:'#e6e6e6',style:LC.LineStyle.Dotted}},
+  rightPriceScale:{borderColor:'#d1d4dc',scaleMargins:{top:0.04,bottom:0.04},entireTextOnly:true},
+  timeScale:{borderColor:'#d1d4dc',timeVisible:intraday,secondsVisible:false,rightOffset:3,minBarSpacing:0.5,
+             tickMarkFormatter:function(t,type){var d=new Date(t*1000);
+               if(type===0)return fYear.format(d);if(type===1)return fMon.format(d).replace('.','');
+               if(type===2)return fDay.format(d);return fHM.format(d);}},
+  crosshair:{mode:LC.CrosshairMode.Normal,vertLine:{color:'#9598a1',labelBackgroundColor:'#434651'},
+             horzLine:{color:'#9598a1',labelBackgroundColor:'#434651'}},
+  localization:{locale:'fr-FR',timeFormatter:function(t){return tlabel(t);}},
+  handleScale:{axisPressedMouseMove:{time:true,price:true},pinch:true,mouseWheel:true},
+  handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true}
+});
+// --- bougies (pane 0) ---
+var auto=D.autoscale.slice();
+D.bands.forEach(function(b){auto.push(b.low,b.high);});
+var candle=chart.addSeries(LC.CandlestickSeries,{upColor:'#FFFFFF',downColor:'#434651',borderUpColor:'#434651',borderDownColor:'#000000',
+  wickUpColor:'#434651',wickDownColor:'#2A2E39',priceFormat:priceFormat,priceLineVisible:false,lastValueVisible:true,
+  autoscaleInfoProvider:function(orig){var r=orig();if(!r||!r.priceRange)return r;
+    var lo=r.priceRange.minValue,hi=r.priceRange.maxValue;
+    auto.forEach(function(p){if(p>0){lo=Math.min(lo,p);hi=Math.max(hi,p);}});
+    r.priceRange.minValue=lo*0.985;r.priceRange.maxValue=hi*1.015;return r;}},0);
+// bougie en cours (D.live) : affichage seul, estompée (~35 %), jamais utilisée par les MA / niveaux
+var LV=D.live,FADE=0.35,bars=D.candles.slice();if(LV)bars.push(LV);
+var liveAt=D.liveAt?new Date(D.liveAt):null;
+function liveStyle(c){var up=c[4]>=c[1];return up?{color:'rgba(255,255,255,'+FADE+')',borderColor:rgba('#434651',FADE),wickColor:rgba('#434651',FADE)}
+  :{color:rgba('#434651',FADE),borderColor:rgba('#000000',FADE),wickColor:rgba('#2A2E39',FADE)};}
+if(LV)candle.applyOptions({lastValueVisible:false});
+candle.setData(bars.map(function(c){var o={time:c[0],open:c[1],high:c[2],low:c[3],close:c[4]};
+  if(LV&&c===LV){var st=liveStyle(c);for(var k in st)o[k]=st[k];}return o;}));
+if(D.markers&&D.markers.length&&candle.setMarkers){
+  candle.setMarkers(D.markers.map(function(m){return {time:m.time,position:m.position||'aboveBar',color:m.color||'#2962ff',
+    shape:m.shape||'circle',text:m.text||''};}).sort(function(a,b){return a.time-b.time;}));
+}
+// --- moyennes mobiles (exclues de l'autoscale, comme l'ylim du PNG) ---
+var maSeries=[];
+D.mas.forEach(function(m){
+  var dots=m.style==='dots';
+  var s=chart.addSeries(LC.LineSeries,{color:m.color,lineWidth:Math.min(4,Math.max(1,Math.round(m.width))),
+    lineType:m.style==='step'?LC.LineType.WithSteps:LC.LineType.Simple,lineVisible:!dots,
+    pointMarkersVisible:dots,pointMarkersRadius:1.5,visible:m.visible,priceFormat:priceFormat,
+    priceLineVisible:false,lastValueVisible:false,crosshairMarkerVisible:false,
+    autoscaleInfoProvider:function(){return null;}},0);
+  s.setData(m.data.map(function(p){return {time:p[0],value:p[1]};}));
+  maSeries.push({m:m,s:s,map:new Map(m.data.map(function(p){return [p[0],p[1]];}))});
+});
+// --- volume (pane 1, en bas) ---
+var vol=chart.addSeries(LC.HistogramSeries,{priceFormat:{type:'volume'},lastValueVisible:false,priceLineVisible:false},1);
+vol.setData(bars.map(function(c){var col=c[4]>=c[1]?'#B2B5BE':'#434651';return {time:c[0],value:c[5],color:(LV&&c===LV)?rgba(col,FADE):col};}));
+var vma=chart.addSeries(LC.LineSeries,{color:'#555555',lineWidth:1,lineStyle:LC.LineStyle.Dashed,priceFormat:{type:'volume'},
+  lastValueVisible:false,priceLineVisible:false,crosshairMarkerVisible:false},1);
+vma.setData(D.vma.map(function(p){return {time:p[0],value:p[1]};}));
+vol.priceScale().applyOptions({scaleMargins:{top:0.12,bottom:0}});
+var panes=chart.panes();panes[0].setStretchFactor(4);panes[1].setStretchFactor(1.1);
+// --- lignes de prix (stop / invalidation / objectif / entrée / dernière clôture) ---
+var LS={solid:LC.LineStyle.Solid,dashed:LC.LineStyle.Dashed,dotted:LC.LineStyle.Dotted};
+// Titres des lignes dessinés À GAUCHE (avec les étiquettes S/R, empilés sans chevauchement) : à droite, seule
+// la petite étiquette de prix colorée reste sur l'axe, pour ne pas masquer l'échelle ni les dernières bougies.
+var lineLabels=[];
+D.lines.forEach(function(l){candle.createPriceLine({price:l.price,color:l.color,lineWidth:l.width||1,
+  lineStyle:LS[l.style]||LC.LineStyle.Solid,axisLabelVisible:true,title:''});
+  if(l.title)lineLabels.push({price:l.price,color:l.color,label:l.title,kind:'line'});});
+if(LV){candle.createPriceLine({price:LV[4],color:'#ef6c00',lineWidth:1,lineStyle:LC.LineStyle.Dotted,axisLabelVisible:true,title:''});
+  lineLabels.push({price:LV[4],color:'#ef6c00',label:'Prix actuel '+fmt(LV[4])+' (bougie en cours)',kind:'line'});}
+// --- primitive : bandes S/R + zones du plan (rectangles pleins) avec étiquettes ---
+function BandsPrimitive(zones,bands,lines){this.items=zones.concat(bands);this.lines=lines||[];this.series=null;this.show=true;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'bottom';},renderer:function(){return {draw:function(){},drawBackground:function(t){self.drawFill(t);}};}},
+              {zOrder:function(){return 'top';},renderer:function(){return {draw:function(t){self.drawLabels(t);}};}}];}
+BandsPrimitive.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+BandsPrimitive.prototype.detached=function(){this.series=null;};
+BandsPrimitive.prototype.updateAllViews=function(){};
+BandsPrimitive.prototype.paneViews=function(){return this.views;};
+BandsPrimitive.prototype.drawFill=function(target){var s=this.series,items=this.items;if(!s)return;
+  target.useBitmapCoordinateSpace(function(sc){var ctx=sc.context,vr=sc.verticalPixelRatio,W=sc.bitmapSize.width,px=Math.max(1,Math.round(vr));
+    items.forEach(function(b){var y1=s.priceToCoordinate(b.high),y2=s.priceToCoordinate(b.low);if(y1===null||y2===null)return;
+      var top=Math.round(Math.min(y1,y2)*vr),h=Math.max(Math.round(Math.abs(y2-y1)*vr),2*px);
+      ctx.fillStyle=rgba(b.color,b.alpha);ctx.fillRect(0,top,W,h);
+      if(b.kind!=='sr'){ctx.fillStyle=rgba(b.color,0.6);ctx.fillRect(0,top,W,px);ctx.fillRect(0,top+h-px,W,px);}
+    });});};
+BandsPrimitive.prototype.drawLabels=function(target){var s=this.series,items=this.items,lines=this.lines;if(!s||!this.show)return;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width,H=sc.mediaSize.height,narrow=W<520;
+    var fs=narrow?10:11,lh=fs+4,labs=[];
+    items.forEach(function(b){var y1=s.priceToCoordinate(b.high),y2=s.priceToCoordinate(b.low);if(y1===null||y2===null)return;
+      var y=(y1+y2)/2;if(y<-lh||y>H+lh)return;labs.push({y:y,b:b});});
+    lines.forEach(function(b){var y=s.priceToCoordinate(b.price);if(y===null||y<-lh||y>H+lh)return;labs.push({y:y,b:b});});
+    labs.sort(function(a,b){return a.y-b.y;});
+    for(var i=1;i<labs.length;i++){if(labs[i].y-labs[i-1].y<lh)labs[i].y=labs[i-1].y+lh;}
+    for(var j=labs.length-1;j>=0;j--){var mx=(j===labs.length-1?H-lh/2:labs[j+1].y-lh);if(labs[j].y>mx)labs[j].y=mx;}
+    labs.forEach(function(L){var b=L.b,txt=(narrow?b.short:b.label)||b.label,bold=b.kind!=='sr';
+      if(b.kind==='line'){ctx.font='600 '+fs+'px '+FONT;var lw=ctx.measureText(txt).width+8;
+        ctx.fillStyle=b.color;if(ctx.roundRect){ctx.beginPath();ctx.roundRect(2,L.y-lh/2,lw,lh,3);ctx.fill();}else ctx.fillRect(2,L.y-lh/2,lw,lh);
+        ctx.fillStyle='#fff';ctx.textBaseline='middle';ctx.fillText(txt,6,L.y+0.5);return;}
+      ctx.font=(bold?'700 ':'500 ')+fs+'px '+FONT;
+      var w=ctx.measureText(txt).width,x=5;
+      ctx.fillStyle='rgba(255,255,255,0.8)';ctx.fillRect(x-3,L.y-lh/2,w+6,lh);
+      ctx.fillStyle=b.kind==='entry'?'#0d47a1':b.color;ctx.textBaseline='middle';ctx.fillText(txt,x,L.y+0.5);});
+  });};
+var bandsPrim=new BandsPrimitive(D.zones,D.bands,lineLabels);candle.attachPrimitive(bandsPrim);
+// étiquettes de gauche (S/R, zones, titres des lignes) : bouton « Labels » ; « Tout » les masque, « Recentrer » les rétablit
+var bLab=$('bLab');
+function setLabels(v){bandsPrim.show=v;bLab.classList.toggle('on',v);if(bandsPrim.req)bandsPrim.req();}
+bLab.onclick=function(){setLabels(!bandsPrim.show);};
+// --- vue initiale : même fenêtre que le PNG (réduite sur petit écran pour garder des bougies lisibles) ---
+var n=bars.length;
+function initialBars(){var w=el.clientWidth||400;return Math.min(D.initial,n,Math.max(60,Math.floor((w-60)/3)));}
+function fit(){chart.timeScale().setVisibleLogicalRange({from:Math.max(0,n-initialBars())-0.5,to:n-1+3});
+  candle.priceScale().applyOptions({autoScale:true});vol.priceScale().applyOptions({autoScale:true});}
+fit();
+$('bFit').onclick=function(){fit();setLabels(true);};
+$('bAll').onclick=function(){chart.timeScale().fitContent();candle.priceScale().applyOptions({autoScale:true});setLabels(false);};
+var isLog=!!D.log,bLog=$('bLog');
+function setLog(v){isLog=v;candle.priceScale().applyOptions({mode:v?LC.PriceScaleMode.Logarithmic:LC.PriceScaleMode.Normal,autoScale:true});
+  bLog.textContent=v?'Log':'Linéaire';bLog.title='Échelle de prix : '+(v?'logarithmique':'linéaire')+' (toucher pour changer)';bLog.classList.toggle('on',v);}
+setLog(isLog);bLog.onclick=function(){setLog(!isLog);};
+// --- pastilles MA (toucher = afficher / masquer) ---
+var chips=$('chips');
+maSeries.forEach(function(o){var c=document.createElement('span');c.className='chip'+(o.m.visible?'':' off');
+  var i=document.createElement('i');i.style.borderTopColor=o.m.color;i.style.borderTopStyle=o.m.style==='dots'?'dotted':'solid';
+  if(o.m.width>=2)i.style.borderTopWidth='3px';c.appendChild(i);c.appendChild(document.createTextNode(o.m.name));
+  c.onclick=function(){o.m.visible=!o.m.visible;o.s.applyOptions({visible:o.m.visible});c.classList.toggle('off',!o.m.visible);legend(lastT);};
+  chips.appendChild(c);});
+// --- lecture au réticule (OHLC, variation, volume, MA) ---
+var leg=$('legend'),byT=new Map(bars.map(function(c){return [c[0],c];})),lastT=null;
+function legend(t){lastT=t;var c=(t!==null&&byT.get(t))||bars[n-1];t=c[0];
+  var ch=(c[4]/c[1]-1)*100,col=ch>=0?'#2e7d32':'#c62828';
+  var h='<b>'+tlabel(t)+'</b> &nbsp;O <b>'+fmt(c[1])+'</b> H <b>'+fmt(c[2])+'</b> B <b>'+fmt(c[3])+'</b> C <b>'+fmt(c[4])+
+    '</b> <span style="color:'+col+'">'+(ch>=0?'+':'')+ch.toFixed(2)+' %</span> · Vol '+fmtVol(c[5]);
+  if(LV&&c===LV)h+=' <span style="color:#ef6c00">· bougie en cours'+(liveAt?' (au '+fHM.format(liveAt)+')':'')+'</span>';
+  var mm=[];maSeries.forEach(function(o){if(!o.m.visible)return;var v=o.map.get(t);if(v!==undefined)mm.push('<span style="color:'+o.m.color+'">'+o.m.name+' '+fmt(v)+'</span>');});
+  if(mm.length)h+='<br>'+mm.join(' · ');leg.innerHTML=h;}
+legend(null);
+chart.subscribeCrosshairMove(function(p){legend(p&&p.time!==undefined?p.time:null);});
+// --- outil « Mesure » (règle façon TradingView) : A puis B, rectangle + variation en % ---
+// Points en coordonnées logiques (index de bougie) + prix : la mesure reste alignée au zoom / déplacement.
+var TFS={'4h':14400,'1d':86400,'1w':604800}[D.tf]||86400;
+var M={on:false,a:null,b:null,hover:null},bMes=$('bMes'),mbar=$('mbar'),mtxt=$('mtxt'),mclr=$('mclr');
+var tsc=chart.timeScale();
+function MeasurePrimitive(){this.series=null;this.req=null;var self=this;
+  this.views=[{zOrder:function(){return 'top';},renderer:function(){return {draw:function(t){self.draw(t);}};}}];}
+MeasurePrimitive.prototype.attached=function(p){this.series=p.series;this.req=p.requestUpdate;};
+MeasurePrimitive.prototype.detached=function(){this.series=null;this.req=null;};
+MeasurePrimitive.prototype.updateAllViews=function(){};
+MeasurePrimitive.prototype.paneViews=function(){return this.views;};
+MeasurePrimitive.prototype.update=function(){if(this.req)this.req();};
+function mStats(A,B){var nb=Math.abs(Math.round(B.l)-Math.round(A.l)),sec=nb*TFS,dur;
+  if(TFS<86400){var hh=sec/3600;dur=hh+' h'+(hh>=24?' ('+(Math.round(hh/24*10)/10).toString().replace('.',',')+' j)':'');}
+  else{dur=(Math.round(sec/86400*10)/10).toString().replace('.',',')+' j';}
+  var d=B.p-A.p,pct=(B.p/A.p-1)*100;
+  return {pct:pct,abs:d,nb:nb,dur:dur,up:B.p>=A.p,
+    l1:(pct>=0?'+':'−')+Math.abs(pct).toFixed(2).replace('.',',')+' %',
+    l2:(d>=0?'+':'−')+fmt(Math.abs(d))+' · '+nb+' bougie'+(nb>1?'s':'')+' · '+dur};}
+MeasurePrimitive.prototype.draw=function(target){var s=this.series;if(!s||!M.a)return;
+  var A=M.a,B=M.b||M.hover;
+  target.useMediaCoordinateSpace(function(sc){var ctx=sc.context,W=sc.mediaSize.width,H=sc.mediaSize.height;
+    var xa=tsc.logicalToCoordinate(A.l),ya=s.priceToCoordinate(A.p);if(xa===null||ya===null)return;
+    if(!B){ctx.fillStyle='#2962ff';ctx.beginPath();ctx.arc(xa,ya,4,0,2*Math.PI);ctx.fill();return;}
+    var xb=tsc.logicalToCoordinate(B.l),yb=s.priceToCoordinate(B.p);if(xb===null||yb===null)return;
+    var st=mStats(A,B),c=st.up?'#2e7d32':'#c62828',x0=Math.min(xa,xb),x1=Math.max(xa,xb),y0=Math.min(ya,yb),y1=Math.max(ya,yb);
+    ctx.fillStyle=rgba(c,0.16);ctx.fillRect(x0,y0,Math.max(x1-x0,1),Math.max(y1-y0,1));
+    ctx.strokeStyle=rgba(c,0.75);ctx.lineWidth=1;ctx.strokeRect(Math.round(x0)+0.5,Math.round(y0)+0.5,Math.max(Math.round(x1-x0),1),Math.max(Math.round(y1-y0),1));
+    // flèches : verticale (prix) et horizontale (temps) au centre
+    var xm=(x0+x1)/2,ym=(y0+y1)/2;ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.beginPath();
+    ctx.moveTo(xm,ya);ctx.lineTo(xm,yb);ctx.moveTo(xa,ym);ctx.lineTo(xb,ym);ctx.stroke();
+    function head(x,y,dx,dy){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-dx*7-dy*4,y-dy*7+dx*4);ctx.lineTo(x-dx*7+dy*4,y-dy*7-dx*4);ctx.closePath();ctx.fill();}
+    ctx.fillStyle=c;if(Math.abs(yb-ya)>14)head(xm,yb,0,yb>ya?1:-1);if(Math.abs(xb-xa)>14)head(xb,ym,xb>xa?1:-1,0);
+    [[xa,ya],[xb,yb]].forEach(function(q){ctx.beginPath();ctx.arc(q[0],q[1],3.5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.stroke();});
+    // étiquette : % en gros, puis variation absolue · bougies · durée
+    var big=W<520?17:19,sm=W<520?11:11.5,pad=7;
+    ctx.font='700 '+big+'px '+FONT;var w1=ctx.measureText(st.l1).width;ctx.font='500 '+sm+'px '+FONT;var w2=ctx.measureText(st.l2).width;
+    var bw=Math.max(w1,w2)+2*pad,bh=big+sm+2*pad+4,bx=Math.min(Math.max(xm-bw/2,3),W-bw-3),by;
+    if(st.up){by=y0-bh-6;if(by<3)by=Math.min(y1+6,H-bh-3);}else{by=y1+6;if(by+bh>H-3)by=Math.max(y0-bh-6,3);}
+    ctx.fillStyle=rgba(c,0.92);if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,by,bw,bh,5);ctx.fill();}else ctx.fillRect(bx,by,bw,bh);
+    ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='top';ctx.font='700 '+big+'px '+FONT;ctx.fillText(st.l1,bx+bw/2,by+pad);
+    ctx.font='500 '+sm+'px '+FONT;ctx.fillText(st.l2,bx+bw/2,by+pad+big+4);ctx.textAlign='left';
+  });};
+var mp=new MeasurePrimitive();candle.attachPrimitive(mp);
+function mUI(){bMes.classList.toggle('on',M.on);mbar.style.display=(M.on||M.a)?'flex':'none';mclr.style.display=M.a?'inline-block':'none';
+  mtxt.style.display=M.on?'inline-block':'none';
+  mtxt.textContent=!M.a?'Mesure : toucher le point A':(!M.b?'Toucher le point B':'Toucher pour une nouvelle mesure');
+  window.__measure=M.a&&M.b?Object.assign(mStats(M.a,M.b),{a:M.a,b:M.b}):null;}
+window.__range=function(){return tsc.getVisibleLogicalRange();};
+// point touché -> {l: index de bougie, p: prix}, aimanté au plus haut / bas / clôture / ouverture à < 8 px
+// (x, y) en px relatifs au graphique ; seul le pane des prix (pane 0, en haut) est accepté
+function mPoint(x,y){if(x<0||y<0||x>tsc.width()||y>chart.panes()[0].getHeight())return null;
+  var lg=tsc.coordinateToLogical(x);if(lg===null)return null;
+  var li=Math.round(lg),pr=candle.coordinateToPrice(y);if(pr===null||!(pr>0))return null;
+  var c=bars[li];if(c){var best=8,bp=null;[c[2],c[3],c[4],c[1]].forEach(function(v){var yy=candle.priceToCoordinate(v);
+    if(yy!==null&&Math.abs(yy-y)<best){best=Math.abs(yy-y);bp=v;}});if(bp!==null)pr=bp;}
+  return {l:li,p:pr};}
+function panOpts(){return {handleScroll:{mouseWheel:true,pressedMouseMove:true,horzTouchDrag:true,vertTouchDrag:true},
+  handleScale:{axisPressedMouseMove:{time:true,price:true},axisDoubleClickReset:{time:true,price:true},pinch:true,mouseWheel:true}};}
+function setMeasure(v){M.on=v;M.hover=null;
+  chart.applyOptions(v?{handleScroll:false,handleScale:false}:panOpts());
+  if(v&&M.a&&!M.b)M.a=null;mUI();mp.update();}
+bMes.onclick=function(){setMeasure(!M.on);};
+function mClear(e){if(e){e.stopPropagation();e.preventDefault();}M.a=M.b=M.hover=null;down=null;mUI();mp.update();}
+mclr.onclick=mClear;mclr.addEventListener('pointerup',mClear);mclr.addEventListener('pointerdown',function(e){e.stopPropagation();});
+// touchers / clics lus directement (pointer events, souris + tactile) : indépendant des gestes de la librairie,
+// deux touchers rapides ne sont pas pris pour un double-clic
+var down=null;
+function rel(e){var r=el.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+el.addEventListener('pointerdown',function(e){if(!M.on||(e.pointerType==='mouse'&&e.button!==0))return;
+  down={id:e.pointerId,p:rel(e),t:Date.now()};},true);
+el.addEventListener('pointerup',function(e){if(!M.on||!down||down.id!==e.pointerId)return;var p=rel(e),d=down;down=null;
+  if(Math.abs(p.x-d.p.x)>12||Math.abs(p.y-d.p.y)>12||Date.now()-d.t>800)return;
+  var q=mPoint(p.x,p.y);if(!q)return;if(!M.a||M.b){M.a=q;M.b=null;M.hover=null;}else{M.b=q;M.hover=null;}mUI();mp.update();},true);
+el.addEventListener('pointercancel',function(){down=null;},true);
+el.addEventListener('pointermove',function(e){if(!M.on||!M.a||M.b||e.pointerType!=='mouse')return;var p=rel(e);
+  M.hover=mPoint(p.x,p.y);mp.update();},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(M.a||M.on)){M.a=M.b=M.hover=null;if(M.on)setMeasure(false);else{mUI();mp.update();}}});
+mUI();
+}
+
+(function(){if(window.LightweightCharts){initChart();return;}
+var s=document.createElement('script');s.src='https://unpkg.com/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';s.integrity='sha384-KkYqTZlM13Zya6fVUF3IGCBOQ1ehFeJVVgxaVvD/0MebineF9EI8Jkd3NnWNChqN';s.crossOrigin='anonymous';
+s.onload=initChart;s.onerror=initChart;document.head.appendChild(s);})();
+</script>
+</body>
+</html>
