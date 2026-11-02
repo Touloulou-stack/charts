@@ -4,7 +4,7 @@
    rangée à part : gomarket-shell-<version>-page-<identifiant de build>. */
 'use strict';
 
-var SHELL_VERSION = '1-gc1';
+var SHELL_VERSION = '1-gc2';
 var CACHE_FAMILY = 'gomarket-shell-' + SHELL_VERSION;
 var STATIC_CACHE = CACHE_FAMILY + '-static';
 var PAGE_PREFIX = CACHE_FAMILY + '-page-';
